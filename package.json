@@ -43,9 +43,15 @@
   },
   "devDependencies": {
     "@types/leaflet": "^1.9.8",
+<<<<<<< Updated upstream
     "eslint": "^8.57.0",
     "leaflet": "^1.9.4",
     "typescript": "^5.4.2",
     "typescript-eslint": "^7.2.0"
+=======
+    "@types/react-leaflet": "^3.0.0",
+    "leaflet": "^1.9.4",
+    "typescript": "^5.4.2"
+>>>>>>> Stashed changes
   }
 }

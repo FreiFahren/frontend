@@ -9,8 +9,7 @@ export default function Markers() {
     useEffect(() => {
         getData(setData);
     }, []);
-    
-    
+
     return(
         <div>
             {data.map((item) => {

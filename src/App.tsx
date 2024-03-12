@@ -1,16 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Map from './components/Map';
-import ReportButton from './components/report-button/report-button';
+import ReportButton from './components/ReportButton/ReportButton';
+import ReportForm from './components/ReportForm/ReportForm';
+import Backdrop from './components/Backdrop/Backdrop';
 import './App.css';
 
 function App() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
-    <div className="App">
-      <div id="map">
+    <div className='App'>
+      <div id='map'>
         <Map />
       </div>
-      <ReportButton />
+      <ReportButton onClick={() => setIsModalOpen(!isModalOpen)} />
+      {isModalOpen && (
+        <>
+          <Backdrop onClick={() => setIsModalOpen(!isModalOpen)} />
+          <ReportForm />
+        </>
+      )}
     </div>
   );
 }

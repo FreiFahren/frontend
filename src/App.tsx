@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import Map from './components/Map';
+import Map from './components/Map/Map';
 import ReportButton from './components/ReportButton/ReportButton';
 import ReportForm from './components/ReportForm/ReportForm';
 import Backdrop from './components/Backdrop/Backdrop';

@@ -1,25 +1,30 @@
 import React, { useEffect, useState } from 'react';
 
-export default function Markers() {
-    const [data, setData] = useState<any[]>([]); // Add type annotation for data state variable
+import { Marker, Popup } from 'react-leaflet';
+import { getCoordinates } from '../../functions/dbUtils';
+
+const Markers = () => {
+    const [data, setData] = useState<Array<[number, number, string]>>([]);
 
     useEffect(() => {
-        fetch('http://157.230.118.137:8080/data')
-            .then(response => {
-                console.log(response);
-                return response.json() as Promise<any[]>;
-            })
-            .then(data => setData(data))
-            .catch(error => console.error(error));
+        getCoordinates(setData);
     }, []);
-    console.log(data);
-    return (
+
+    return(
         <div>
-            {/* Render the fetched data */}
-            {data.map(item => (
-                <div key={item.id}>{item.name}</div>
-            ))}
-            
+            {data.map((coordinates, index) => {
+                // coordinates are an array of [latitude, longitude, stationName]
+                const stationName = coordinates[2];
+                return (
+                    <Marker key={`${stationName}-${index}`} position={[coordinates[0],coordinates[1]]}>
+                        <Popup>
+                            {stationName}
+                        </Popup>
+                    </Marker>
+                );
+            })}
         </div>
-    );
+    )
 }
+
+export default Markers;

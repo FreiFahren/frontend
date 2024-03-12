@@ -1,22 +1,35 @@
 import React, { useEffect, useState } from 'react';
 
+import { Marker, Popup } from 'react-leaflet';
+
 export default function Markers() {
     const [data, setData] = useState<any[]>([]); // Add type annotation for data state variable
 
     useEffect(() => {
-        fetch('http://157.230.118.137:8080/data')
+        fetch('/data')
             .then(response => response.json())
-            .then(data => setData(data))
+            .then(data => {
+                setData(data);
+                 // Print data in the console
+            })
             .catch(error => console.error(error));
     }, []);
-    console.log(data);
-    return (
+    
+    
+
+    return(
         <div>
-            {/* Render the fetched data */}
-            {data.map(item => (
-                <div key={item.id}>{item.name}</div>
-            ))}
-            
+            {data.map((item) => {
+                console.log(item);
+                return (
+                    <Marker position={[item[0],item[1]]}>
+                        <Popup>
+                            {item[2]}
+                        </Popup>
+                    </Marker>
+                );
+            })}
         </div>
-    );
+    )
+
 }

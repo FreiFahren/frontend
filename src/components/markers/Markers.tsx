@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from 'react';
 
 import { Marker, Popup } from 'react-leaflet';
+import { getData } from '../../functions/db_util';
 
 export default function Markers() {
     const [data, setData] = useState<any[]>([]); // Add type annotation for data state variable
 
     useEffect(() => {
-        fetch('/data')
-            .then(response => response.json())
-            .then(data => {
-                setData(data);
-                 // Print data in the console
-            })
-            .catch(error => console.error(error));
+        getData(setData);
     }, []);
     
     
-
     return(
         <div>
             {data.map((item) => {

@@ -1,0 +1,6 @@
+#map {
+  width: auto !important;
+  height: 100% !important;
+  position: relative;
+  background-color: green;
+}

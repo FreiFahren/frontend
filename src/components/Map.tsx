@@ -1,21 +1,25 @@
-import React, { useEffect, useRef } from 'react';
-import L from 'leaflet';
+import { MapContainer, TileLayer, Popup, Marker } from "react-leaflet";
+import { LatLngTuple } from "leaflet";
+
+import './Map.css'
 
 export default function Map() {
-    const mapRef = useRef(null);
-    let mapInstance: L.Map | L.LayerGroup<any> | null = null;
+    const position: LatLngTuple = [52.520008,13.404954];
 
-    useEffect(() => {
-        if (!mapInstance) {
-            mapInstance = L.map(mapRef.current!).setView([52.5072, 13.4248], 13);
+  return (
+    
+    
+        <MapContainer id="map" center={position} zoom={13} scrollWheelZoom={true}>
+        <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <Marker position={position}>
+            <Popup>
+            A pretty CSS3 popup. <br /> Easily customizable.
+            </Popup>
+        </Marker>
+        </MapContainer>
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(mapInstance);
-        }
-    }, []);
-
-    return (
-        <div ref={mapRef} ></div>
-    );
+  );
 }

@@ -1,0 +1,9 @@
+.report-button {
+    position: fixed;
+    height: 100px;
+    width: 100px;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px;
+    background-color: tomato;
+}

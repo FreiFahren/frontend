@@ -6,4 +6,10 @@ import tseslint from 'typescript-eslint';
 export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
+  {
+    rules: {
+      'quotes': ['error', 'single'],
+      'jsx-quotes': ['error', 'prefer-single']
+    }
+  }
 );

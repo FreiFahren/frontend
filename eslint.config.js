@@ -9,8 +9,8 @@ export default tseslint.config(
     rules: {
       'quotes': ['error', 'single'],
       'jsx-quotes': ['error', 'prefer-single'],
-      'no-trailing-spaces': ['error'], // disallow trailing whitespaces at the end of lines
-      'no-multiple-empty-lines': ['error', { 'max': 1 }], // disallow multiple empty lines
+      'no-trailing-spaces': ['error'],
+      'no-multiple-empty-lines': ['error', { 'max': 1 }],
     }
   }
 );

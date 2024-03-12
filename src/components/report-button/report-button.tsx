@@ -5,7 +5,7 @@ import './report-button.css';
 const ReportButton = () => {
     return (
         <button className='report-button'>
-        <span>Report</span>
+            <span role="img" aria-label="warning">⚠️</span>
         </button>
     );
 };

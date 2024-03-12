@@ -10,4 +10,12 @@
     border: none;
     border-radius: 50%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.report-button span {
+    display: block;
+    font-size: 50px;
+    position: relative; 
+    z-index: 1; 
 }

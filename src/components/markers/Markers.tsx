@@ -1,28 +1,30 @@
 import React, { useEffect, useState } from 'react';
 
 import { Marker, Popup } from 'react-leaflet';
-import { getData } from '../../functions/db_util';
+import { getCoordinates } from '../../functions/dbUtils';
 
-export default function Markers() {
-    const [data, setData] = useState<any[]>([]); // Add type annotation for data state variable
+const Markers = () => {
+    const [data, setData] = useState<Array<[number, number, string]>>([]);
 
     useEffect(() => {
-        getData(setData);
+        getCoordinates(setData);
     }, []);
 
     return(
         <div>
-            {data.map((item) => {
-                console.log(item);
+            {data.map((coordinates, index) => {
+                // coordinates are an array of [latitude, longitude, stationName]
+                const stationName = coordinates[2];
                 return (
-                    <Marker position={[item[0],item[1]]}>
+                    <Marker key={`${stationName}-${index}`} position={[coordinates[0],coordinates[1]]}>
                         <Popup>
-                            {item[2]}
+                            {stationName}
                         </Popup>
                     </Marker>
                 );
             })}
         </div>
     )
-
 }
+
+export default Markers;

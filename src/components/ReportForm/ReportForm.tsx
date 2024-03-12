@@ -14,6 +14,9 @@ const ReportForm: React.FC = () => {
                 <div>
                     <input type='text' id='direction' name='direction' placeholder='Richtung' />
                 </div>
+                <div>
+                    <button type='submit'>Submit</button>
+                </div>
             </form>
 
         </div>

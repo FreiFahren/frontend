@@ -1,5 +1,5 @@
-import { MapContainer, TileLayer, Popup, Marker } from "react-leaflet";
-import { LatLngTuple } from "leaflet";
+import { MapContainer, TileLayer, Popup, Marker } from 'react-leaflet';
+import { LatLngTuple } from 'leaflet';
 
 import './Map.css'
 
@@ -9,10 +9,10 @@ export default function Map() {
   return (
     
     
-        <MapContainer id="map" center={position} zoom={13} scrollWheelZoom={true}>
+        <MapContainer id='map' center={position} zoom={13} scrollWheelZoom={true}>
         <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
         <Marker position={position}>
             <Popup>

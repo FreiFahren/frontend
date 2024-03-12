@@ -10,8 +10,8 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className="App">
-      <div id="map">
+    <div className='App'>
+      <div id='map'>
         <Map />
       </div>
       <ReportButton onClick={() => setIsModalOpen(!isModalOpen)} />

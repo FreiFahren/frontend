@@ -3,10 +3,31 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 80%;
+    width: 60%;
     max-width: 600px;
-    background-color: #fff;
+    background-color: var(--white);
     padding: 20px;
-    border-radius: 8px;
+    border-radius: var(--standard-border-radius);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.report-form-container div {
+    margin: 20px 0;
+}
+
+.report-form-container input {
+    width: 80%;
+    padding: 10px;
+    border: 2px solid var(--gray-outlines);
+    border-radius: var(--standard-border-radius);
+}
+
+.report-form-container button {
+    width: 80%;
+    height: 2.5em;
+    background-color: var(--action-color);
+    border: none;
+    border-radius: var(--standard-border-radius);
+    color: var(--white);
+    font-size: 1em;
 }

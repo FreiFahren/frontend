@@ -6,16 +6,16 @@ const ReportForm: React.FC = () => {
             <h1>Neue Meldung</h1>
             <form>
                 <div>
-                    <input type='text' id='station' name='station' placeholder='Station' />
+                    <input type='text' id='line' name='line' placeholder='Linie' />
                 </div>
                 <div>
-                    <input type='text' id='line' name='line' placeholder='Linie' />
+                    <input type='text' id='station' name='station' placeholder='Station' />
                 </div>
                 <div>
                     <input type='text' id='direction' name='direction' placeholder='Richtung' />
                 </div>
                 <div>
-                    <button type='submit'>Submit</button>
+                    <button type='submit'>Melden</button>
                 </div>
             </form>
 

@@ -12,7 +12,6 @@ const Markers: React.FC<MarkersProps> = ({ formSubmitted }) => {
 
     useEffect(() => {
         getCoordinates(setData);
-        console.log('fetching data');
     }, [formSubmitted]);
 
     return(

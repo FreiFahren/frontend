@@ -22,9 +22,6 @@ export function reportInspector(line: string, station: string, direction: string
         body: JSON.stringify(requestBody), // Convert the JavaScript object to a JSON string
     })
     .then(response => response.json()) // Parse the JSON response body
-    .then(data => {
-        console.log('Inspector sighting reported successfully:', data);
-    })
     .catch(error => {
         console.error('Error reporting inspector sighting:', error);
     });

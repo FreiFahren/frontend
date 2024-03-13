@@ -16,7 +16,7 @@ function App() {
   return (
     <div className='App'>
       <div id='map'>
-        <Map />
+        <Map isModalOpen={isModalOpen}/>
       </div>
       <ReportButton onClick={handleCloseModal} />
       {isModalOpen && (

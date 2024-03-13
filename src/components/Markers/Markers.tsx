@@ -3,12 +3,16 @@ import React, { useEffect, useState } from 'react';
 import { Marker, Popup } from 'react-leaflet';
 import { getCoordinates } from '../../functions/dbUtils';
 
-const Markers = () => {
+interface MarkersProps {
+    isModalOpen: boolean;
+}
+
+const Markers: React.FC<MarkersProps> = ({ isModalOpen }) => {
     const [data, setData] = useState<Array<[number, number, string]>>([]);
 
     useEffect(() => {
         getCoordinates(setData);
-    }, []);
+    }, [isModalOpen]);
 
     return(
         <div>

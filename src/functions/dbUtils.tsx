@@ -7,14 +7,14 @@ export function getCoordinates(setData: React.Dispatch<React.SetStateAction<Arra
     .catch(error => console.error(error));
 }
 
-export function reportInspector(line: string, station: string, direction: string) {
+export function reportInspector(line: string, station: string, direction: string): Promise<any> {
     const requestBody = {
         line,
         station,
         direction,
     };
 
-    fetch('/newInspector', {
+    return fetch('/newInspector', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -25,4 +25,4 @@ export function reportInspector(line: string, station: string, direction: string
     .catch(error => {
         console.error('Error reporting inspector sighting:', error);
     });
-}  
+} 

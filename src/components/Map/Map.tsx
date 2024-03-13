@@ -4,7 +4,11 @@ import { LatLngTuple } from 'leaflet';
 import Markers from '../Markers/Markers';
 import './Map.css'
 
-const Map = () => {
+interface MapProps {
+    isModalOpen: boolean;
+}
+
+const Map: React.FC<MapProps> = ({ isModalOpen }) => {
     // Berlin as Standardview
     const position: LatLngTuple = [52.520008,13.404954];
 
@@ -14,7 +18,7 @@ const Map = () => {
             attribution= '<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a>'
             url={`https://tile.jawg.io/jawg-streets/{z}/{x}/{y}{r}.png?access-token=${process.env.REACT_APP_JAWG_ACCESS_TOKEN}`}
         />
-        <Markers />
+        <Markers isModalOpen={isModalOpen}/>
 
         </MapContainer>
   );

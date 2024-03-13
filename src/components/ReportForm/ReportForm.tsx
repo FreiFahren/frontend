@@ -1,5 +1,7 @@
 import React from 'react';
+
 import './ReportForm.css';
+import { reportInspector } from '../../functions/dbUtils';
 
 interface ReportFormProps {
   closeModal: () => void;
@@ -8,6 +10,11 @@ interface ReportFormProps {
 const ReportForm: React.FC<ReportFormProps> = ({ closeModal }) => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+    const line = (document.getElementById('line') as HTMLInputElement).value;
+    const station = (document.getElementById('station') as HTMLInputElement).value;
+    const direction = (document.getElementById('direction') as HTMLInputElement).value;
+
+    reportInspector(line, station, direction);
 
     closeModal();
   };

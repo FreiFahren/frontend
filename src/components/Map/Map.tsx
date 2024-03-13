@@ -10,8 +10,8 @@ interface MapProps {
 
 const Map: React.FC<MapProps> = ({ formSubmitted }) => {
     // Berlin as Standardview
-    const position: LatLngTuple = [52.520008,13.404954];
-
+    const position: LatLngTuple = [52.5162,13.3880];
+    
   return (
         <MapContainer id='map' center={position} zoom={13} scrollWheelZoom={true}>
         <TileLayer

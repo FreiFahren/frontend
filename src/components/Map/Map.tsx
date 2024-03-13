@@ -5,10 +5,10 @@ import Markers from '../Markers/Markers';
 import './Map.css'
 
 interface MapProps {
-    isModalOpen: boolean;
+    formSubmitted: boolean;
 }
 
-const Map: React.FC<MapProps> = ({ isModalOpen }) => {
+const Map: React.FC<MapProps> = ({ formSubmitted }) => {
     // Berlin as Standardview
     const position: LatLngTuple = [52.520008,13.404954];
 
@@ -18,7 +18,7 @@ const Map: React.FC<MapProps> = ({ isModalOpen }) => {
             attribution= '<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a>'
             url={`https://tile.jawg.io/jawg-streets/{z}/{x}/{y}{r}.png?access-token=${process.env.REACT_APP_JAWG_ACCESS_TOKEN}`}
         />
-        <Markers isModalOpen={isModalOpen}/>
+        <Markers formSubmitted={formSubmitted}/>
 
         </MapContainer>
   );

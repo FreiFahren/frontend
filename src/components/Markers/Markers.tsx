@@ -4,15 +4,16 @@ import { Marker, Popup } from 'react-leaflet';
 import { getCoordinates } from '../../functions/dbUtils';
 
 interface MarkersProps {
-    isModalOpen: boolean;
+    formSubmitted: boolean;
 }
 
-const Markers: React.FC<MarkersProps> = ({ isModalOpen }) => {
+const Markers: React.FC<MarkersProps> = ({ formSubmitted }) => {
     const [data, setData] = useState<Array<[number, number, string]>>([]);
 
     useEffect(() => {
         getCoordinates(setData);
-    }, [isModalOpen]);
+        console.log('fetching data');
+    }, [formSubmitted]);
 
     return(
         <div>

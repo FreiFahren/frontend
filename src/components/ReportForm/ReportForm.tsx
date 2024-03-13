@@ -5,9 +5,10 @@ import { reportInspector } from '../../functions/dbUtils';
 
 interface ReportFormProps {
   closeModal: () => void;
+  onFormSubmit: () => void;
 }
 
-const ReportForm: React.FC<ReportFormProps> = ({ closeModal }) => {
+const ReportForm: React.FC<ReportFormProps> = ({ closeModal, onFormSubmit }) => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     const line = (document.getElementById('line') as HTMLInputElement).value;
@@ -17,6 +18,7 @@ const ReportForm: React.FC<ReportFormProps> = ({ closeModal }) => {
     await reportInspector(line, station, direction);
 
     closeModal();
+    onFormSubmit(); // Notify App component about the submission
 };
 
   return (

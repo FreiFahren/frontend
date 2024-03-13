@@ -3,12 +3,17 @@ import React, { useEffect, useState } from 'react';
 import { Marker, Popup } from 'react-leaflet';
 import { getCoordinates } from '../../functions/dbUtils';
 
-const Markers = () => {
+interface MarkersProps {
+    formSubmitted: boolean;
+}
+
+const Markers: React.FC<MarkersProps> = ({ formSubmitted }) => {
     const [data, setData] = useState<Array<[number, number, string]>>([]);
 
     useEffect(() => {
         getCoordinates(setData);
-    }, []);
+        console.log('fetching data');
+    }, [formSubmitted]);
 
     return(
         <div>

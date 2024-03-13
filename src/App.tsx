@@ -8,17 +8,22 @@ import './App.css';
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
+  const handleFormSubmit = () => {
+    setFormSubmitted(prevState => !prevState);
+  }
 
   return (
     <div className='App'>
       <div id='map'>
-        <Map />
+        <Map formSubmitted={formSubmitted} />
       </div>
       <ReportButton onClick={() => setIsModalOpen(!isModalOpen)} />
       {isModalOpen && (
         <>
-          <Backdrop onClick={() => setIsModalOpen(!isModalOpen)} />
-          <ReportForm />
+          <Backdrop onClick={() => setIsModalOpen(false)} />
+          <ReportForm closeModal={() => setIsModalOpen(false)} onFormSubmit={handleFormSubmit} />
         </>
       )}
     </div>

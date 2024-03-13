@@ -6,3 +6,23 @@ export function getCoordinates(setData: React.Dispatch<React.SetStateAction<Arra
     })
     .catch(error => console.error(error));
 }
+
+export async function reportInspector(line: string, station: string, direction: string): Promise<ResponseType> {
+    const requestBody = {
+        line,
+        station,
+        direction,
+    };
+
+    return fetch('/newInspector', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody), // Convert the JavaScript object to a JSON string
+    })
+    .then(response => response.json()) // Parse the JSON response body
+    .catch(error => {
+        console.error('Error reporting inspector sighting:', error);
+    });
+}

@@ -9,16 +9,20 @@ import './App.css';
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const handleCloseModal = () => {
+    setIsModalOpen(!isModalOpen);
+  }
+
   return (
     <div className='App'>
       <div id='map'>
         <Map />
       </div>
-      <ReportButton onClick={() => setIsModalOpen(!isModalOpen)} />
+      <ReportButton onClick={handleCloseModal} />
       {isModalOpen && (
         <>
-          <Backdrop onClick={() => setIsModalOpen(!isModalOpen)} />
-          <ReportForm />
+          <Backdrop onClick={handleCloseModal} />
+          <ReportForm closeModal={handleCloseModal} />
         </>
       )}
     </div>

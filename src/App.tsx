@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Map from './components/Map/Map';
 import ReportButton from './components/ReportButton/ReportButton';
 import ReportForm from './components/ReportForm/ReportForm';
+import UtilButton from './components/UtilButton/UtilButton';
 import Backdrop from './components/Backdrop/Backdrop';
 import './App.css';
 
@@ -19,6 +20,7 @@ function App() {
       <div id='map'>
         <Map formSubmitted={formSubmitted} />
       </div>
+      <UtilButton onClick={() => setIsModalOpen(!isModalOpen)}/>
       <ReportButton onClick={() => setIsModalOpen(!isModalOpen)} />
       {isModalOpen && (
         <>

@@ -9,10 +9,24 @@ interface MarkersProps {
 }
 
 export type MarkerData = {
-	Coordinates: [number, number];
-	Station: string;
-	Direction: string;
-	Line: string;
+	timestamp: string;
+	station: {
+    id: string;
+    name: string;
+    coordinates: {
+      latitude: number;
+      longitude: number;
+    }
+  }
+	direction: {
+    id: string;
+    name: string;
+    coordinates: {
+      latitude: number;
+      longitude: number;
+    }
+  }
+	line: string;
 };
 
 const Markers: React.FC<MarkersProps> = ({ formSubmitted }) => {
@@ -27,15 +41,15 @@ const Markers: React.FC<MarkersProps> = ({ formSubmitted }) => {
 	});
 
   useEffect(() => {
-	getLatestData(setData);
-    const interval = setInterval(() => {
-		getLatestData(setData);
-    }, 5000);
+    getLatestData(setData);
+      const interval = setInterval(() => {
+      getLatestData(setData);
+      }, 5000);
 
-	// When the component unmounts, clear the interval, because we don't want to keep fetching data
-    return () => {
-      clearInterval(interval);
-    };
+    // When the component unmounts, clear the interval, because we don't want to keep fetching data
+      return () => {
+        clearInterval(interval);
+      };
 
   }, [formSubmitted]);
 
@@ -43,12 +57,12 @@ const Markers: React.FC<MarkersProps> = ({ formSubmitted }) => {
     <div>
       {Array.isArray(data) &&
         data.map((item, index) => {
-          const station = item.Station || '';
-          const line = item.Line;
-          const direction = item.Direction || '';
+          const station = item.station.name || '';
+          const line = item.line;
+          const direction = item.direction.name || '';
 
-          if (Array.isArray(item.Coordinates)) {
-            const [latitude, longitude] = item.Coordinates;
+            const latitude = item.station.coordinates.latitude;
+            const longitude =  item.station.coordinates.longitude;
 
             return (
               <Marker key={`${line}-${index}`} position={[latitude, longitude]} icon={MarkerIcon}>
@@ -59,12 +73,7 @@ const Markers: React.FC<MarkersProps> = ({ formSubmitted }) => {
                 </Popup>
               </Marker>
             );
-          } else {
-            if (process.env.NODE_ENV === 'development') {
-              console.log('Coordinates are not an array');
-            }
-            return '';
-          }
+
         })}
     </div>
   );

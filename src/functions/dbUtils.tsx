@@ -1,25 +1,10 @@
 import { MarkerData } from '../components/Markers/Markers';
 
 export function getLatestData(setData: React.Dispatch<React.SetStateAction<MarkerData[]>>) {
-    fetch('/data?names=true')
+    fetch('/latest')
     .then(response => response.json())
     .then(data => {
-        const MarkerData: MarkerData[] = [];
-
-        // The response body is
-        // [Coordinates, StationID, DirectionID, Line]
-        // StationID and DirectionID can be IDs or names
-        // We convert it to this format for conveniency:
-        for (const item of data) {
-            const Marking: MarkerData = {
-                Coordinates: item.Coordinates,
-                Station: item.StationID,
-                Direction: item.DirectionID,
-                Line: item.Line,
-            }
-            MarkerData.push(Marking);
-        }
-        setData(MarkerData);
+        setData(data);
     })
     .catch(error => console.error('Error:', error));
 

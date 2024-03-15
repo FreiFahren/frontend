@@ -32,8 +32,8 @@ export async function reportInspector(line: string, station: string, direction: 
 }
 
 export function IdToStation(id: string): string {
-
-    let stationName: string = "";
+ 
+    const stationName: string = "";
 
     if (id !== "") {
         return stationsData[id as keyof typeof stationsData]['name'];

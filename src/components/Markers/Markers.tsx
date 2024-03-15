@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { Marker, Popup } from 'react-leaflet';
-import { getCoordinates} from '../../functions/dbUtils';
+import { getLatestData } from '../../functions/dbUtils';
 
 interface MarkersProps {
 	formSubmitted: boolean;
@@ -9,8 +9,8 @@ interface MarkersProps {
 
 export type MarkerData = {
 	Coordinates: [number, number];
-	StationID: string;
-	DirectionID: string;
+	Station: string;
+	Direction: string;
 	Line: string;
 };
 
@@ -18,16 +18,16 @@ const Markers: React.FC<MarkersProps> = ({ formSubmitted }) => {
   const [data, setData] = useState<MarkerData[]>([]);
 
     useEffect(() => {
-        getCoordinates(setData);
+        getLatestData(setData);
     }, [formSubmitted]);
 
   return (
     <div>
       {
 	  Array.isArray(data) && data.map((item, index) => {
-		const station = item.StationID || '';
+		const station = item.Station || '';
 		const line = item.Line;
-		const direction = item.DirectionID || '';
+		const direction = item.Direction || '';
 
 		if (Array.isArray(item.Coordinates)) {
 			const [latitude, longitude] = item.Coordinates;

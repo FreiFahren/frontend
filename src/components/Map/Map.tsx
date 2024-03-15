@@ -2,6 +2,7 @@ import { MapContainer, TileLayer } from 'react-leaflet';
 import { LatLngTuple } from 'leaflet';
 
 import Markers from '../Markers/Markers';
+import LocationMarker from '../LocationMarker/LocationMarker';
 import './Map.css'
 
 interface MapProps {
@@ -18,6 +19,7 @@ const Map: React.FC<MapProps> = ({ formSubmitted }) => {
             attribution= '<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a>'
             url={`https://tile.jawg.io/jawg-streets/{z}/{x}/{y}{r}.png?access-token=${process.env.REACT_APP_JAWG_ACCESS_TOKEN}`}
         />
+        <LocationMarker />
         <Markers formSubmitted={formSubmitted}/>
 
         </MapContainer>

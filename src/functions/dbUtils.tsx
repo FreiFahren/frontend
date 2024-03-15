@@ -1,8 +1,7 @@
 import { MarkerData } from "../components/Markers/Markers";
-import stationsData from './stations.json';
 
 export function getCoordinates(setData: React.Dispatch<React.SetStateAction<MarkerData[]>>) {
-    fetch('/data')
+    fetch('/data?names=true')
     .then(response => response.json())
     .then(data => {
         setData(data);
@@ -31,13 +30,14 @@ export async function reportInspector(line: string, station: string, direction: 
     });
 }
 
-export function IdToStation(id: string): string {
- 
-    const stationName: string = "";
 
-    if (id !== "") {
-        return stationsData[id as keyof typeof stationsData]['name'];
-    } 
-    
-    return stationName;
-}
+// export async function IdToStation(id: string): Promise<string> {
+//     if (id === "") return "";
+//     fetch('/station?id=' + id)
+//     .then(response => response.json()) // Parse the JSON response body
+//     .then(data => {
+//         return data;
+//     })
+
+//     return "////";
+// }

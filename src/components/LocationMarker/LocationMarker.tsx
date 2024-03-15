@@ -10,7 +10,7 @@ const LocationMarker = () => {
         iconSize: [64, 64],
         iconAnchor: [32, 32],
         popupAnchor: [0, -16],
-        
+
     });
 
     useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
 import { Marker, Popup } from 'react-leaflet';
 import { getLatestData } from '../../functions/dbUtils';
@@ -34,9 +34,9 @@ const Markers: React.FC<MarkersProps> = ({ formSubmitted }) => {
     <div>
       {Array.isArray(data) &&
         data.map((item, index) => {
-          const station = item.Station || "";
+          const station = item.Station || '';
           const line = item.Line;
-          const direction = item.Direction || "";
+          const direction = item.Direction || '';
 
           if (Array.isArray(item.Coordinates)) {
             const [latitude, longitude] = item.Coordinates;
@@ -45,16 +45,16 @@ const Markers: React.FC<MarkersProps> = ({ formSubmitted }) => {
               <Marker key={`${line}-${index}`} position={[latitude, longitude]}>
                 <Popup>
                   <>
-                    {line} {direction ? direction + " - " : ""} {station}
+                    {line} {direction ? direction + ' - ' : ''} {station}
                   </>
                 </Popup>
               </Marker>
             );
           } else {
-            if (process.env.NODE_ENV === "development") {
-              console.log("Coordinates are not an array");
+            if (process.env.NODE_ENV === 'development') {
+              console.log('Coordinates are not an array');
             }
-            return "";
+            return '';
           }
         })}
     </div>

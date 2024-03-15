@@ -5,7 +5,7 @@ export function getLatestData(setData: React.Dispatch<React.SetStateAction<Marke
     .then(response => response.json())
     .then(data => {
         const MarkerData: MarkerData[] = [];
-        
+
         // The response body is
         // [Coordinates, StationID, DirectionID, Line]
         // StationID and DirectionID can be IDs or names

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { Marker, Popup } from 'react-leaflet';
+import L, { Icon } from 'leaflet';
 import { getLatestData } from '../../functions/dbUtils';
 
 interface MarkersProps {
@@ -16,6 +17,14 @@ export type MarkerData = {
 
 const Markers: React.FC<MarkersProps> = ({ formSubmitted }) => {
   const [data, setData] = useState<MarkerData[]>([]);
+
+	const MarkerIcon: Icon = L.icon({
+		iconUrl: process.env.PUBLIC_URL + '/marker.svg',
+		iconSize: [48, 48],
+		iconAnchor: [25, 50],
+		popupAnchor: [0, -16],
+
+	});
 
   useEffect(() => {
 	getLatestData(setData);
@@ -42,7 +51,7 @@ const Markers: React.FC<MarkersProps> = ({ formSubmitted }) => {
             const [latitude, longitude] = item.Coordinates;
 
             return (
-              <Marker key={`${line}-${index}`} position={[latitude, longitude]}>
+              <Marker key={`${line}-${index}`} position={[latitude, longitude]} icon={MarkerIcon}>
                 <Popup>
                   <>
                     {line} {direction ? direction + ' - ' : ''} {station}

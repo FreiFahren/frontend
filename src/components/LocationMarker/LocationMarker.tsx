@@ -5,10 +5,10 @@ import { Marker, Popup } from 'react-leaflet';
 const LocationMarker = () => {
     const [position, setPosition] = useState<[number, number] | null>(null);
 
-    const icon: Icon = L.icon({
+    const LocationIcon: Icon = L.icon({
         iconUrl: process.env.PUBLIC_URL + '/location.svg',
         iconSize: [64, 64],
-        iconAnchor: [32, 32],
+        iconAnchor: [32, 48],
         popupAnchor: [0, -16],
 
     });
@@ -38,7 +38,7 @@ const LocationMarker = () => {
     return (
         <div>
             {position && (
-                <Marker position={position} icon={icon} >
+                <Marker position={position} icon={LocationIcon} >
                     <Popup>
                         Dein Standort
                     </Popup>

@@ -23,8 +23,8 @@ const Markers: React.FC<MarkersProps> = ({ formSubmitted }) => {
 
   return (
     <div>
-      {
-	  Array.isArray(data) && data.map((item, index) => {
+		{
+		Array.isArray(data) && data.map((item, index) => {
 		const station = item.Station || '';
 		const line = item.Line;
 		const direction = item.Direction || '';

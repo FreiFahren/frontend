@@ -1,4 +1,4 @@
-import { MarkerData } from "../components/Markers/Markers";
+import { MarkerData } from '../components/Markers/Markers';
 
 export function getCoordinates(setData: React.Dispatch<React.SetStateAction<MarkerData[]>>) {
     fetch('/data?names=true')
@@ -7,7 +7,7 @@ export function getCoordinates(setData: React.Dispatch<React.SetStateAction<Mark
         setData(data);
     })
     .catch(error => console.error('Error:', error));
-    
+
 }
 
 export async function reportInspector(line: string, station: string, direction: string): Promise<ResponseType> {
@@ -29,7 +29,6 @@ export async function reportInspector(line: string, station: string, direction: 
         console.error('Error reporting inspector sighting:', error);
     });
 }
-
 
 // export async function IdToStation(id: string): Promise<string> {
 //     if (id === "") return "";

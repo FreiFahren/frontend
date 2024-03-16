@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 import { Marker, Popup } from 'react-leaflet';
-import L, { Icon } from 'leaflet';
-import { getLatestData } from '../../functions/dbUtils';
+import L from 'leaflet';
+import { getRecentTicketInspectorInfo } from '../../functions/dbUtils';
+import { createMarkerHTML } from '../../functions/mapUtils';
 
 interface MarkersProps {
   formSubmitted: boolean;
@@ -28,41 +29,46 @@ export type MarkerData = {
   }
 	line: string;
 };
-
+    
 const Markers: React.FC<MarkersProps> = ({ formSubmitted }) => {
   const [data, setData] = useState<MarkerData[]>([]);
 
-	const MarkerIcon: Icon = L.icon({
-		iconUrl: process.env.PUBLIC_URL + '/marker.svg',
-		iconSize: [48, 48],
-		iconAnchor: [25, 50],
-		popupAnchor: [0, -16],
+  
+    const MarkerIcon = L.divIcon({
+        className: 'custom-icon',
+        html: createMarkerHTML(),
+        iconSize: [20, 20]
+    });
 
-	});
+ useEffect(() => {
+    const fetchData = async () => {
+        const newData = await getRecentTicketInspectorInfo();
+        if (JSON.stringify(newData) !== JSON.stringify(data)) {
+            setData(newData);
+        }
+    };
 
-  useEffect(() => {
-    getLatestData(setData);
-      const interval = setInterval(() => {
-      getLatestData(setData);
-      }, 5000);
+    fetchData();
 
-    // When the component unmounts, clear the interval, because we don't want to keep fetching data
-      return () => {
+    const interval = setInterval(fetchData, 5000);
+
+    return () => {
         clearInterval(interval);
-      };
-
-  }, [formSubmitted]);
+    };
+}, [data]);
 
   return (
     <div>
-      {Array.isArray(data) &&
+      {
         data.map((item, index) => {
-          const station = item.station.name || '';
-          const line = item.line;
-          const direction = item.direction.name || '';
+            const station = item.station.name 
+            const line = item.line;
+            const direction = item.direction.name;
 
             const latitude = item.station.coordinates.latitude;
             const longitude =  item.station.coordinates.longitude;
+
+            console.log(item.station.name, item.line, item.direction.name, item.station.coordinates.latitude, item.station.coordinates.longitude)
 
             return (
               <Marker key={`${line}-${index}`} position={[latitude, longitude]} icon={MarkerIcon}>

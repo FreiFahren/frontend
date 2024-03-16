@@ -1,17 +1,18 @@
-import L, { Icon } from 'leaflet';
+import L from 'leaflet';
 import React, { useEffect, useState } from 'react';
 import { Marker, Popup } from 'react-leaflet';
+import { createLocationMarkerHTML } from '../../functions/mapUtils';
 
 const LocationMarker = () => {
     const [position, setPosition] = useState<[number, number] | null>(null);
 
-    const LocationIcon: Icon = L.icon({
-        iconUrl: process.env.PUBLIC_URL + '/location.svg',
-        iconSize: [64, 64],
-        iconAnchor: [32, 48],
-        popupAnchor: [0, -16],
-
-    });
+    
+    
+        const LocationIcon = L.divIcon({
+            className: 'custom-icon',
+            html: createLocationMarkerHTML(),
+            iconSize: [20, 20]
+        });
 
     useEffect(() => {
         // If the browser doesn't support geolocation, do nothing
@@ -29,7 +30,7 @@ const LocationMarker = () => {
         getPosition();
 
         // Then get it every 2 seconds
-        const intervalId = setInterval(getPosition, 2000);
+        const intervalId = setInterval(getPosition, 10000);
 
         // Clear interval on component unmount
         return () => clearInterval(intervalId);

@@ -1,13 +1,14 @@
 import { MarkerData } from '../components/Markers/Markers';
 
-export function getLatestData(setData: React.Dispatch<React.SetStateAction<MarkerData[]>>) {
-    fetch('/latest')
-    .then(response => response.json())
-    .then(data => {
-        setData(data);
-    })
-    .catch(error => console.error('Error:', error));
-
+export async function getRecentTicketInspectorInfo(): Promise<MarkerData[]> {
+    try {
+        const response = await fetch('/recent');
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error:', error);
+        return [];
+    }
 }
 
 export async function reportInspector(line: string, station: string, direction: string): Promise<ResponseType> {

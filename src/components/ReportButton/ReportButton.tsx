@@ -7,6 +7,7 @@ interface ReportButtonProps {
 }
 
 const ReportButton: React.FC<ReportButtonProps> = ({ onClick }) => {
+
     return (
         <button className='report-button' onClick={onClick}>
             <span role='img' aria-label='warning'>⚠️</span>

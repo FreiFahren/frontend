@@ -1,10 +1,14 @@
-export function getCoordinates(setData: React.Dispatch<React.SetStateAction<Array<[number, number, string]>>>) {
-    fetch('/data')
-    .then(response => response.json())
-    .then(data => {
-        setData(data);
-    })
-    .catch(error => console.error(error));
+import { MarkerData } from '../components/Markers/Markers';
+
+export async function getRecentTicketInspectorInfo(): Promise<MarkerData[]> {
+    try {
+        const response = await fetch('/recent');
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error:', error);
+        return [];
+    }
 }
 
 export async function reportInspector(line: string, station: string, direction: string): Promise<ResponseType> {

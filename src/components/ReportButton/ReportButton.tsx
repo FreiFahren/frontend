@@ -6,10 +6,7 @@ interface ReportButtonProps {
     onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
-
-
 const ReportButton: React.FC<ReportButtonProps> = ({ onClick }) => {
-
 
     return (
         <button className='report-button' onClick={onClick}>

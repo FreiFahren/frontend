@@ -6,8 +6,6 @@ import { createLocationMarkerHTML } from '../../functions/mapUtils';
 const LocationMarker = () => {
     const [position, setPosition] = useState<[number, number] | null>(null);
 
-    
-    
         const LocationIcon = L.divIcon({
             className: 'custom-icon',
             html: createLocationMarkerHTML(),

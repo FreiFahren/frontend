@@ -29,11 +29,10 @@ export type MarkerData = {
   }
 	line: string;
 };
-    
+
 const Markers: React.FC<MarkersProps> = ({ formSubmitted }) => {
   const [data, setData] = useState<MarkerData[]>([]);
 
-  
     const MarkerIcon = L.divIcon({
         className: 'custom-icon',
         html: createMarkerHTML(),
@@ -55,13 +54,13 @@ const Markers: React.FC<MarkersProps> = ({ formSubmitted }) => {
     return () => {
         clearInterval(interval);
     };
-}, [data]);
+}, [data, formSubmitted]);
 
   return (
     <div>
       {
         data.map((item, index) => {
-            const station = item.station.name 
+            const station = item.station.name
             const line = item.line;
             const direction = item.direction.name;
 

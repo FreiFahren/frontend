@@ -1,6 +1,8 @@
+import './UtilModal.css';
+
 const UtilModal = () => {
     return (
-        <div className='util'>
+        <div className='util-modal'>
 
         </div>
     );

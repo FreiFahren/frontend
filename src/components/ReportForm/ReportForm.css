@@ -8,3 +8,11 @@
     border: 2px solid var(--gray-outlines);
     border-radius: var(--standard-border-radius);
 }
+
+.custom-placeholder {
+    position: absolute;
+    font-size: 0.85em;
+    left: 6vw;
+    bottom: -8px;
+    color: var(---place-holder-color);
+}

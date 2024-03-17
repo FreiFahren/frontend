@@ -28,13 +28,18 @@ const ReportForm: React.FC<ReportFormProps> = ({ closeModal, onFormSubmit }) => 
         <div>
           <input type='text' id='line' name='line' placeholder='Linie' />
         </div>
-        <div>
+        <div style={{position: 'relative'}}>
           <input
             type='text'
             id='station'
             name='station'
-            placeholder='Station'
+            onFocus={() => (document.getElementById('custom-placeholder') as HTMLElement).style.display = 'none'}
+            onBlur={(e) => { if (e.target.value === '') (document.getElementById('custom-placeholder') as HTMLElement).style.display = 'inline'}}
           />
+          <div id='custom-placeholder' className='custom-placeholder'>
+            <span>Station</span>
+            <span style={{color: 'red'}}>*</span>
+          </div>
         </div>
         <div>
           <input

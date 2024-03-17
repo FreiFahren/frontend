@@ -51,6 +51,12 @@ button:hover {
   filter: brightness(1.1);
 }
 
+button a {
+  color: var(--white);
+  font-size: 1rem;
+  text-decoration: none;
+}
+
 .container {
   position: fixed;
   top: 50%;
@@ -63,4 +69,10 @@ button:hover {
   border-radius: var(--standard-border-radius);
   box-shadow: var(--button-box-shadow);
   z-index: var(--modal-z-index);
+}
+
+@media (max-width: 400px) {
+  .container {
+    width: 85%;
+  }
 }

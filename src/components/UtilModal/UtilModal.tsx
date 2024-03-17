@@ -4,7 +4,7 @@ import './UtilModal.css';
 
 const UtilModal = () => {
     return (
-        <div className='util-modal'>
+        <div className='util-modal container'>
             <h1>Info</h1>
             <button>
                 <a href='https://docs.google.com/forms/d/e/1FAIpQLSdWK_9ziq8cGEWFwzc_qpTaOI1dfxTz8vHWvuDphdz-UvX1TQ/viewform?usp=sf_link' target='_blank' rel='noopener noreferrer'>

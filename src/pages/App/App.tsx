@@ -17,9 +17,7 @@ function App() {
     setFormSubmitted(prevState => !prevState);
   }
 
-  
   const [isUtilFormOpen, setIsUtilFormOpen] = useState(false);
-
 
   const [isFirstOpen, setIsFirstOpen] = useState(true);
 
@@ -35,7 +33,7 @@ function App() {
 
   return (
     <div className='App'>
-      {isFirstOpen && 
+      {isFirstOpen &&
       <>
         <LegalDisclaimer closeModal={() => setIsFirstOpen(false)} />
         <Backdrop onClick={highlightLegalDisclaimer} />

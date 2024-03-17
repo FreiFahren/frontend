@@ -18,9 +18,13 @@
     border: none;
     border-radius: var(--standard-border-radius);
     background-color: var(--action-color);
+    cursor: pointer;
+}
+
+.util-modal button a {
     color: var(--white);
     font-size: 1rem;
-    cursor: pointer;
+    text-decoration: none;
 }
 
 .util-modal ul {

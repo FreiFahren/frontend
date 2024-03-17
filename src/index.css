@@ -3,10 +3,16 @@
   --gray-outlines: #c4c4c4;
   --white: #fff;
   --black: #000;
+  --red: #ff0000;
 
   --standard-border-radius: 8px;
 
   --button-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+
+  --map-z-index: -1;
+  --button-z-index: 0;
+  --backdrop-z-index: 1;
+  --modal-z-index: 2;
 }
 
 body {
@@ -23,13 +29,38 @@ code {
     monospace;
 }
 
-
 h1 {
   font-size: 1.5em;
   font-weight: 500;
   margin: 0.67em 0;
 }
 
+button {
+  width: 80%;
+  height: 2.5em;
+  background-color: var(--action-color);
+  border: none;
+  border-radius: var(--standard-border-radius);
+  color: var(--white);
+  font-size: 1em;
+  font-weight: 600;
+  text-align: center;
+}
+
 button:hover {
   filter: brightness(1.1);
+}
+
+.container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  max-width: 600px;
+  background-color: var(--white);
+  padding: 20px;
+  border-radius: var(--standard-border-radius);
+  box-shadow: var(--button-box-shadow);
+  z-index: 2;
 }

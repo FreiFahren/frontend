@@ -4,10 +4,36 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 60%;
-    max-width: 600px;
+    max-width: 225px;
     background-color: var(--white);
     padding: 20px;
     border-radius: var(--standard-border-radius);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     z-index: 2;
+}
+
+.util-modal button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--standard-border-radius);
+    background-color: var(--action-color);
+    color: var(--white);
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.util-modal ul {
+    margin-left: 2.5vw;
+    list-style: none;
+    padding: 0;
+    text-align: left;
+}
+
+.util-modal ul li {
+    margin-bottom: 5px;
+}
+
+.util-modal ul li a {
+    color: var(--black);
 }

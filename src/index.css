@@ -2,6 +2,7 @@
   --action-color: #3070F0;
   --gray-outlines: #c4c4c4;
   --white: #fff;
+  --black: #000;
 
   --standard-border-radius: 8px;
 
@@ -27,4 +28,8 @@ h1 {
   font-size: 1.5em;
   font-weight: 500;
   margin: 0.67em 0;
+}
+
+button:hover {
+  filter: brightness(1.1);
 }

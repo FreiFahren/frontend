@@ -9,6 +9,7 @@
     padding: 20px;
     border-radius: var(--standard-border-radius);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 2;
 }
 
 .report-form-container div {
@@ -20,14 +21,4 @@
     padding: 10px;
     border: 2px solid var(--gray-outlines);
     border-radius: var(--standard-border-radius);
-}
-
-.report-form-container button {
-    width: 80%;
-    height: 2.5em;
-    background-color: var(--action-color);
-    border: none;
-    border-radius: var(--standard-border-radius);
-    color: var(--white);
-    font-size: 1em;
 }

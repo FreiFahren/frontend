@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import Map from './components/Map/Map';
 import ReportButton from './components/ReportButton/ReportButton';
@@ -15,7 +15,9 @@ function App() {
     setFormSubmitted(prevState => !prevState);
   }
 
+
   const [isFirstOpen, setIsFirstOpen] = useState(true);
+
   const highlightLegalDisclaimer = () => {
     const legalDisclaimer = document.querySelector('.legal-disclaimer');
     if (legalDisclaimer) {

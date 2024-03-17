@@ -11,3 +11,12 @@
     box-shadow: var(--button-box-shadow);
     z-index: 2;
 }
+
+.legal-disclaimer p {
+    text-align: left;
+}
+
+.legal-disclaimer li {
+    margin: 10px 0;
+    text-align: left;
+}

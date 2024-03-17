@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import Map from './components/Map/Map';
 import ReportButton from './components/ReportButton/ReportButton';
 import ReportForm from './components/ReportForm/ReportForm';
 import UtilButton from './components/UtilButton/UtilButton';
+import UtilModal from './components/UtilModal/UtilModal';
 import Backdrop from './components/Backdrop/Backdrop';
 import './App.css';
 
@@ -25,14 +26,15 @@ function App() {
       <UtilButton onClick={() => setIsUtilFormOpen(!isUtilFormOpen)}/>
       {isUtilFormOpen && (
         <>
+          <UtilModal />
           <Backdrop onClick={() => setIsUtilFormOpen(false)} />
         </>
       )}
       <ReportButton onClick={() => setIsReportFormOpen(!isReportFormOpen)} />
       {isReportFormOpen && (
         <>
-          <Backdrop onClick={() => setIsReportFormOpen(false)} />
           <ReportForm closeModal={() => setIsReportFormOpen(false)} onFormSubmit={handleFormSubmit} />
+          <Backdrop onClick={() => setIsReportFormOpen(false)} />
         </>
       )}
     </div>

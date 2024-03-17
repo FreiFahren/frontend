@@ -1,7 +1,8 @@
 import { MapContainer, TileLayer } from 'react-leaflet';
-import { LatLngTuple } from 'leaflet';
+import { LatLngTuple, latLngBounds } from 'leaflet';
 
 import Markers from '../Markers/Markers';
+import LocationMarker from '../LocationMarker/LocationMarker';
 import './Map.css'
 
 interface MapProps {
@@ -11,13 +12,16 @@ interface MapProps {
 const Map: React.FC<MapProps> = ({ formSubmitted }) => {
     // Berlin as Standardview
     const position: LatLngTuple = [52.5162,13.3880];
-    
+
+    const maxBounds = latLngBounds([52.96125019866001, 12.509131386425151], [52.014679000584486, 14.382300343810543]);
+
   return (
-        <MapContainer id='map' center={position} zoom={13} scrollWheelZoom={true}>
+        <MapContainer id='map' center={position} zoom={13} scrollWheelZoom={true} maxBounds={maxBounds}>
         <TileLayer
             attribution= '<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a>'
             url={`https://tile.jawg.io/jawg-streets/{z}/{x}/{y}{r}.png?access-token=${process.env.REACT_APP_JAWG_ACCESS_TOKEN}`}
         />
+        <LocationMarker />
         <Markers formSubmitted={formSubmitted}/>
 
         </MapContainer>

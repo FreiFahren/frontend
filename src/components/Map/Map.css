@@ -13,5 +13,12 @@
 @media (min-width: 999px) {
   .leaflet-control-container {
     display: block;
+    position: absolute;
+    bottom: 100px;
+    left: 10px;
+  }
+
+  .leaflet-control-attribution {
+    display: none;
   }
 }

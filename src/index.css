@@ -3,6 +3,8 @@
   --gray-outlines: #c4c4c4;
   --white: #fff;
 
+  --button-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+
   --standard-border-radius: 8px;
 }
 

@@ -57,5 +57,5 @@ button {
   padding: 20px;
   border-radius: var(--standard-border-radius);
   box-shadow: var(--button-box-shadow);
-  z-index: 2;
+  z-index: var(--modal-z-index);
 }

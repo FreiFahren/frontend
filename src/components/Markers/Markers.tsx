@@ -1,44 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
-import { Marker, Popup } from 'react-leaflet';
-import L from 'leaflet';
 import { getRecentTicketInspectorInfo } from '../../functions/dbUtils';
-import { createMarkerHTML } from '../../functions/mapUtils';
-import { MarkerComponent } from './MarkerComponent';
-
-interface MarkersProps {
-  formSubmitted: boolean;
-}
-
-export type MarkerData = {
-	timestamp: string;
-	station: {
-    id: string;
-    name: string;
-    coordinates: {
-      latitude: number;
-      longitude: number;
-    }
-  }
-	direction: {
-    id: string;
-    name: string;
-    coordinates: {
-      latitude: number;
-      longitude: number;
-    }
-  }
-	line: string;
-};
+import { MarkerComponent } from './OpacityMarker';
+import { MarkersProps, MarkerData } from '../../functions/markerProps';
 
 const Markers: React.FC<MarkersProps> = ({ formSubmitted }) => {
   const [data, setData] = useState<MarkerData[]>([]);
-
-    const MarkerIcon = L.divIcon({
-        className: 'custom-icon',
-        html: createMarkerHTML(),
-        iconSize: [20, 20]
-    });
 
  useEffect(() => {
     const fetchData = async () => {
@@ -61,9 +28,9 @@ const Markers: React.FC<MarkersProps> = ({ formSubmitted }) => {
     <div>
       {
         data.map((item, index) => {
-        
+
             return (
-              <MarkerComponent markerData={item} index={index} />
+              <MarkerComponent markerData={item} index={index} key={index}/>
             );
 
         })}

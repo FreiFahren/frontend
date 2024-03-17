@@ -1,4 +1,4 @@
-import { MarkerData } from '../components/Markers/Markers';
+import { MarkerData } from './markerProps';
 
 export async function getRecentTicketInspectorInfo(): Promise<MarkerData[]> {
     try {

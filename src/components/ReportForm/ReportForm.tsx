@@ -22,7 +22,7 @@ const ReportForm: React.FC<ReportFormProps> = ({ closeModal, onFormSubmit }) => 
 };
 
   return (
-    <div className='report-form-container'>
+    <div className='report-form container'>
       <h1>Neue Meldung</h1>
       <form onSubmit={handleSubmit}>
         <div>

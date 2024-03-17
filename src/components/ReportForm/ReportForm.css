@@ -8,7 +8,7 @@
     background-color: var(--white);
     padding: 20px;
     border-radius: var(--standard-border-radius);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--button-box-shadow);
     z-index: 2;
 }
 

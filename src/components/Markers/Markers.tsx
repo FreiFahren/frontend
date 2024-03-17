@@ -4,6 +4,7 @@ import { Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import { getRecentTicketInspectorInfo } from '../../functions/dbUtils';
 import { createMarkerHTML } from '../../functions/mapUtils';
+import { MarkerComponent } from './MarkerComponent';
 
 interface MarkersProps {
   formSubmitted: boolean;
@@ -60,23 +61,9 @@ const Markers: React.FC<MarkersProps> = ({ formSubmitted }) => {
     <div>
       {
         data.map((item, index) => {
-            const station = item.station.name
-            const line = item.line;
-            const direction = item.direction.name;
-
-            const latitude = item.station.coordinates.latitude;
-            const longitude =  item.station.coordinates.longitude;
-
-            console.log(item.station.name, item.line, item.direction.name, item.station.coordinates.latitude, item.station.coordinates.longitude)
-
+        
             return (
-              <Marker key={`${line}-${index}`} position={[latitude, longitude]} icon={MarkerIcon}>
-                <Popup>
-                  <>
-                    {line} {direction ? direction + ' - ' : ''} {station}
-                  </>
-                </Popup>
-              </Marker>
+              <MarkerComponent markerData={item} index={index} />
             );
 
         })}

@@ -6,7 +6,7 @@ interface LegalDisclaimerProps {
 
 const LegalDisclaimer: React.FC<LegalDisclaimerProps> = ({ closeModal }) => {
   return (
-    <div className='legal-disclaimer container'>
+    <div className='legal-disclaimer container' id='legal-disclaimer'>
       <h3>Bitte bestätigen Sie vor dem Fortfahren</h3>
       <p>
       Um die Integrität unserer Community und den Geist fairer Nutzung zu wahren, bitten wir Sie, zwei wichtige Punkte zu bestätigen:

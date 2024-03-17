@@ -16,3 +16,7 @@
     bottom: -8px;
     color: var(---place-holder-color);
 }
+
+.red-highlight {
+   color: var(--red);
+}

@@ -2,6 +2,7 @@ import React from 'react';
 
 import './ReportForm.css';
 import { reportInspector } from '../../functions/dbUtils';
+import { highlightElement } from '../../App';
 
 interface ReportFormProps {
   closeModal: () => void;
@@ -15,11 +16,16 @@ const ReportForm: React.FC<ReportFormProps> = ({ closeModal, onFormSubmit }) => 
     const station = (document.getElementById('station') as HTMLInputElement).value;
     const direction = (document.getElementById('direction') as HTMLInputElement).value;
 
+    if (station.trim() === '') {
+      highlightElement('station'); // Highlight the 'station' input field
+      return; // Stop the form submission process
+    }
+
     await reportInspector(line, station, direction);
 
     closeModal();
     onFormSubmit(); // Notify App component about the submission
-};
+  };
 
   return (
     <div className='report-form container'>
@@ -38,7 +44,7 @@ const ReportForm: React.FC<ReportFormProps> = ({ closeModal, onFormSubmit }) => 
           />
           <div id='custom-placeholder' className='custom-placeholder'>
             <span>Station</span>
-            <span style={{color: 'red'}}>*</span>
+            <span className='red-highlight'>*</span>
           </div>
         </div>
         <div>

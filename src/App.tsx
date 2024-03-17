@@ -7,6 +7,16 @@ import LegalDisclaimer from './components/LegalDisclaimer/LegalDisclaimer';
 import Backdrop from './components/Backdrop/Backdrop';
 import './App.css';
 
+export function highlightElement(id: string) {
+  const element = document.getElementById(id);
+  if (element) {
+    element.classList.add('highlight');
+    setTimeout(() => {
+      element.classList.remove('highlight');
+    }, 3000);
+  }
+}
+
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -18,22 +28,12 @@ function App() {
 
   const [isFirstOpen, setIsFirstOpen] = useState(true);
 
-  const highlightLegalDisclaimer = () => {
-    const legalDisclaimer = document.querySelector('.legal-disclaimer');
-    if (legalDisclaimer) {
-      legalDisclaimer.classList.add('highlight');
-      setTimeout(() => {
-        legalDisclaimer.classList.remove('highlight');
-      }, 3000);
-    }
-  }
-
   return (
     <div className='App'>
       {isFirstOpen && 
       <>
         <LegalDisclaimer closeModal={() => setIsFirstOpen(false)} />
-        <Backdrop onClick={highlightLegalDisclaimer} />
+        <Backdrop onClick={() => highlightElement('legal-disclaimer')} />
       </>
       }
       <div id='map'>

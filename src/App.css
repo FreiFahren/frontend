@@ -3,5 +3,5 @@
 }
 
 .highlight {
-  border: 3px solid var(--red);
+  border: 3px solid var(--red) !important;
 }

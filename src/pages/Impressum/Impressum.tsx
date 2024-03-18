@@ -20,20 +20,20 @@ const Impressum = () => {
                     </ul>
                 <h2>Haftungsausschluss:</h2>
                     <p>
-                        Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. 
-                        Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. 
-                        Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. 
+                        Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt.
+                        Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen.
+                        Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich.
                         Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
                     </p>
                 <h2>Urheberrecht:</h2>
                     <p>
-                        Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. 
-                        Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. 
+                        Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht.
+                        Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.
                         Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet.
                     </p>
                 <h2>Datenschutz:</h2>
                     <p>
-                        Die Nutzung unserer Webseite ist in der Regel ohne Angabe personenbezogener Daten möglich. 
+                        Die Nutzung unserer Webseite ist in der Regel ohne Angabe personenbezogener Daten möglich.
                         Für weitere Informationen sehen sie unsere Datenschutzerklärung.
                     </p>
 

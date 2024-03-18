@@ -16,7 +16,6 @@ const ReportForm: React.FC<ReportFormProps> = ({ closeModal, onFormSubmit }) => 
     const station = (document.getElementById('station') as HTMLInputElement).value;
     const direction = (document.getElementById('direction') as HTMLInputElement).value;
 
-
     let hasError = false;
 
     if (station.trim() === '') {
@@ -30,7 +29,6 @@ const ReportForm: React.FC<ReportFormProps> = ({ closeModal, onFormSubmit }) => 
     }
 
     if (hasError) return; // If there is an error, do not proceed with the submission
-
 
     await reportInspector(line, station, direction);
 

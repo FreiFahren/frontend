@@ -6,13 +6,13 @@ const Datenschutz = () => {
                 <p>Letze aktualisierung: 18.03.2024</p>
                 <h2>1. Präambel</h2>
                     <p>
-                    Diese Datenschutzerklärung klärt Sie über die Art, den Umfang und Zwecke der Erhebung und Verwendung personenbezogener 
-                    Daten innerhalb der mobilen Anwendung "Freifahren" (im Folgenden „App“) auf. 
+                    Diese Datenschutzerklärung klärt Sie über die Art, den Umfang und Zwecke der Erhebung und Verwendung personenbezogener
+                    Daten innerhalb der mobilen Anwendung "Freifahren" (im Folgenden „App“) auf.
                     Die App ermöglicht es Nutzern, Standorte von Ticketkontrolleuren zu melden und diese Informationen anderen Nutzern zur Verfügung zu stellen.
                     </p>
                 <h2>2. Verantwortliche Stelle</h2>
                     <p>
-                    Verantwortlich für die Datenverarbeitung im Rahmen dieser App ist die Freifahren GbR, vertreten durch die Gesellschafter, 
+                    Verantwortlich für die Datenverarbeitung im Rahmen dieser App ist die Freifahren GbR, vertreten durch die Gesellschafter,
                     erreichbar unter der E-Mail-Adresse: johan@trieloff.net.
                     </p>
                 <h2>3.  Erhebung und Nutzung von Daten</h2>
@@ -34,12 +34,12 @@ const Datenschutz = () => {
                     </p>
                 <h2>5. Speicherung und Zugriff</h2>
                     <p>
-                        Die erhobenen Daten werden auf Servern der Firma Digital Ocean in Frankfurt am Main gespeichert und sind unbestimmt lang gespeichert. 
+                        Die erhobenen Daten werden auf Servern der Firma Digital Ocean in Frankfurt am Main gespeichert und sind unbestimmt lang gespeichert.
                         Der Zugriff auf die Daten ist streng begrenzt auf die Gesellschafter der Freifahren GbR.
                     </p>
                 <h2>6. Rechte der Nutzer</h2>
                     <p>
-                    Nutzer haben das Recht, Auskunft über die sie betreffenden Daten zu erhalten, sowie die Berichtigung oder Löschung ihrer Daten zu verlangen. 
+                    Nutzer haben das Recht, Auskunft über die sie betreffenden Daten zu erhalten, sowie die Berichtigung oder Löschung ihrer Daten zu verlangen.
                     Anfragen hierzu können über das Kontaktformular der App oder direkt per E-Mail an johan@trieloff.net gestellt werden.
                     </p>
                 <h2>7. Zustimmung zur Datenschutzpolicy</h2>
@@ -56,8 +56,8 @@ const Datenschutz = () => {
                     </p>
                 <h2>10. Salvatorische Klausel</h2>
                     <p>
-                    Sollten einzelne Bestimmungen dieser Datenschutzerklärung ganz oder teilweise nicht rechtswirksam oder nicht durchführbar sein oder ihre Rechtswirksamkeit oder Durchführbarkeit später verlieren, soll hierdurch die Gültigkeit der übrigen Bestimmungen der Datenschutzerklärung nicht berührt werden. 
-                    Anstelle der unwirksamen oder undurchführbaren Bestimmungen soll eine Regelung treten, die dem Zweck der unwirksamen oder undurchführbaren Bestimmung in rechtswirksamer und durchführbarer Weise wirtschaftlich am nächsten kommt. 
+                    Sollten einzelne Bestimmungen dieser Datenschutzerklärung ganz oder teilweise nicht rechtswirksam oder nicht durchführbar sein oder ihre Rechtswirksamkeit oder Durchführbarkeit später verlieren, soll hierdurch die Gültigkeit der übrigen Bestimmungen der Datenschutzerklärung nicht berührt werden.
+                    Anstelle der unwirksamen oder undurchführbaren Bestimmungen soll eine Regelung treten, die dem Zweck der unwirksamen oder undurchführbaren Bestimmung in rechtswirksamer und durchführbarer Weise wirtschaftlich am nächsten kommt.
                     Die vorstehenden Bestimmungen gelten entsprechend für den Fall, dass sich die Datenschutzerklärung als lückenhaft erweist.
                     </p>
         </>

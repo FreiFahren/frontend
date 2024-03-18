@@ -3,7 +3,5 @@
     height: 100%;
     position: fixed;
     z-index: var(--backdrop-z-index);
-    left: 0;
-    top: 0;
     background-color: rgba(0, 0, 0, 0.5);
 }

@@ -1,6 +1,6 @@
 import './LegalDisclaimer.css';
 
-interface LegalDisclaimerProps {    
+interface LegalDisclaimerProps {
     closeModal: () => void;
 }
 

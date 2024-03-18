@@ -1,5 +1,3 @@
-import './Datenschutz.css'
-
 const Datenschutz = () => {
     return (
         <>

@@ -34,7 +34,7 @@ const ReportForm: React.FC<ReportFormProps> = ({ closeModal, onFormSubmit }) => 
         <div>
           <input type='text' id='line' name='line' placeholder='Linie' />
         </div>
-        <div style={{position: 'relative'}}>
+        <div>
           <input
             type='text'
             id='station'
@@ -54,6 +54,12 @@ const ReportForm: React.FC<ReportFormProps> = ({ closeModal, onFormSubmit }) => 
             name='direction'
             placeholder='Richtung'
           />
+        </div>
+        <div>
+          <label htmlFor='privacy-checkbox'>
+            <input type='checkbox' id='privacy-checkbox' name='privacy-checkbox' required />
+            Ich stimme der Datenschutzerklärung zu.
+          </label>
         </div>
         <div>
           <button type='submit'>Melden</button>

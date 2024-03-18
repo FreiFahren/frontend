@@ -20,3 +20,14 @@
 .red-highlight {
    color: var(--red);
 }
+
+.report-form form > div:nth-child(2) {
+    position: relative;
+}
+
+.report-form label {
+    font-size: 0.65em;
+    display: flex;
+    align-items: center;
+    margin-right: 100px;
+}

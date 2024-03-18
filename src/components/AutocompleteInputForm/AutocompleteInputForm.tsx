@@ -8,20 +8,30 @@ export interface Option {
   label: string;
 }
 
-const colourStyles: StylesConfig = {
-  control: (styles) => ({ 
-    ...styles, 
-    marginBottom: '5%',
-    textAlign: 'center',
-    justifyContent: 'center',
-    justifyItems: 'center',}),
+export function setStyles (hasError: boolean | undefined) {
+   const colourStyles: StylesConfig = {
+    control: (styles) => ({ 
+      ...styles, 
+      marginTop: '2%',
+      marginBottom: '2%',
+      justifyContent: 'center',
+      justifyItems: 'center',
+      padding: '10px',
+      borderColor: hasError ? 'red' : '#ced4da',
+      }),
   
+  }
+
+  return colourStyles;
 }
 
+
     
-export default function AutocompleteInputForm (props: { options: Option[] | undefined; placeholder: string; onChange: (value: any) => void; className: string; value?: Option;}) {
+export default function AutocompleteInputForm (props: { options: Option[] | undefined; placeholder: string; onChange: (value: any) => void; className: string; value?: Option; hasError?: boolean;}) {
   const [isSearchable, setIsSearchable] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+
+  const colourStyles = setStyles(props.hasError);
 
   return (
     <>

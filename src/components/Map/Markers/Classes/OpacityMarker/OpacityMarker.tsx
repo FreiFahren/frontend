@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Marker, Popup } from 'react-leaflet';
 import { MarkerData } from '../../MarkerContainer';
-import L from 'leaflet';
+import { OpacityMarkerIcon } from '../../../../../functions/mapUtils';
+
+let icon = OpacityMarkerIcon(1);
 
 export const OpacityMarker = ({ markerData, index }: { markerData: MarkerData; index: number; }) => {
     const [opacity, setOpacity] = useState(1);
@@ -15,20 +17,9 @@ export const OpacityMarker = ({ markerData, index }: { markerData: MarkerData; i
         const elapsedTime = currentTime - timestampSeconds;
         const opacityValue = Math.max(0, 1 - (elapsedTime / (15 * 60 * 1000)));
         setOpacity(opacityValue);
+        icon = OpacityMarkerIcon(opacityValue);
         return opacityValue;
     };
-
-    const OpacityMarkerIcon = () => {
-        const icon = L.divIcon({
-            className: 'custom-icon',
-            html: `<div style="background-color:rgba(255,0,0,${opacity});width:20px;height:20px;border-radius:50%;"></div>`,
-            iconSize: [20, 20],
-        });
-
-        return icon;
-    };
-
-    const icon = OpacityMarkerIcon();
 
     useEffect(() => {
         const interval = setInterval(() => {

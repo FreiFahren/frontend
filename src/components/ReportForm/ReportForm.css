@@ -38,3 +38,8 @@
 .report-form label input {
     width: fit-content;
 }
+
+.report-form label a {
+    color: var(--black);
+    margin: 0 2px;
+}

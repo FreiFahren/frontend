@@ -1,5 +1,10 @@
 import { MarkerData } from './markerProps';
 
+export type StationsAndLinesList = {
+    lines: string[];
+    stations: string[];
+  };
+
 export async function getRecentTicketInspectorInfo(): Promise<MarkerData[]> {
     try {
         const response = await fetch('/recent');
@@ -8,6 +13,17 @@ export async function getRecentTicketInspectorInfo(): Promise<MarkerData[]> {
     } catch (error) {
         console.error('Error:', error);
         return [];
+    }
+}
+
+export async function getAllStationsAndLines(): Promise<StationsAndLinesList> {
+    try {
+        const response = await fetch('/list');
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error:', error);
+        return { lines: [], stations: [] };
     }
 }
 

@@ -16,6 +16,7 @@ export function setStyles (hasError: boolean | undefined) {
       justifyContent: 'center',
       justifyItems: 'center',
       padding: '10px',
+      fontSize: '1.4rem',
       borderColor: hasError ? 'red' : '#ced4da',
       }),
 

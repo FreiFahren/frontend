@@ -20,22 +20,32 @@
 
 .report-form form > div:nth-child(2) {
     position: relative; 
+
 }
 
 .report-form label {
     border-radius: var(--standard-border-radius);
-    font-size: 0.65em;
+    font-size: 0.9em;
     display: flex;
     align-items: center;
     width: fit-content;
     position: relative;
     
     margin: auto;
-    margin-bottom: 1%;
+    margin-bottom: 1rem;
+
 }
 
 .report-form label input {
     width: fit-content;
+    
+}
+
+.report-form input[type="checkbox"] {
+    height: 1.5rem;
+    width: 1.5rem;
+    margin: auto;
+    margin-right: 0.65rem;
 }
 
 .report-form label a {

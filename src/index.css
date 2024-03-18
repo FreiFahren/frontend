@@ -1,6 +1,7 @@
 :root {
   --action-color: #3070F0;
   --gray-outlines: #c4c4c4;
+  ---place-holder-color: #646363;
   --white: #fff;
   --black: #000;
   --red: #ff0000;
@@ -22,6 +23,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body:not(:has(.App)) {
+  padding: 25px;
 }
 
 code {
@@ -75,4 +80,8 @@ button a {
   .container {
     width: 85%;
   }
+}
+
+.highlight {
+  border: 3px solid var(--red) !important;
 }

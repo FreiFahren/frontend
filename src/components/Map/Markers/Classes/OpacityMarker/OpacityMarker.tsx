@@ -11,7 +11,7 @@ export const OpacityMarker = ({ markerData, index }: { markerData: MarkerData; i
     const currentTime = new Date().getTime();
 
     const calculateOpacity = () => {
-        
+
         const elapsedTime = currentTime - timestampSeconds;
         const opacityValue = Math.max(0, 1 - (elapsedTime / (15 * 60 * 1000)));
         setOpacity(opacityValue);
@@ -33,7 +33,7 @@ export const OpacityMarker = ({ markerData, index }: { markerData: MarkerData; i
     useEffect(() => {
         const interval = setInterval(() => {
             calculateOpacity();
-            
+
             if (opacity === 0) {
                 clearInterval(interval);
             }

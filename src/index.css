@@ -1,6 +1,7 @@
 :root {
   --action-color: #3070F0;
   --gray-outlines: #c4c4c4;
+  ---place-holder-color: #646363;
   --white: #fff;
   --black: #000;
   --red: #ff0000;

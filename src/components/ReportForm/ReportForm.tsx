@@ -2,7 +2,7 @@ import React from 'react';
 
 import './ReportForm.css';
 import { reportInspector } from '../../functions/dbUtils';
-import { highlightElement } from '../../pages/App/App';
+import { highlightElement } from '../../functions/uiUtils';
 
 interface ReportFormProps {
   closeModal: () => void;

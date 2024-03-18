@@ -1,7 +1,7 @@
 import L from 'leaflet';
 import React, { useEffect, useState } from 'react';
 import { Marker, Popup } from 'react-leaflet';
-import { createLocationMarkerHTML } from '../../functions/mapUtils';
+import { createLocationMarkerHTML } from '../../../../../functions/mapUtils';
 
 const LocationMarker = () => {
     const [position, setPosition] = useState<[number, number] | null>(null);

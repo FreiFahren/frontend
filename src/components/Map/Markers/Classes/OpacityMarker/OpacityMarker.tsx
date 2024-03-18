@@ -1,17 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Marker, Popup } from 'react-leaflet';
-import { MarkerData } from '../../functions/markerProps';
+import { MarkerData } from '../../MarkerContainer';
 import L from 'leaflet';
 
-export const MarkerComponent = ({ markerData, index }: { markerData: MarkerData; index: number; }) => {
+export const OpacityMarker = ({ markerData, index }: { markerData: MarkerData; index: number; }) => {
     const [opacity, setOpacity] = useState(1);
     const { timestamp, station, line, direction } = markerData;
 
-    const timestampMarker = new Date(timestamp.replace(/T|Z/g, ' ')).getTime();
+    const timestampSeconds = new Date(timestamp.replace(/T|Z/g, ' ')).getTime();
     const currentTime = new Date().getTime();
 
     const calculateOpacity = () => {
-        const elapsedTime = currentTime - timestampMarker;
+
+        const elapsedTime = currentTime - timestampSeconds;
         const opacityValue = Math.max(0, 1 - (elapsedTime / (15 * 60 * 1000)));
         setOpacity(opacityValue);
         return opacityValue;

@@ -1,4 +1,4 @@
-import { MarkerData } from './markerProps';
+import { MarkerData } from '../components/Map/Markers/MarkerContainer';
 
 export type StationsAndLinesList = {
     lines: string[];

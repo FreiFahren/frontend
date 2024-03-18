@@ -1,3 +1,4 @@
+import { Option } from '../components/AutocompleteInputForm/AutocompleteInputForm';
 import { MarkerData } from '../components/Map/Markers/MarkerContainer';
 
 export type StationsAndLinesList = {
@@ -27,22 +28,31 @@ export async function getAllStationsAndLines(): Promise<StationsAndLinesList> {
     }
 }
 
-export async function reportInspector(line: string, station: string, direction: string): Promise<ResponseType> {
-    const requestBody = {
-        line,
-        station,
-        direction,
-    };
-
-    return fetch('/newInspector', {
+export async function reportInspector(line: Option, station: Option, direction: Option) {
+    // TODO: we should send ID instead of the name!!!!!! (backend issue)
+    const requestBody = JSON.stringify({
+        line: line.value,
+        station: station.label,
+        direction: direction.label,
+    });
+    console.log(requestBody)
+    fetch('/newInspector', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify(requestBody), // Convert the JavaScript object to a JSON string
-    })
-    .then(response => response.json()) // Parse the JSON response body
-    .catch(error => {
-        console.error('Error reporting inspector sighting:', error);
-    });
+        body: requestBody
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log(data)
+        console.log('Success!');
+        })
+      .catch((error) => console.error('Error:', error));
 }
+

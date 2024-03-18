@@ -1,6 +1,6 @@
 export function highlightElement(id: string) {
     const element = document.getElementById(id);
-    
+
     if (element) {
       element.classList.add('highlight');
       setTimeout(() => {

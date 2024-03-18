@@ -81,3 +81,7 @@ button a {
     width: 85%;
   }
 }
+
+.highlight {
+  border: 3px solid var(--red) !important;
+}

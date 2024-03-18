@@ -26,8 +26,15 @@
 }
 
 .report-form label {
+    border-radius: var(--standard-border-radius);
     font-size: 0.65em;
     display: flex;
     align-items: center;
-    margin-right: 100px;
+    width: fit-content;
+    position: relative;
+    left: 5vw;
+}
+
+.report-form label input {
+    width: fit-content;
 }

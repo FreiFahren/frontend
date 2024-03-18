@@ -1,8 +1,8 @@
 import { MapContainer, TileLayer } from 'react-leaflet';
 import { LatLngTuple, latLngBounds } from 'leaflet';
 
-import Markers from '../Markers/Markers';
-import LocationMarker from '../LocationMarker/LocationMarker';
+import MarkerContainer from './Markers/MarkerContainer';
+import LocationMarker from './Markers/Classes/LocationMarker/LocationMarker';
 import './Map.css'
 
 interface MapProps {
@@ -22,7 +22,8 @@ const Map: React.FC<MapProps> = ({ formSubmitted }) => {
             url={`https://tile.jawg.io/jawg-streets/{z}/{x}/{y}{r}.png?access-token=${process.env.REACT_APP_JAWG_ACCESS_TOKEN}`}
         />
         <LocationMarker />
-        <Markers formSubmitted={formSubmitted}/>
+
+        <MarkerContainer formSubmitted={formSubmitted}/>
 
         </MapContainer>
   );

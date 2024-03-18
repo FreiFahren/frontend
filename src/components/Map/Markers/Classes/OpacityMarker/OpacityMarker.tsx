@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Marker, Popup } from 'react-leaflet';
-import { MarkerData } from '../../functions/markerProps';
+import { MarkerData } from '../../MarkerContainer';
 import L from 'leaflet';
 
-export const MarkerComponent = ({ markerData, index }: { markerData: MarkerData; index: number; }) => {
+export const OpacityMarker = ({ markerData, index }: { markerData: MarkerData; index: number; }) => {
     const [opacity, setOpacity] = useState(1);
     const { timestamp, station, line, direction } = markerData;
 

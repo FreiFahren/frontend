@@ -25,6 +25,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+body:not(:has(.App)) {
+  padding: 25px;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -76,4 +80,8 @@ button a {
   .container {
     width: 85%;
   }
+}
+
+.highlight {
+  border: 3px solid var(--red) !important;
 }

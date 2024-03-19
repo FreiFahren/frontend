@@ -52,9 +52,16 @@ const MarkerContainer: React.FC<MarkersProps> = ({ formSubmitted }) => {
     <div>
       {
         ticketInspectorList.map((ticketInspector, index) => {
-
+            let isHistoric = false;
+            if (ticketInspector.timestamp === "0001-01-01T00:00:00Z"){
+              isHistoric = true;
+            }
             return (
-              <OpacityMarker markerData={ticketInspector} index={index} key={ticketInspector.station.id}/>
+              <OpacityMarker 
+                markerData={ticketInspector} 
+                index={index} 
+                key={ticketInspector.station.id} 
+                isHistoric={isHistoric}/>
             );
 
         })}

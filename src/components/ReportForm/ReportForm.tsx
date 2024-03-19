@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import './ReportForm.css';
 import {
 	LinesList,
+	StationProperty,
 	StationsList,
 	getAllLinesList,
 	getAllStationsList,
@@ -80,17 +81,27 @@ const ReportForm: React.FC<ReportFormProps> = ({
 		onFormSubmit(); // Notify App component about the submission
 	};
 
+	const refreshLineOptions = async () => {
+		let LineOptions: Option[] = [];
+		const LinesList: LinesList[] = await getAllLinesList();
+		
+		for (const line in LinesList) {
+			LineOptions.push({ value: line, label: line });
+		}
+
+		setLinesList(LinesList);
+		setLineOptions(LineOptions);
+	}
+
 	const fetchStationsAndLines = async () => {
 		try {
-			let LineOptions: Option[] = [];
+			
 			let StationOptions: Option[] = [];
 
 			const StationsList: StationsList[] = await getAllStationsList();
-			const LinesList: LinesList[] = await getAllLinesList();
+			
 
-			for (const line in LinesList) {
-				LineOptions.push({ value: line, label: line });
-			}
+			refreshLineOptions();	
 			
 			for (const station in StationsList) {
 				StationOptions.push({
@@ -101,10 +112,9 @@ const ReportForm: React.FC<ReportFormProps> = ({
 
 			// here, we set the list of stations and lines (for later use)
 			setStationsList(StationsList);
-			setLinesList(LinesList);
+			
 
 			// these are the dropdown options
-			setLineOptions(LineOptions);
 			setStationOptions(StationOptions);
 
 
@@ -122,15 +132,17 @@ const ReportForm: React.FC<ReportFormProps> = ({
 
 			setDefaultLineInputValue(value as string);
 
+			let newDirectionOptions: Option[] = [];
 
-
+			console.log(linesList[((value as unknown as Option).value) as unknown as number])
 		},
 		[]
 	);
 
-	const handleOnStationChange = useCallback((value: unknown, action: ActionMeta<unknown>) => {
+	const handleOnStationChange = (value: unknown, action: ActionMeta<unknown>) => {
 			if(action.action === 'clear') {
 				setDefaultStationInputValue('');
+				refreshLineOptions();
 				return;
 			}
 
@@ -138,12 +150,30 @@ const ReportForm: React.FC<ReportFormProps> = ({
 			
 			let newLineOptions: Option[] = [];
 
-			console.log('value', value);
+			let isLineInStation = false;
+
+
+	
+			for (const station in stationsList) {
+				if ((value as unknown as Option).value === station ) {
+					for (const line of stationsList[station].lines as unknown as string[]) {
+						newLineOptions.push({ value: line, label: line });
+						
+					}
+				}
+			}
+			for(const line of newLineOptions) {
+				if (line.value === (defaultLineInputValue as unknown as Option).value) {
+					isLineInStation = true;
+				}
+			}
+			if (!isLineInStation) {
+				setDefaultLineInputValue('');
+				setDefaultDirectionInputValue('');
+			}
 
 			setLineOptions(newLineOptions);
-		},
-		[]
-	);
+		}
 
 	const handleOnDirectionChange = useCallback(
 		(value: unknown, action: ActionMeta<unknown>) => {

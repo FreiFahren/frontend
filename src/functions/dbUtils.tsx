@@ -1,13 +1,33 @@
 import { MarkerData } from '../components/Map/Markers/MarkerContainer';
 
-export async function getRecentTicketInspectorInfo(): Promise<MarkerData[]> {
+export async function getRecentTicketInspectorInfo(lastUpdateTimestamp: string | null): Promise<MarkerData[] | null> {
     try {
-        const response = await fetch('/recent');
+        const headers = new Headers();
+        console.log(lastUpdateTimestamp + " ss ");
+        // Include the If-Modified-Since header only if lastUpdateTimestamp is available
+        if (lastUpdateTimestamp && lastUpdateTimestamp !== "undefined") {
+            headers.append("If-Modified-Since", lastUpdateTimestamp);
+            console.log('Headersss:', headers);
+        }
+
+        // Make the request with optional If-Modified-Since header
+        const response = await fetch('/recent', {
+            method: 'GET',
+            headers: headers,
+        });
+
+    
+
+        // Handle 304 Not Modified
+        if (response.status === 304) {
+            return null;
+        }
+
         const data = await response.json();
         return data;
     } catch (error) {
         console.error('Error:', error);
-        return [];
+        return []; // Return an empty array in case of error
     }
 }
 

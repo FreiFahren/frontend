@@ -39,6 +39,16 @@ If you have any questions feel free to reach out to: johan@trieloff.net or dbran
     ```
 ## How it works 
 
-We are using leaflet to display the map and the markers in App.tsx. The markers are being updated every 5 seconds by fetching the data from the [backend](https://github.com/FreiFahren/backend). The backend is a simple echo server that fetches the last reported locations of the ticket inspectors from the database and sends it to the frontend.
+FreiFahren operates by leveraging real-time, community-driven data to track the presence of ticket inspectors across the Berlin public transport network. Here's a step-by-step breakdown of how it works:
 
-When a user reports a ticket inspector via the form, the data is sent to the backend and stored in the database. The backend then sends the updated data to the frontend.   
+1. **Data Collection:**  Our primary data source is the (FreiFahren Telegram group)[https://t.me/freifahren_BE]. Here, community members report sightings of ticket inspectors. Each report includes the location and time of the sighting.
+
+2. **Data Processing:** Once a report is submitted, our backend system processes the data. It verifies the report, extracts the necessary information, and updates our database.
+
+3. **Real-Time Updates:** The processed data is then pushed to our live map in real-time. This ensures that users always have the most up-to-date information about the presence of ticket inspectors.
+
+4. **User Interface:** Users can access the live map through our web application. The map displays the current locations of ticket inspectors, allowing users to plan their journeys accordingly.
+
+5. **Community Engagement:** Users are encouraged to contribute to the community by reporting their own sightings of ticket inspectors. This helps keep the map accurate and up-to-date.
+
+By harnessing the power of community reporting and real-time data processing, FreiFahren provides a valuable tool for navigating the Berlin public transport network with confidence.

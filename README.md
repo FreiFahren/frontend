@@ -1,46 +1,54 @@
-# Getting Started with Create React App
+# FreiFahren
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
+Freifahren is an innovative project designed to map the presence of ticket inspectors across the Berlin public transport network. By offering a live map that tracks inspectors in real-time, the initiative seeks to inform and empower users to navigate the city with added confidence. The project leverages community-driven data from the [Freifahren Telegram group](https://t.me/freifahren_BE), where users report sightings of ticket inspectors.
 
-## Available Scripts
+If you have any questions feel free to reach out to: johan@trieloff.net or dbrandesx@gmail.com.
 
-In the project directory, you can run:
+<img width="1440" alt="Screenshot showing the map" src="https://github.com/FreiFahren/frontend/assets/30388999/ab3b5eee-3b93-4c80-a4f3-946d4af38898">
 
-### `npm start`
+<img width="1440" alt="Screenshot showing how to report a inspector" src="https://github.com/FreiFahren/frontend/assets/30388999/5681a8c3-4683-4dae-937b-2f5ba42333de">
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
+## Getting Started
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Prerequisites
+- [Node.js](https://nodejs.org/en/)
 
-### `npm run build`
+### Installation
+1. Clone the repository
+   ```sh
+   git clone https://github.com/FreiFahren/frontend
+    ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. Install NPM packages
+    ```sh
+    npm install
+    ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. Set up enviromental variables
+    ```sh
+    REACT_APP_JAWG_ACCESS_TOKEN=YOUR_JAWG_ACCESS_TOKEN
+    ```
+    You can get a free access token from [Jawg](https://www.jawg.io/)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+4. Run the app
+    ```sh
+    npm start
+    ```
+## How it works 
 
-### `npm run eject`
+FreiFahren operates by leveraging real-time, community-driven data to track the presence of ticket inspectors across the Berlin public transport network. Here's a step-by-step breakdown of how it works:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+1. **Data Collection:**  Our primary data source is the [FreiFahren Telegram group](https://t.me/freifahren_BE) and our own form. Here, community members report sightings of ticket inspectors. Each report includes the station and time of the sighting.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. **Data Processing:** Once a report is submitted, our backend system processes the data. It verifies the report, extracts the necessary information, and updates our database.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+3. **Real-Time Updates:** The processed data is then pushed to our live map in real-time. This ensures that users always have the most up-to-date information about the presence of ticket inspectors.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+4. **User Interface:** Users can access the live map through our web application. The map displays the current locations of ticket inspectors, allowing users to plan their journeys accordingly.
 
-## Learn More
+5. **Community Engagement:** Users are encouraged to contribute to the community by reporting their own sightings of ticket inspectors. This helps keep the map accurate and up-to-date.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+By harnessing the power of community reporting and real-time data processing, FreiFahren provides a valuable tool for navigating the Berlin public transport network with confidence.

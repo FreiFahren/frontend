@@ -5,7 +5,12 @@ import { OpacityMarkerIcon } from '../../../../../functions/mapUtils';
 
 let icon = OpacityMarkerIcon(1);
 
-export const OpacityMarker = ({ markerData, index }: { markerData: MarkerData; index: number; }) => {
+interface OpacityMarkerProps {
+    markerData: MarkerData;
+    index: number;
+}
+
+export const OpacityMarker: React.FC<OpacityMarkerProps> = ({ markerData, index }) => {
     const [opacity, setOpacity] = useState(1);
     const { timestamp, station, line, direction } = markerData;
 

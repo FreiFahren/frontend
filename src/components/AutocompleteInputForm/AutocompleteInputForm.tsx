@@ -36,6 +36,7 @@ export default function AutocompleteInputForm (props: { options: Option[] | unde
         className={props.className}
         value={props.defaultInputValue}
         isClearable={true}
+        noOptionsMessage={() => 'Keine Optionen'}
         name='search'
         options={props.options}
         styles={colourStyles}

@@ -53,6 +53,7 @@ const MarkerContainer: React.FC<MarkersProps> = ({ formSubmitted }) => {
       {
         ticketInspectorList.map((ticketInspector, index) => {
             let isHistoric = false;
+
             if (ticketInspector.timestamp === '0001-01-01T00:00:00Z'){
               isHistoric = true;
             }

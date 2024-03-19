@@ -6,6 +6,23 @@ export type StationsAndLinesList = {
     stations: string[];
   };
 
+export interface StationsList  {
+    [key: string]: StationProperty;
+};
+
+export interface StationProperty {
+	name: string;
+	coordinates: {
+		latitude: number;
+		longitude: number;
+	};
+	lines: string[];
+}
+
+export interface LinesList {
+    [key: string]: string[];
+};
+
 export async function getRecentTicketInspectorInfo(): Promise<MarkerData[]> {
     try {
         const response = await fetch('/recent');
@@ -26,6 +43,28 @@ export async function getAllStationsAndLines(): Promise<StationsAndLinesList> {
         console.error('Error:', error);
         return { lines: [], stations: [] };
     }
+}
+
+export async function getAllStationsList(): Promise<StationsList[]> {
+  try {
+      const response = await fetch('/list?stations=true');
+      const data = await response.json();
+      return data;
+  } catch (error) {
+      console.error('Error:', error);
+      return [];
+  }
+}
+
+export async function getAllLinesList(): Promise<LinesList[]> {
+  try {
+      const response = await fetch('/list?lines=true');
+      const data = await response.json();
+      return data;
+  } catch (error) {
+      console.error('Error:', error);
+      return [];
+  }
 }
 
 export async function reportInspector(line: Option, station: Option, direction: Option) {

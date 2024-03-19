@@ -2,27 +2,21 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import './ReportForm.css';
 import {
-	getAllStationsAndLines,
+	LinesList,
+	StationsList,
+	getAllLinesList,
+	getAllStationsList,
 	reportInspector,
 } from '../../functions/dbUtils';
 import AutocompleteInputForm, {
 	Option,
 } from '../AutocompleteInputForm/AutocompleteInputForm';
-import { StationsAndLinesList } from '../../functions/dbUtils';
 import { highlightElement } from '../../functions/uiUtils';
 import { ActionMeta } from 'react-select/';
 
 interface ReportFormProps {
 	closeModal: () => void;
 	onFormSubmit: () => void;
-}
-interface StationProperty {
-	name: string;
-	coordinates: {
-		latitude: number;
-		longitude: number;
-	};
-	lines: string[];
 }
 
 const ReportForm: React.FC<ReportFormProps> = ({
@@ -46,19 +40,16 @@ const ReportForm: React.FC<ReportFormProps> = ({
 	// checks if the station input is empty
 	const [hasNoStationInput, setHasNoStationInput] = useState(false);
 	const [defaultLineInputValue, setDefaultLineInputValue] = useState('');
-	const [defaultStationInputValue, setDefaultStationInputValue] =
-		useState('');
-	const [defaultDirectionInputValue, setDefaultDirectionInputValue] =
-		useState('');
+	const [defaultStationInputValue, setDefaultStationInputValue] = useState('');
+	const [defaultDirectionInputValue, setDefaultDirectionInputValue] = useState('');
 
 	// these are the options/list on the dropdowns
-	const [lines, setLines] = useState<Option[]>([]);
-	const [stations, setStations] = useState<Option[]>([]);
-	const [directions, setDirections] = useState<Option[]>([]);
+	const [lineOptions, setLineOptions] = useState<Option[]>([]);
+	const [stationOptions, setStationOptions] = useState<Option[]>([]);
+	const [directionOptions, setDirectionOptions] = useState<Option[]>([]);
 
-	// the whole fetched list of stations and lines
-	const [stationsAndLinesList, setStationsAndLinesList] =
-		useState<StationsAndLinesList>({} as StationsAndLinesList);
+	const [stationsList, setStationsList] = useState<StationsList[]>([]);
+	const [linesList, setLinesList] = useState<LinesList[]>([]);
 
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
@@ -91,139 +82,60 @@ const ReportForm: React.FC<ReportFormProps> = ({
 
 	const fetchStationsAndLines = async () => {
 		try {
-			const StationsAndLinesList: StationsAndLinesList =
-				await getAllStationsAndLines();
+			let LineOptions: Option[] = [];
+			let StationOptions: Option[] = [];
 
-			const lineKeys = Object.keys(StationsAndLinesList.lines[0]);
-			const stationKeys = Object.keys(
-				StationsAndLinesList.stations
-			);
+			const StationsList: StationsList[] = await getAllStationsList();
+			const LinesList: LinesList[] = await getAllLinesList();
 
-			const newLines = [...lines];
-			const newStations = [...stations];
-
-			for (const key of lineKeys) {
-				if (!newLines.some((line) => line.value === key)) {
-					newLines.push({ value: key, label: key });
-				}
+			for (const line in LinesList) {
+				LineOptions.push({ value: line, label: line });
+			}
+			
+			for (const station in StationsList) {
+				StationOptions.push({
+					value: station,
+					label: (StationsList[station].name as unknown as string),
+				});
 			}
 
-			for (const key of stationKeys) {
-				if (!newStations.some((station) => station.value === key)) {
-					newStations.push({
-						value: key,
-						label: (
-							StationsAndLinesList.stations[
-								key as unknown as number
-							] as unknown as StationProperty
-						).name,
-					});
-				}
-			}
+			// here, we set the list of stations and lines (for later use)
+			setStationsList(StationsList);
+			setLinesList(LinesList);
 
-			setLines(newLines);
-			setStations(newStations);
+			// these are the dropdown options
+			setLineOptions(LineOptions);
+			setStationOptions(StationOptions);
 
-			setStationsAndLinesList(StationsAndLinesList);
+
 		} catch (error) {
 			console.error('Failed to fetch stations and lines:', error);
-			// You could also set some state here to show an error message to the user
+		
 		}
 	};
 
-	const handleOnLineChange = useCallback(
-		(value: unknown, action: ActionMeta<unknown>) => {
-			setLinePOST(value as Option);
+	const handleOnLineChange = useCallback((value: unknown, action: ActionMeta<unknown>) => {
+			setDefaultLineInputValue(value as string);
 
-			if (value === null) {
+			if (action.action === 'clear') {
 				setDefaultLineInputValue('');
-				if (action.action === 'clear') {
-					fetchStationsAndLines();
-					setDefaultDirectionInputValue('');
-					setDefaultStationInputValue('');
-				}
 				return;
 			}
-
-			setDefaultLineInputValue(value as string);
-			setDefaultStationInputValue('');
-			setDefaultDirectionInputValue('');
-
-			const StationList: Option[] = [];
-			const DirectionList: Option[] = [];
-
-			Object.entries(stationsAndLinesList.lines[0]).forEach(
-				([line, lineStations]) => {
-					if (line === (value as Option).value) {
-						for (const station of lineStations) {
-							Object.entries(
-								stationsAndLinesList.stations || {}
-							).forEach(([stationID, stationProperty]) => {
-								if (station === stationID) {
-									StationList.push({
-										value: stationID,
-										label: (
-											stationProperty as unknown as StationProperty
-										).name,
-									});
-								}
-							});
-						}
-					}
-				}
-			);
-
-			DirectionList.push(
-				{
-					value: StationList[0].value,
-					label: StationList[0].label,
-				},
-				{
-					value: StationList[StationList.length - 1].value,
-					label: StationList[StationList.length - 1].label,
-				}
-			);
-
-			setStations(StationList);
-			setDirections(DirectionList);
+			
 		},
-		[stationsAndLinesList]
+		[]
 	);
 
-	const handleOnStationChange = useCallback(
-		(value: unknown, action: ActionMeta<unknown>) => {
-			setStationPOST(value as Option);
-			if (value === null) {
-				setDefaultStationInputValue('');
-				if (action.action === 'clear') {
-					fetchStationsAndLines();
-
-					setDefaultDirectionInputValue('');
-					setDefaultLineInputValue('');
-				}
-				return;
-			}
-
+	const handleOnStationChange = useCallback((value: unknown, action: ActionMeta<unknown>) => {
 			setDefaultStationInputValue(value as string);
-
-			const LinesList: Option[] = [];
-
-			console.log(value);
-			Object.entries(stationsAndLinesList.stations).forEach(
-				([stationID, stationProperty]) => {
-					if ((value as Option).value === stationID) {
-						(
-							stationProperty as unknown as StationProperty
-						).lines.forEach((line) => {
-							LinesList.push({ value: line, label: line });
-						});
-					}
+			console.log(defaultLineInputValue)
+			if (defaultLineInputValue !== '') {
+				for (const station in stationsList) {
+					console.log(station);
 				}
-			);
-
-			setLines(LinesList);
+			}
 		},
-		[stationsAndLinesList]
+		[]
 	);
 
 	const handleOnDirectionChange = useCallback(
@@ -231,7 +143,7 @@ const ReportForm: React.FC<ReportFormProps> = ({
 			setDirectionPOST(value as Option);
 
 			if (value === null) {
-				setDirections([]);
+				setDirectionOptions([]);
 				setDefaultDirectionInputValue('');
 				if (action.action === 'clear') {
 					fetchStationsAndLines();
@@ -242,7 +154,7 @@ const ReportForm: React.FC<ReportFormProps> = ({
 			}
 			setDefaultDirectionInputValue(value as string);
 		},
-		[stationsAndLinesList]
+		[]
 	);
 
 	useEffect(() => {
@@ -253,31 +165,41 @@ const ReportForm: React.FC<ReportFormProps> = ({
 		<div className='report-form container'>
 			<h1>Neue Meldung</h1>
 			<form onSubmit={handleSubmit}>
-				<AutocompleteInputForm
-					className='line-select'
-					options={lines}
-					defaultInputValue={defaultLineInputValue}
-					placeholder='Linie'
-					onChange={handleOnLineChange}
-				/>
+				
 				<div>
 					<AutocompleteInputForm
 						className='station-select'
-						options={stations}
+						options={stationOptions}
 						placeholder='Station'
 						defaultInputValue={defaultStationInputValue}
 						hasNoStationInput={hasNoStationInput}
 						onChange={handleOnStationChange}
 					/>
+
 				</div>
-				<div>
+				<div style={{ display: 'flex', justifyContent: 'space-between' }}>
+				<div style={{ width: '40%' }}>
+					<AutocompleteInputForm
+						className='line-select'
+						options={lineOptions}
+						defaultInputValue={defaultLineInputValue}
+						placeholder='Linie'
+						onChange={handleOnLineChange}
+						isDropdownIndicator={false}
+						isIndicatorSeparator={false}
+					/>
+				</div>
+				<div style={{ width: '60%' }}>
 					<AutocompleteInputForm
 						className='direction-select'
-						options={directions}
+						options={directionOptions}
 						placeholder='Richtung'
 						defaultInputValue={defaultDirectionInputValue}
 						onChange={handleOnDirectionChange}
+						isDropdownIndicator={false}
+						isIndicatorSeparator={false}
 					/>
+				</div>
 				</div>
 				<div>
 					<label htmlFor='privacy-checkbox' id='privacy-label'>

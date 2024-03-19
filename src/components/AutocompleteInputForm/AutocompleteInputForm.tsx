@@ -7,7 +7,7 @@ export interface Option {
   label: string;
 }
 
-export function setStyles (hasError: boolean | undefined) {
+export function setStyles (hasError: boolean | undefined, isIndicatorSeparator: boolean | undefined, isDropdownIndicator: boolean | undefined): StylesConfig {
    const colourStyles: StylesConfig = {
     control: (styles) => ({
       ...styles,
@@ -16,18 +16,38 @@ export function setStyles (hasError: boolean | undefined) {
       justifyContent: 'center',
       justifyItems: 'center',
       padding: '10px',
-      fontSize: '1.4rem',
+      fontSize: '1.3rem',
       borderColor: hasError ? 'red' : '#ced4da',
+      
       }),
-
+      indicatorSeparator: (base) => ({
+        ...base,
+        display: isIndicatorSeparator ? 'block' : 'none',
+      }),
+      dropdownIndicator: defaultStyles => ({
+        ...defaultStyles,
+        display: isDropdownIndicator ? 'block' : 'none',
+      }),
   }
 
   return colourStyles;
 }
 
-export default function AutocompleteInputForm (props: { options: Option[] | undefined; placeholder: string; onChange: (value: unknown | Option, action: ActionMeta<unknown>)  => void; className: string; value?: Option; hasNoStationInput?: boolean; defaultInputValue: string;}) {
+export interface AutocompleteInputFormProps {
+  options: Option[] | undefined;
+  placeholder: string;
+  onChange: (value: unknown | Option, action: ActionMeta<unknown>) => void;
+  className: string;
+  value?: Option;
+  hasNoStationInput?: boolean;
+  defaultInputValue: string;
+  isIndicatorSeparator?: boolean;
+  isDropdownIndicator?: boolean;
+}
 
-  const colourStyles = setStyles(props.hasNoStationInput);
+export default function AutocompleteInputForm(props: AutocompleteInputFormProps) {
+
+  const colourStyles = setStyles(props.hasNoStationInput, props.isIndicatorSeparator, props.isDropdownIndicator);
 
   return (
     <>
@@ -42,6 +62,7 @@ export default function AutocompleteInputForm (props: { options: Option[] | unde
         styles={colourStyles}
         placeholder={props.placeholder}
         onChange={props.onChange}
+
       />
     </div>
 

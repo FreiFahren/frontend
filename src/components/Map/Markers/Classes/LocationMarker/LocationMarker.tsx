@@ -21,7 +21,7 @@ const LocationMarker = () => {
         const getPosition = () => {
             if (navigator.geolocation) {
                 navigator.permissions
-                .query({ name: "geolocation" })
+                .query({ name: 'geolocation' })
                 .then(function (result) {
                     console.log(result);
                 });

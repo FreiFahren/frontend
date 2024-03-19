@@ -10,15 +10,15 @@ export const OpacityMarker = ({ markerData, index, isHistoric }: { markerData: M
     const { timestamp, station, line, direction } = markerData;
 
     const timestampSeconds = new Date(timestamp);
-    
+
     // Subtract one hour to account for the time difference between the server and the client
     timestampSeconds.setHours(timestampSeconds.getHours() - 1);
     const currentTime = new Date().getTime();
 
-
     const calculateOpacity = () => {
         const elapsedTime = currentTime - timestampSeconds.getTime();
         const opacityValue = Math.max(0, 1 - (elapsedTime / (15 * 60 * 1000)));
+
         setOpacity(opacityValue);
         icon = OpacityMarkerIcon(opacityValue);
         return opacityValue;
@@ -28,17 +28,17 @@ export const OpacityMarker = ({ markerData, index, isHistoric }: { markerData: M
         if (!isHistoric) {
             const interval = setInterval(() => {
                 calculateOpacity();
-                
+
                 if (opacity === 0) {
                     clearInterval(interval);
                 }
             }, 2000);
-    
+
             return () => {
                 clearInterval(interval);
             };
         }
-        
+
     });
 
     // If the opacity hits zero, we don't want to render the marker
@@ -50,7 +50,7 @@ export const OpacityMarker = ({ markerData, index, isHistoric }: { markerData: M
         <Marker key={`${line}-${index}`} position={[station.coordinates.latitude, station.coordinates.longitude]} icon={icon}>
             <Popup>
                 <>
-                    {line} {direction.name ? direction.name + ' - ' : ''} {station.name} {isHistoric ? ' (Historisch)' : ''}
+                    {line} {direction.name ? direction.name + ' - ' : ''} {station.name}
                 </>
             </Popup>
         </Marker>

@@ -1,5 +1,5 @@
 
-import Select, {StylesConfig} from 'react-select';
+import Select, {ActionMeta, StylesConfig} from 'react-select';
 import { AutocompleteStyles } from './AutocompleteStyles';
 
 export interface Option {
@@ -25,7 +25,7 @@ export function setStyles (hasError: boolean | undefined) {
   return colourStyles;
 }
 
-export default function AutocompleteInputForm (props: { options: Option[] | undefined; placeholder: string; onChange: (value: unknown | Option)  => void; className: string; value?: Option; hasNoStationInput?: boolean;}) {
+export default function AutocompleteInputForm (props: { options: Option[] | undefined; placeholder: string; onChange: (value: unknown | Option, action: ActionMeta<unknown>)  => void; className: string; value?: Option; hasNoStationInput?: boolean; defaultInputValue: string;}) {
 
   const colourStyles = setStyles(props.hasNoStationInput);
 
@@ -34,7 +34,8 @@ export default function AutocompleteInputForm (props: { options: Option[] | unde
     <div style={AutocompleteStyles}>
       <Select
         className={props.className}
-
+        value={props.defaultInputValue}
+        isClearable={true}
         name='search'
         options={props.options}
         styles={colourStyles}

@@ -7,9 +7,10 @@ import { highlightElement } from '../../functions/uiUtils';
 interface ReportFormProps {
   closeModal: () => void;
   onFormSubmit: () => void;
+  className?: string;
 }
 
-const ReportForm: React.FC<ReportFormProps> = ({ closeModal, onFormSubmit }) => {
+const ReportForm: React.FC<ReportFormProps> = ({ closeModal, onFormSubmit, className }) => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     const line = (document.getElementById('line') as HTMLInputElement).value;
@@ -37,7 +38,7 @@ const ReportForm: React.FC<ReportFormProps> = ({ closeModal, onFormSubmit }) => 
   };
 
   return (
-    <div className='report-form container'>
+    <div className={`report-form container ${className}`}>
       <h1>Neue Meldung</h1>
       <form onSubmit={handleSubmit}>
         <div>

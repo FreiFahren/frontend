@@ -9,16 +9,18 @@
     box-shadow: var(--button-box-shadow);
     width: 65px;
     height: 65px;
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .util-button span {
-    margin-top: 8px;
-    margin-bottom: 8px;
-    margin-left: 7px;
     display: block;
     height: 4px;
-    width: 75%;
+    width: 85%;
     border-radius: var(--standard-border-radius);
-    background-color: black;
+    background-color: var(--black);
+    margin: 4px 0;
 }
 

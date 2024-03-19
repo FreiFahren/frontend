@@ -31,9 +31,9 @@ const ReportForm: React.FC<ReportFormProps> = ({
 
 	// checks if the station input is empty
 	const [hasNoStationInput, setHasNoStationInput] = useState(false);
-	const [defaultLineInputValue, setDefaultLineInputValue] = useState(''); 
-	const [defaultStationInputValue, setDefaultStationInputValue] = useState(''); 
-	const [defaultDirectionInputValue, setDefaultDirectionInputValue] = useState(''); 
+	const [defaultLineInputValue, setDefaultLineInputValue] = useState('');
+	const [defaultStationInputValue, setDefaultStationInputValue] = useState('');
+	const [defaultDirectionInputValue, setDefaultDirectionInputValue] = useState('');
 
 	// these are the options/list on the dropdowns
 	const [lines, setLines] = useState<Option[]>([]);
@@ -44,7 +44,7 @@ const ReportForm: React.FC<ReportFormProps> = ({
 	const [stationsAndLinesList, setStationsAndLinesList] = useState<StationsAndLinesList | null>(null);
 
 	const handleSubmit = async (event: React.FormEvent) => {
-		
+
 		event.preventDefault();
 
 		let hasError = false;
@@ -73,7 +73,7 @@ const ReportForm: React.FC<ReportFormProps> = ({
 	const fetchStationsAndLines = async () => {
 		const StationsAndLinesList: StationsAndLinesList =
 			await getAllStationsAndLines();
-	
+
 		const lineKeys = Object.keys(StationsAndLinesList?.lines[0] || {});
 		const stationKeys = Object.keys(StationsAndLinesList?.stations || {});
 
@@ -88,14 +88,10 @@ const ReportForm: React.FC<ReportFormProps> = ({
 				stations.push({ value: key, label: (StationsAndLinesList?.stations[key as unknown as number] as unknown as StationProperty).name });
 			}
 		}
-			
-		setStationsAndLinesList(StationsAndLinesList);
-		
-		
-		
-		
-	};
 
+		setStationsAndLinesList(StationsAndLinesList);
+
+	};
 
 	const handleOnLineChange = (value: unknown, action: ActionMeta<unknown>) => {
 		if (value === null){
@@ -112,8 +108,9 @@ const ReportForm: React.FC<ReportFormProps> = ({
 		setDefaultStationInputValue('');
 		setDefaultDirectionInputValue('');
 
-		let StationList: Option[] = [];
-		let DirectionList: Option[] = [];
+		const StationList: Option[] = [];
+		const DirectionList: Option[] = [];
+
 		Object.entries(stationsAndLinesList?.lines[0] || {}).forEach(([line, lineStations]) => {
 			if( line === (value as Option).value){
 				for (const station of lineStations) {
@@ -123,9 +120,10 @@ const ReportForm: React.FC<ReportFormProps> = ({
 						}
 					});
 				}
-				
+
 			}
 		});
+
 		DirectionList.push(
 			{
 				value: StationList[0].value,
@@ -136,7 +134,7 @@ const ReportForm: React.FC<ReportFormProps> = ({
 				label: StationList[StationList.length - 1].label,
 			}
 		);
-		
+
 		setStations(StationList);
 		setDirections(DirectionList);
 	}
@@ -145,17 +143,17 @@ const ReportForm: React.FC<ReportFormProps> = ({
 			setDefaultStationInputValue('');
 			if(action.action === 'clear'){
 				fetchStationsAndLines();
+
 				setDefaultDirectionInputValue('');
 				setDefaultLineInputValue('');
 			}
 			return;
 		}
-		
+
 		setDefaultStationInputValue(value as string);
-		
-		
-		let LinesList: Option[] = [];
-		
+
+		const LinesList: Option[] = [];
+
 		console.log(value);
 		Object.entries(stationsAndLinesList?.stations || {}).forEach(([stationID, stationProperty]) => {
 			if ((value as Option).value === stationID) {
@@ -163,15 +161,15 @@ const ReportForm: React.FC<ReportFormProps> = ({
 					LinesList.push({ value: line, label: line });
 				});
 			}
-			
-		});
-		
-		setLines(LinesList);
 
+		});
+
+		setLines(LinesList);
 
 	}
 	const handleOnDirectionChange = (value: unknown, action: ActionMeta<unknown>) => {
 		if (value === null){
+			setDirections([]);
 			setDefaultDirectionInputValue('');
 			if(action.action === 'clear'){
 				fetchStationsAndLines();
@@ -181,7 +179,7 @@ const ReportForm: React.FC<ReportFormProps> = ({
 			return;
 		}
 		setDefaultDirectionInputValue(value as string);
-		
+
 	}
 
 	useEffect(() => {

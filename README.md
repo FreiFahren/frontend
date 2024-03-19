@@ -41,7 +41,7 @@ If you have any questions feel free to reach out to: johan@trieloff.net or dbran
 
 FreiFahren operates by leveraging real-time, community-driven data to track the presence of ticket inspectors across the Berlin public transport network. Here's a step-by-step breakdown of how it works:
 
-1. **Data Collection:**  Our primary data source is the (FreiFahren Telegram group)[https://t.me/freifahren_BE]. Here, community members report sightings of ticket inspectors. Each report includes the location and time of the sighting.
+1. **Data Collection:**  Our primary data source is the [FreiFahren Telegram group](https://t.me/freifahren_BE) and our own form. Here, community members report sightings of ticket inspectors. Each report includes the station and time of the sighting.
 
 2. **Data Processing:** Once a report is submitted, our backend system processes the data. It verifies the report, extracts the necessary information, and updates our database.
 

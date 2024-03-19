@@ -5,9 +5,9 @@ Freifahren is an innovative project designed to map the presence of ticket inspe
 
 If you have any questions feel free to reach out to: johan@trieloff.net or dbrandesx@gmail.com.
 
-<img width="1440" alt="Bildschirm­foto 2024-03-19 um 12 44 26" src="https://github.com/FreiFahren/frontend/assets/30388999/ab3b5eee-3b93-4c80-a4f3-946d4af38898">
+<img width="1440" alt="Screenshot showing the map" src="https://github.com/FreiFahren/frontend/assets/30388999/ab3b5eee-3b93-4c80-a4f3-946d4af38898">
 
-<img width="1440" alt="Bildschirm­foto 2024-03-19 um 12 43 57" src="https://github.com/FreiFahren/frontend/assets/30388999/5681a8c3-4683-4dae-937b-2f5ba42333de">
+<img width="1440" alt="Screenshot showing how to report a inspector" src="https://github.com/FreiFahren/frontend/assets/30388999/5681a8c3-4683-4dae-937b-2f5ba42333de">
 
 
 

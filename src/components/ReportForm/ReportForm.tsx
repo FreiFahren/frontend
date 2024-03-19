@@ -115,25 +115,32 @@ const ReportForm: React.FC<ReportFormProps> = ({
 	};
 
 	const handleOnLineChange = useCallback((value: unknown, action: ActionMeta<unknown>) => {
-			setDefaultLineInputValue(value as string);
-
 			if (action.action === 'clear') {
 				setDefaultLineInputValue('');
 				return;
 			}
-			
+
+			setDefaultLineInputValue(value as string);
+
+
+
 		},
 		[]
 	);
 
 	const handleOnStationChange = useCallback((value: unknown, action: ActionMeta<unknown>) => {
-			setDefaultStationInputValue(value as string);
-			console.log(defaultLineInputValue)
-			if (defaultLineInputValue !== '') {
-				for (const station in stationsList) {
-					console.log(station);
-				}
+			if(action.action === 'clear') {
+				setDefaultStationInputValue('');
+				return;
 			}
+
+			setDefaultStationInputValue(value as string);
+			
+			let newLineOptions: Option[] = [];
+
+			console.log('value', value);
+
+			setLineOptions(newLineOptions);
 		},
 		[]
 	);

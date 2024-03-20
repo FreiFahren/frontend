@@ -3,10 +3,9 @@ import { MarkerData } from '../components/Map/Markers/MarkerContainer';
 export async function getRecentTicketInspectorInfo(lastUpdateTimestamp: string | null): Promise<MarkerData[] | null> {
     try {
         const headers = new Headers();
-
         // Include the If-Modified-Since header only if lastUpdateTimestamp is available
         if (lastUpdateTimestamp) {
-            headers.append("If-Modified-Since", lastUpdateTimestamp);
+            headers.append('If-Modified-Since', lastUpdateTimestamp);
         }
 
         // Make the request with optional If-Modified-Since header

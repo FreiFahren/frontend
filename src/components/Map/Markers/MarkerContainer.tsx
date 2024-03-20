@@ -34,12 +34,12 @@ const MarkerContainer: React.FC<MarkersProps> = ({ formSubmitted }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-        const newTicketInspectorList = await getRecentTicketInspectorInfo(lastRecievedInspectorTimestamp.current) || []; 
+        const newTicketInspectorList = await getRecentTicketInspectorInfo(lastRecievedInspectorTimestamp.current) || [];
 
         // Only reset the markers if we are getting new data
         if (Array.isArray(newTicketInspectorList) && newTicketInspectorList.length > 0) {
             setTicketInspectorList(newTicketInspectorList);
-            
+
             // Update lastUpdateTime in local storage with the most recent timestamp
             lastRecievedInspectorTimestamp.current = newTicketInspectorList[0].timestamp;
         }
@@ -50,7 +50,6 @@ const MarkerContainer: React.FC<MarkersProps> = ({ formSubmitted }) => {
 
     return () => clearInterval(interval);
 }, [formSubmitted, ticketInspectorList]);
-
 
   return (
     <div>

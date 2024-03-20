@@ -3,7 +3,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import './ReportForm.css';
 import {
 	LinesList,
-	StationProperty,
 	StationsList,
 	getAllLinesList,
 	getAllStationsList,
@@ -25,18 +24,12 @@ const ReportForm: React.FC<ReportFormProps> = ({
 	onFormSubmit,
 }) => {
 	// these are the values from the dropdowns, that are getting posted to api
-	const [linePOST, setLinePOST] = useState<{ value: string; label: string }>({
+	const [linePOST, setLinePOST] = useState<Option>({
 		value: '',
 		label: '',
 	});
-	const [stationPOST, setStationPOST] = useState<{
-		value: string;
-		label: string;
-	}>({ value: '', label: '' });
-	const [directionPOST, setDirectionPOST] = useState<{
-		value: string;
-		label: string;
-	}>({ value: '', label: '' });
+	const [stationPOST, setStationPOST] = useState<Option>({ value: '', label: '' });
+	const [directionPOST, setDirectionPOST] = useState<Option>({ value: '', label: '' });
 
 	// checks if the station input is empty
 	const [hasNoStationInput, setHasNoStationInput] = useState(false);
@@ -51,6 +44,10 @@ const ReportForm: React.FC<ReportFormProps> = ({
 
 	const [stationsList, setStationsList] = useState<StationsList[]>([]);
 	const [linesList, setLinesList] = useState<LinesList[]>([]);
+
+	const [isLoadingLines, setIsLoadingLines] = useState(true);
+	const [isLoadingStations, setIsLoadingStations] = useState(true);
+
 
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
@@ -82,25 +79,33 @@ const ReportForm: React.FC<ReportFormProps> = ({
 	};
 
 	const refreshLineOptions = async () => {
-		let LineOptions: Option[] = [];
-		const LinesList: LinesList[] = await getAllLinesList();
-		
-		for (const line in LinesList) {
-			LineOptions.push({ value: line, label: line });
-		}
-
-		setLinesList(LinesList);
-		setLineOptions(LineOptions);
-	}
-
-	const fetchStationsAndLines = async () => {
 		try {
+			setIsLoadingLines(true); // Set loading state to true before fetching data
+			let LineOptions: Option[] = [];
+			const LinesList: LinesList[] = await getAllLinesList();
 			
-			let StationOptions: Option[] = [];
+			for (const line in LinesList) {
+				LineOptions.push({ value: line, label: line });
+			}
+			
+			setLinesList(LinesList);
+			setLineOptions(LineOptions);
 
+			console.log(LineOptions)
+		} catch (error) {
+			console.error('Failed to fetch lines:', error);
+		} finally {
+			setIsLoadingLines(false); // Set loading state to false after fetching data
+			console.log('lines:', linesList);
+		}
+	}
+	
+	const refreshStationOptions = async () => {
+		try {
+			setIsLoadingStations(true); // Set loading state to true before fetching data
+			let StationOptions: Option[] = [];
 			const StationsList: StationsList[] = await getAllStationsList();
 			
-
 			refreshLineOptions();	
 			
 			for (const station in StationsList) {
@@ -109,32 +114,60 @@ const ReportForm: React.FC<ReportFormProps> = ({
 					label: (StationsList[station].name as unknown as string),
 				});
 			}
-
-			// here, we set the list of stations and lines (for later use)
+	
 			setStationsList(StationsList);
-			
-
-			// these are the dropdown options
 			setStationOptions(StationOptions);
-
-
 		} catch (error) {
 			console.error('Failed to fetch stations and lines:', error);
-		
+		} finally {
+			setIsLoadingStations(false); // Set loading state to false after fetching data
 		}
 	};
 
 	const handleOnLineChange = useCallback((value: unknown, action: ActionMeta<unknown>) => {
 			if (action.action === 'clear') {
 				setDefaultLineInputValue('');
+				setDefaultDirectionInputValue('');
 				return;
 			}
 
 			setDefaultLineInputValue(value as string);
 
+			if(defaultDirectionInputValue !== '') {
+				setDefaultDirectionInputValue('');
+			}
+
+
+			// redefine direction list to the first and last station of the selected line
 			let newDirectionOptions: Option[] = [];
 
-			console.log(linesList[((value as unknown as Option).value) as unknown as number])
+
+			if (linesList.length !== 0) {
+				const length = (linesList[((value as unknown as Option).value) as unknown as number].length) as unknown as number;
+				const firstStation_id = linesList[((value as unknown as Option).value) as unknown as number][0] as unknown as string;
+				const lastStation_id = linesList[((value as unknown as Option).value) as unknown as number][length - 1] as unknown as string;
+
+				const firstStation_name = stationsList[firstStation_id as unknown as number].name as unknown as string;
+				const lastStation_name = stationsList[lastStation_id as unknown as number].name as unknown as string;
+
+				newDirectionOptions.push({ value: firstStation_id, label: firstStation_name });
+				newDirectionOptions.push({ value: lastStation_id, label: lastStation_name });
+				
+				setDirectionOptions(newDirectionOptions);
+			}else {
+				let newLineOptions: Option[] = [];
+
+				for (const station in stationsList) {
+					if ((value as unknown as Option).value === station ) {
+						for (const line of stationsList[station].lines as unknown as string[]) {
+							newLineOptions.push({ value: line, label: line });
+							
+						}
+					}
+				}
+			}
+			
+		
 		},
 		[]
 	);
@@ -147,13 +180,10 @@ const ReportForm: React.FC<ReportFormProps> = ({
 			}
 
 			setDefaultStationInputValue(value as string);
-			
+
+			// redefine lines list to the connections of the selected station
 			let newLineOptions: Option[] = [];
 
-			let isLineInStation = false;
-
-
-	
 			for (const station in stationsList) {
 				if ((value as unknown as Option).value === station ) {
 					for (const line of stationsList[station].lines as unknown as string[]) {
@@ -162,15 +192,21 @@ const ReportForm: React.FC<ReportFormProps> = ({
 					}
 				}
 			}
+
+			// if the line is not in the station, reset the line and direction
+			let isLineInStation = false;
+
 			for(const line of newLineOptions) {
 				if (line.value === (defaultLineInputValue as unknown as Option).value) {
 					isLineInStation = true;
 				}
 			}
+
 			if (!isLineInStation) {
 				setDefaultLineInputValue('');
 				setDefaultDirectionInputValue('');
 			}
+
 
 			setLineOptions(newLineOptions);
 		}
@@ -183,7 +219,7 @@ const ReportForm: React.FC<ReportFormProps> = ({
 				setDirectionOptions([]);
 				setDefaultDirectionInputValue('');
 				if (action.action === 'clear') {
-					fetchStationsAndLines();
+					refreshStationOptions();
 					setDefaultLineInputValue('');
 					setDefaultStationInputValue('');
 				}
@@ -195,7 +231,8 @@ const ReportForm: React.FC<ReportFormProps> = ({
 	);
 
 	useEffect(() => {
-		fetchStationsAndLines();
+		refreshStationOptions();
+		refreshLineOptions();
 	}, []);
 
 	return (
@@ -211,6 +248,8 @@ const ReportForm: React.FC<ReportFormProps> = ({
 						defaultInputValue={defaultStationInputValue}
 						hasNoStationInput={hasNoStationInput}
 						onChange={handleOnStationChange}
+						isLoading={isLoadingStations}
+						isDisabled={isLoadingStations}
 					/>
 
 				</div>
@@ -224,6 +263,8 @@ const ReportForm: React.FC<ReportFormProps> = ({
 						onChange={handleOnLineChange}
 						isDropdownIndicator={false}
 						isIndicatorSeparator={false}
+						isLoading={isLoadingLines}
+						isDisabled={isLoadingLines}
 					/>
 				</div>
 				<div style={{ width: '60%' }}>
@@ -235,6 +276,8 @@ const ReportForm: React.FC<ReportFormProps> = ({
 						onChange={handleOnDirectionChange}
 						isDropdownIndicator={false}
 						isIndicatorSeparator={false}
+						isDisabled={directionOptions.length === 0}
+
 					/>
 				</div>
 				</div>

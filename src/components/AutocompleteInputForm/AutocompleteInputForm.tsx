@@ -43,6 +43,8 @@ export interface AutocompleteInputFormProps {
   defaultInputValue: string;
   isIndicatorSeparator?: boolean;
   isDropdownIndicator?: boolean;
+  isLoading?: boolean;
+  isDisabled?: boolean;
 }
 
 export default function AutocompleteInputForm(props: AutocompleteInputFormProps) {
@@ -62,6 +64,8 @@ export default function AutocompleteInputForm(props: AutocompleteInputFormProps)
         styles={colourStyles}
         placeholder={props.placeholder}
         onChange={props.onChange}
+        isLoading={props.isLoading}
+        isDisabled={props.isDisabled}
 
       />
     </div>

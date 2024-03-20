@@ -5,6 +5,8 @@ import { OpacityMarkerIcon } from '../../../../../functions/mapUtils';
 
 let icon = OpacityMarkerIcon(1);
 
+
+
 export const OpacityMarker = ({ markerData, index, isHistoric }: { markerData: MarkerData; index: number; isHistoric: boolean}) => {
     const [opacity, setOpacity] = useState(1);
     const { timestamp, station, line, direction } = markerData;
@@ -50,7 +52,7 @@ export const OpacityMarker = ({ markerData, index, isHistoric }: { markerData: M
         <Marker key={`${line}-${index}`} position={[station.coordinates.latitude, station.coordinates.longitude]} icon={icon}>
             <Popup>
                 <>
-                    {line} {direction.name ? direction.name + ' - ' : ''} {station.name}
+                    {line} {direction.name ? direction.name + ' - ' : ''} {isHistoric ? station.name + ' (Historisch)' : station.name}
                 </>
             </Popup>
         </Marker>

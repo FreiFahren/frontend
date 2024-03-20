@@ -22,13 +22,16 @@ export const OpacityMarker = ({ markerData, index }: { markerData: MarkerData; i
     };
 
     useEffect(() => {
+        // Get the initial opacity value
+        calculateOpacity();
+
         const interval = setInterval(() => {
             calculateOpacity();
 
             if (opacity === 0) {
                 clearInterval(interval);
             }
-        }, 1000);
+        }, 3000);
 
         return () => {
             clearInterval(interval);

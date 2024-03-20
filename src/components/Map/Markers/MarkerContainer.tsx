@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 import { getRecentTicketInspectorInfo } from '../../../functions/dbUtils';
 import { OpacityMarker } from './Classes/OpacityMarker/OpacityMarker';
@@ -30,44 +30,31 @@ export type MarkerData = {
 
 const MarkerContainer: React.FC<MarkersProps> = ({ formSubmitted }) => {
   const [ticketInspectorList, setTicketInspectorList] = useState<MarkerData[]>([]);
-  useEffect(() => {
-   
-    const fetchData = async () => {
-      // change name lastUpdateTime for understanding
-        const lastUpdateTime = localStorage.getItem('lastUpdateTime');
-        if (!lastUpdateTime) {
-            console.log('No lastUpdateTime found in local storage.');
-            const currentTime = new Date().toISOString();
-            localStorage.setItem('lastUpdateTime', currentTime);
-        }
-        const newTicketInspectorList = await getRecentTicketInspectorInfo(lastUpdateTime); 
-        console.log(newTicketInspectorList, ticketInspectorList);
-        // Only update ticketInspectorList if newTicketInspectorList is an array
-        if (Array.isArray(newTicketInspectorList)) {
-            setTicketInspectorList(newTicketInspectorList);
+  const lastRecievedInspectorTimestamp = useRef<string | null>(null);
 
-            // Assuming the array is sorted with the most recent timestamp first
-            if (newTicketInspectorList.length > 0) {
-                // Update lastUpdateTime in local storage with the most recent timestamp
-                const latestReturnedTimestamp = newTicketInspectorList[0].timestamp;
-                localStorage.setItem('lastUpdateTime', latestReturnedTimestamp);
-            }
-        } else {
-            console.log('No new data to update.');
+  useEffect(() => {
+    const fetchData = async () => {
+        const newTicketInspectorList = await getRecentTicketInspectorInfo(lastRecievedInspectorTimestamp.current) || []; 
+
+        // Only reset the markers if we are getting new data
+        if (Array.isArray(newTicketInspectorList) && newTicketInspectorList.length > 0) {
+            setTicketInspectorList(newTicketInspectorList);
+            
+            // Update lastUpdateTime in local storage with the most recent timestamp
+            lastRecievedInspectorTimestamp.current = newTicketInspectorList[0].timestamp;
         }
     };
 
     fetchData();
-    console.log(ticketInspectorList)
     const interval = setInterval(fetchData, 5000);
 
     return () => clearInterval(interval);
-}, [formSubmitted]);
+}, [formSubmitted, ticketInspectorList]);
+
 
   return (
     <div>
-      {
-        ticketInspectorList.map((ticketInspector, index) => {
+      {ticketInspectorList.map((ticketInspector, index) => {
             return (
               <OpacityMarker markerData={ticketInspector} index={index} key={ticketInspector.station.id}/>
             );

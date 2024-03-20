@@ -1,10 +1,10 @@
 
-import Select, {ActionMeta, StylesConfig} from 'react-select';
+import Select, { ActionMeta, StylesConfig} from 'react-select';
 import { AutocompleteStyles } from './AutocompleteStyles';
 
 export interface Option {
-  value: string;
-  label: string;
+  value: string ;
+  label: string ;
 }
 
 export function setStyles (hasError: boolean | undefined, isIndicatorSeparator: boolean | undefined, isDropdownIndicator: boolean | undefined): StylesConfig {
@@ -18,7 +18,7 @@ export function setStyles (hasError: boolean | undefined, isIndicatorSeparator: 
       padding: '10px',
       fontSize: '1.3rem',
       borderColor: hasError ? 'red' : '#ced4da',
-      
+
       }),
       indicatorSeparator: (base) => ({
         ...base,
@@ -34,13 +34,13 @@ export function setStyles (hasError: boolean | undefined, isIndicatorSeparator: 
 }
 
 export interface AutocompleteInputFormProps {
-  options: Option[] | undefined;
+  options: Option[] ;
   placeholder: string;
-  onChange: (value: unknown | Option, action: ActionMeta<unknown>) => void;
+  onChange: (value: Option | unknown, action: ActionMeta<unknown>) => void;
   className: string;
   value?: Option;
   hasNoStationInput?: boolean;
-  defaultInputValue: string;
+  defaultInputValue: Option | unknown;
   isIndicatorSeparator?: boolean;
   isDropdownIndicator?: boolean;
   isLoading?: boolean;

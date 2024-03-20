@@ -8,7 +8,7 @@ export type StationsAndLinesList = {
 
 export interface StationsList  {
     [key: string]: StationProperty;
-};
+}
 
 export interface StationProperty {
 	name: string;
@@ -21,7 +21,7 @@ export interface StationProperty {
 
 export interface LinesList {
     [key: string]: string[];
-};
+}
 
 export async function getRecentTicketInspectorInfo(): Promise<MarkerData[]> {
     try {

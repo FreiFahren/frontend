@@ -19,6 +19,10 @@ const LocationMarker = () => {
         }
 
         const getPosition = () => {
+            if (navigator.geolocation) {
+                navigator.permissions
+                .query({ name: 'geolocation' })
+            }
             navigator.geolocation.getCurrentPosition((position) => {
                 setPosition([position.coords.latitude, position.coords.longitude]);
             });
@@ -27,7 +31,7 @@ const LocationMarker = () => {
         // Get current position immediately
         getPosition();
 
-        // Then get it every 2 seconds
+        // Then get it every 10 seconds
         const intervalId = setInterval(getPosition, 10000);
 
         // Clear interval on component unmount

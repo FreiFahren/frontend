@@ -4,35 +4,45 @@ import { OpacityMarkerIcon } from '../../../../../functions/mapUtils';
 import L from 'leaflet';
 import { useRef, useEffect, useState } from 'react';
 
-export const OpacityMarker = ({ markerData, index }: { markerData: MarkerData; index: number; }) => {
-    const [opacity, setOpacity] = useState(1); // full opacity so that the component renders initially
+interface OpacityMarkerProps {
+    markerData: MarkerData;
+    index: number;
+    isHistoric: boolean;
+}
+
+export const OpacityMarker: React.FC<OpacityMarkerProps> = ({ markerData, index, isHistoric }) => {
+    const [opacity, setOpacity] = useState(0);
     const { timestamp, station, line, direction } = markerData;
 
-    const timestampSeconds = new Date(timestamp.replace(/T|Z/g, ' ')).getTime();
+    // Timestamp is only one time call, so it's safe to ignore the warning
+    const Timestamp = new Date(timestamp);
+    Timestamp.setHours(Timestamp.getHours() -1); // subtracts 1 hour from the timestamp (utc to local time conversion)
 
     const markerRef = useRef<L.Marker | null>(null);
-
     useEffect(() => {
         // ensures that intervalId is defined before it's used
         // eslint-disable-next-line prefer-const
         let intervalId: NodeJS.Timeout;
 
-        const calculateOpacity = () => {
+        if (!isHistoric) {
+          const calculateOpacity = () => {
             const currentTime = new Date().getTime();
-            const elapsedTime = currentTime - timestampSeconds;
-            const newOpacity = Math.max(0, 1 - (elapsedTime / (15 * 60 * 1000)));
+            const elapsedTime = currentTime - Timestamp.getTime();
+            const newOpacity = Math.max(0, 1 - (elapsedTime / (20 * 1000)));
             setOpacity(newOpacity);
             if (newOpacity === 0) {
-                clearInterval(intervalId);
+              clearInterval(intervalId);
             }
-        };
+          };
+          calculateOpacity(); // Initial calculation
 
-        calculateOpacity(); // Initial calculation
+          intervalId = setInterval(calculateOpacity, 5000); // every 5 seconds to avoid excessive rerenders
+        } else {
+          setOpacity(1);
+          return () => clearInterval(intervalId); // This will clear the interval when isHistoric becomes true
+        }
 
-        intervalId = setInterval(calculateOpacity, 5000); // every 5 seconds to avoid excessive rerenders
-
-        return () => clearInterval(intervalId);
-    }, [timestampSeconds]); // runs when getting a new timestamp
+      }, [Timestamp, isHistoric]); // Add isHistoric to the dependency array
 
     useEffect(() => {
         if (markerRef.current && opacity > 0) {
@@ -53,7 +63,9 @@ export const OpacityMarker = ({ markerData, index }: { markerData: MarkerData; i
             icon={OpacityMarkerIcon(opacity)}
         >
             <Popup>
-                {`${line} ${direction.name ? direction.name + ' - ' : ''} ${station.name}`}
+                <>
+                    {line} {direction.name ? direction.name + ' - ' : ''} { station.name }
+                </>
             </Popup>
         </Marker>
     );

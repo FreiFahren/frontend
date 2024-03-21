@@ -1,45 +1,50 @@
-.report-form div {
-    margin: 20px 0;
-}
 
-.report-form input {
-    width: 80%;
-    padding: 10px;
-    border: 2px solid var(--gray-outlines);
-    border-radius: var(--standard-border-radius);
-}
 
-.custom-placeholder {
-    position: absolute;
-    font-size: 0.85em;
-    left: 6vw;
-    bottom: -8px;
-    color: var(---place-holder-color);
-}
 
 .red-highlight {
    color: var(--red);
 }
 
 .report-form form > div:nth-child(2) {
-    position: relative;
+    position: relative; 
+
 }
 
 .report-form label {
     border-radius: var(--standard-border-radius);
-    font-size: 0.65em;
+    font-size: 0.9em;
     display: flex;
     align-items: center;
     width: fit-content;
     position: relative;
-    left: 5vw;
+    
+    margin: auto;
+    margin-bottom: 1rem;
+
 }
 
-.report-form label input {
-    width: fit-content;
+
+.report-form input[type="checkbox"] {
+    height: 1.5rem;
+    width: 1.5rem;
+    margin: auto;
+    margin-right: 0.65rem;
 }
 
 .report-form label a {
     color: var(--black);
     margin: 0 2px;
+}
+
+.line-direction-container {
+    display: flex;
+    justify-content: space-between;
+}
+.line-select-container {
+    width: 35%;
+    margin-right: 0.5rem;
+}
+
+.direction-select-container {
+    width: 65%;
 }

@@ -26,7 +26,10 @@ function App() {
     <div className='App'>
       {isFirstOpen &&
       <>
-        <LegalDisclaimer closeModal={() => setIsFirstOpen(false)} />
+        <LegalDisclaimer
+          className={isFirstOpen ? 'open' : ''}
+          closeModal={() => setIsFirstOpen(false)}
+        />
         <Backdrop onClick={() => highlightElement('legal-disclaimer')} />
       </>}
       <div id='map'>
@@ -35,14 +38,18 @@ function App() {
       <UtilButton onClick={() => setIsUtilFormOpen(!isUtilFormOpen)}/>
       {isUtilFormOpen && (
         <>
-          <UtilModal />
+          <UtilModal className={'open'}/>
           <Backdrop onClick={() => setIsUtilFormOpen(false)} />
         </>
       )}
       <ReportButton onClick={() => setIsReportFormOpen(!isReportFormOpen)} />
       {isReportFormOpen && (
         <>
-          <ReportForm closeModal={() => setIsReportFormOpen(false)} onFormSubmit={handleFormSubmit} />
+          <ReportForm
+            closeModal={() => setIsReportFormOpen(false)}
+            onFormSubmit={handleFormSubmit}
+            className={'open'}
+          />
           <Backdrop onClick={() => setIsReportFormOpen(false)} />
         </>
       )}

@@ -17,7 +17,7 @@ export const OpacityMarkerIcon = (opacity: number) => {
                             width:20px;
                             height:20px;
                             border-radius:50%;
-                            box-shadow: 0 2px 4px rgba(0, 0, 0, ${opacity/2});"></div>`,
+                            box-shadow: 0 2px 4px rgba(0, 0, 0, ${opacity});"></div>`,
         iconSize: [20, 20],
     });
 

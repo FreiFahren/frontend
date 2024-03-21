@@ -1,4 +1,21 @@
+import { selectOption } from '../components/AutocompleteInputForm/AutocompleteInputForm';
 import { MarkerData } from '../components/Map/Markers/MarkerContainer';
+
+export interface StationProperty {
+	name: string;
+	coordinates: {
+		latitude: number;
+		longitude: number;
+	};
+	lines: string[];
+}
+
+export type LineProperty = {
+    [key: string]: string[];
+}
+
+export type StationList = Record<string, StationProperty>;
+export type LinesList = Record<string, string[]>;
 
 export async function getRecentTicketInspectorInfo(lastUpdateTimestamp: string | null): Promise<MarkerData[] | null> {
     try {
@@ -27,22 +44,48 @@ export async function getRecentTicketInspectorInfo(lastUpdateTimestamp: string |
     }
 }
 
-export async function reportInspector(line: string, station: string, direction: string): Promise<ResponseType> {
-    const requestBody = {
-        line,
-        station,
-        direction,
-    };
+export async function getAllStationsList(): Promise<StationList> {
+  try {
+      const response = await fetch('/list?stations=true');
+      const data = await response.json();
+      return data;
+  } catch (error) {
+      console.error('Error:', error);
+      return {};
+  }
+}
 
-    return fetch('/newInspector', {
+export async function getAllLinesList(): Promise<LinesList> {
+  try {
+      const response = await fetch('/list?lines=true');
+      const data = await response.json();
+      return data;
+  } catch (error) {
+      console.error('Error:', error);
+      return {};
+  }
+}
+
+export async function reportInspector(line: selectOption, station: selectOption, direction: selectOption) {
+    const requestBody = JSON.stringify({
+        line: line === undefined ? '' : line.value,
+        station: station.label,
+        direction: (direction === undefined || direction === null) ? '' : direction.label,
+    });
+
+    fetch('/newInspector', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify(requestBody), // Convert the JavaScript object to a JSON string
-    })
-    .then(response => response.json()) // Parse the JSON response body
-    .catch(error => {
-        console.error('Error reporting inspector sighting:', error);
-    });
+        body: requestBody
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .catch((error) => console.error('Error:', error));
 }
+

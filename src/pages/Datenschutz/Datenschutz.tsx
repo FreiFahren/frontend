@@ -1,6 +1,7 @@
 const Datenschutz = () => {
     return (
         <>
+        <div className='legal-text'>
             <h1>Datenschutzerklärung für die App "Freifahren"</h1>
             <br />
                 <p>Letze aktualisierung: 18.03.2024</p>
@@ -60,6 +61,7 @@ const Datenschutz = () => {
                     Anstelle der unwirksamen oder undurchführbaren Bestimmungen soll eine Regelung treten, die dem Zweck der unwirksamen oder undurchführbaren Bestimmung in rechtswirksamer und durchführbarer Weise wirtschaftlich am nächsten kommt.
                     Die vorstehenden Bestimmungen gelten entsprechend für den Fall, dass sich die Datenschutzerklärung als lückenhaft erweist.
                     </p>
+            </div>
         </>
     );
 }

@@ -21,6 +21,7 @@ const Map: React.FC<MapProps> = ({ formSubmitted }) => {
             attribution= '<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a>'
             url={`https://tile.jawg.io/jawg-streets/{z}/{x}/{y}{r}.png?access-token=${process.env.REACT_APP_JAWG_ACCESS_TOKEN}`}
         />
+
         <LocationMarker />
 
         <MarkerContainer formSubmitted={formSubmitted}/>

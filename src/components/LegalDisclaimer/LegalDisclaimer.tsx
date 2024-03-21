@@ -2,11 +2,12 @@ import './LegalDisclaimer.css';
 
 interface LegalDisclaimerProps {
     closeModal: () => void;
+    className?: string;
 }
 
-const LegalDisclaimer: React.FC<LegalDisclaimerProps> = ({ closeModal }) => {
+const LegalDisclaimer: React.FC<LegalDisclaimerProps> = ({ closeModal, className }) => {
   return (
-    <div className='legal-disclaimer container' id='legal-disclaimer'>
+    <div className={`legal-disclaimer container ${className}`} id='legal-disclaimer'>
       <h3>Bitte bestätigen Sie vor dem Fortfahren</h3>
       <p>
       Um die Integrität unserer Community und den Geist fairer Nutzung zu wahren, bitten wir Sie, zwei wichtige Punkte zu bestätigen:

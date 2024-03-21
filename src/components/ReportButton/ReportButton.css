@@ -11,10 +11,12 @@
     border-radius: 50%;
     box-shadow: var(--button-box-shadow);
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .report-button span {
-    display: block;
     font-size: 50px;
     position: relative; 
     z-index: var(--button-z-index); 

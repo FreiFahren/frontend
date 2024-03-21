@@ -22,3 +22,13 @@
 .util-modal ul li a {
     color: var(--black);
 }
+
+.util-modal > div {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 2.5vw;
+}
+
+.util-modal > div img{
+    max-height: 25px;
+}

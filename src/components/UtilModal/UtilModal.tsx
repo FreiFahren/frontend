@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 
 import './UtilModal.css';
+import githubMark from '../../icons/github-mark.svg';
 
 interface UtilModalProps {
     className: string
@@ -19,6 +20,13 @@ const UtilModal: React.FC<UtilModalProps> = ({ className }) => {
                 <li><Link to='/impressum'>Impressum</Link></li>
                 <li><Link to='/Datenschutz'>Datenschutz</Link></li>
             </ul>
+            <div>
+                <span>
+                    <a href='https://github.com/FreiFahren/frontend' target='_blank' rel='noopener noreferrer'>
+                        <img src={githubMark} alt='GitHub' />
+                    </a>
+                </span>
+            </div>
         </div>
     );
 }

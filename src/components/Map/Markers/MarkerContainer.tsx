@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 import { getRecentTicketInspectorInfo } from '../../../functions/dbUtils';
 import { OpacityMarker } from './Classes/OpacityMarker/OpacityMarker';
@@ -31,36 +31,30 @@ export type MarkerData = {
 
 const MarkerContainer: React.FC<MarkersProps> = ({ formSubmitted }) => {
   const [ticketInspectorList, setTicketInspectorList] = useState<MarkerData[]>([]);
+  const lastReceivedInspectorTimestamp = useRef<string | null>(null);
 
- useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
-        const newTicketInspectorList = await getRecentTicketInspectorInfo();
-        if (JSON.stringify(newTicketInspectorList) !== JSON.stringify(ticketInspectorList)) {
-          setTicketInspectorList(newTicketInspectorList);
-        }
-        ticketInspectorList.forEach((ticketInspector) => {
-          if (ticketInspector.timestamp === '0001-01-01T00:00:00Z'){
-            ticketInspector.isHistoric = true;
-          }else{
-            ticketInspector.isHistoric = false;
-          }
-        })
+        const newTicketInspectorList = await getRecentTicketInspectorInfo(lastReceivedInspectorTimestamp.current) || [];
 
+        // Check if the new array is not empty, then update the state
+        if (Array.isArray(newTicketInspectorList) && newTicketInspectorList.length > 0) {
+            setTicketInspectorList(newTicketInspectorList);
+
+            // Update lastUpdateTime in local storage with the most recent timestamp
+            lastReceivedInspectorTimestamp.current = newTicketInspectorList[0].timestamp;
+        }
     };
 
     fetchData();
-
     const interval = setInterval(fetchData, 5000);
 
-    return () => {
-        clearInterval(interval);
-    };
-}, [ticketInspectorList, formSubmitted]);
+    return () => clearInterval(interval);
+}, [formSubmitted, ticketInspectorList]);
 
   return (
     <div>
-      {
-        ticketInspectorList.map((ticketInspector, index) => {
+      {ticketInspectorList.map((ticketInspector, index) => {
             return (
               <OpacityMarker
                 markerData={ticketInspector}

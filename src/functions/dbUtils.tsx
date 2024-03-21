@@ -17,14 +17,48 @@ export type LineProperty = {
 export type StationList = Record<string, StationProperty>;
 export type LinesList = Record<string, string[]>;
 
-export async function getRecentTicketInspectorInfo(): Promise<MarkerData[]> {
+export interface StationProperty {
+	name: string;
+	coordinates: {
+		latitude: number;
+		longitude: number;
+	};
+	lines: string[];
+}
+
+export type LineProperty = {
+    [key: string]: string[];
+}
+
+export type StationList = Record<string, StationProperty>;
+export type LinesList = Record<string, string[]>;
+
+
+
+export async function getRecentTicketInspectorInfo(lastUpdateTimestamp: string | null): Promise<MarkerData[] | null> {
     try {
-        const response = await fetch('/recent');
+        const headers = new Headers();
+        // Include the If-Modified-Since header only if lastUpdateTimestamp is available
+        if (lastUpdateTimestamp) {
+            headers.append('If-Modified-Since', lastUpdateTimestamp);
+        }
+
+        // Make the request with optional If-Modified-Since header
+        const response = await fetch('/recent', {
+            method: 'GET',
+            headers: headers,
+        });
+
+        // Handle 304 Not Modified
+        if (response.status === 304) {
+            return null;
+        }
+
         const data = await response.json();
         return data;
     } catch (error) {
         console.error('Error:', error);
-        return [];
+        return []; // Return an empty array in case of error
     }
 }
 

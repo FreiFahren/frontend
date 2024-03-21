@@ -30,18 +30,18 @@ export type MarkerData = {
 
 const MarkerContainer: React.FC<MarkersProps> = ({ formSubmitted }) => {
   const [ticketInspectorList, setTicketInspectorList] = useState<MarkerData[]>([]);
-  const lastRecievedInspectorTimestamp = useRef<string | null>(null);
+  const lastReceivedInspectorTimestamp = useRef<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-        const newTicketInspectorList = await getRecentTicketInspectorInfo(lastRecievedInspectorTimestamp.current) || [];
+        const newTicketInspectorList = await getRecentTicketInspectorInfo(lastReceivedInspectorTimestamp.current) || [];
 
-        // Only reset the markers if we are getting new data
+        // Check if the new array is not empty, then update the state
         if (Array.isArray(newTicketInspectorList) && newTicketInspectorList.length > 0) {
             setTicketInspectorList(newTicketInspectorList);
 
             // Update lastUpdateTime in local storage with the most recent timestamp
-            lastRecievedInspectorTimestamp.current = newTicketInspectorList[0].timestamp;
+            lastReceivedInspectorTimestamp.current = newTicketInspectorList[0].timestamp;
         }
     };
 

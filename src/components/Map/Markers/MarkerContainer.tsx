@@ -45,7 +45,7 @@ const MarkerContainer: React.FC<MarkersProps> = ({ formSubmitted }) => {
             ticketInspector.isHistoric = false;
           }
         })
-        
+
     };
 
     fetchData();

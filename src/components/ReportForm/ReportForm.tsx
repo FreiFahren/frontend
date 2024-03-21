@@ -4,12 +4,13 @@ import { ActionMeta } from 'react-select/';
 import {
 	LinesList,
 	StationList,
+	StationProperty,
 	getAllLinesList,
 	getAllStationsList,
 	reportInspector,
 } from '../../functions/dbUtils';
 import AutocompleteInputForm, {
-	Option,
+	selectOption,
 } from '../AutocompleteInputForm/AutocompleteInputForm';
 import { highlightElement, redefineDirectionOptions, redefineLineOptions, redefineStationOptions } from '../../functions/uiUtils';
 
@@ -22,12 +23,12 @@ interface ReportFormProps {
 }
 
 type reportFormState = {
-	lineInput: Option | undefined;
-	stationInput: Option | undefined;
-	directionInput: Option | undefined;
-	lineOptions: Option[];
-	stationOptions: Option[];
-	directionOptions: Option[];
+	lineInput: selectOption | undefined;
+	stationInput: selectOption | undefined;
+	directionInput: selectOption | undefined;
+	lineOptions: selectOption[];
+	stationOptions: selectOption[];
+	directionOptions: selectOption[];
 	stationsList: StationList;
 	linesList: LinesList;
 	isLoadingLines: boolean;
@@ -49,7 +50,7 @@ const initialState: reportFormState = {
 
 const redHighlight = (text: string) => {
 	return <>{text}<span className='red-highlight'>*</span></>
-} 
+}
 
 const ReportForm: React.FC<ReportFormProps> = ({
 	closeModal,
@@ -59,7 +60,7 @@ const ReportForm: React.FC<ReportFormProps> = ({
 
 	const [reportFormState, setReportFormState] = useState<reportFormState>(initialState);
 
-	const emptyOption = '' as unknown as Option;
+	const emptyOption = '' as unknown as selectOption;
 
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
@@ -86,44 +87,27 @@ const ReportForm: React.FC<ReportFormProps> = ({
 		onFormSubmit(); // Notify App component about the submission
 	};
 
-	const refreshLineOptions = async () => {
+	const refreshOptions = async (type: 'lines' | 'stations') => {
 		try {
-			setReportFormState(prevState => ({ ...prevState, isLoadingLines: true }));
+			setReportFormState(prevState => ({ ...prevState,
+				[type === 'lines' ? 'isLoadingLines' : 'isLoadingStations']: true }));
 
-			const LinesList: LinesList = await getAllLinesList();
-			const LineOptions = Object.keys(LinesList).map(line => ({ value: line, label: line }));
+			const list = type === 'lines' ? await getAllLinesList() : await getAllStationsList();
+			const options = Object.keys(list).map(key => ({ value: key, label: type === 'lines' ? key : (list[key] as StationProperty).name }));
 
-			setReportFormState(prevState => ({ ...prevState, linesList: LinesList, lineOptions: LineOptions }));
-
-			return LinesList
-		} catch (error) {
-			console.error('Failed to fetch lines:', error);
-		} finally {
-			setReportFormState(prevState => ({ ...prevState, isLoadingLines: false }));
-
-		}
-	}
-
-	const refreshStationOptions = async () => {
-		try {
-			setReportFormState(prevState => ({ ...prevState, isLoadingStations: true }));
-
-			const StationsList: StationList = await getAllStationsList();
-			const StationOptions = Object.keys(StationsList).map(station => ({ value: station, label: StationsList[station].name }));
-
-			setReportFormState(prevState => ({ ...prevState, stationsList: StationsList, stationOptions: StationOptions }));
+			setReportFormState(prevState => ({ ...prevState, [type === 'lines' ? 'linesList' : 'stationsList']: list, [type === 'lines' ? 'lineOptions' : 'stationOptions']: options }));
 
 		} catch (error) {
-			console.error('Failed to fetch stations and lines:', error);
+			console.error(`Failed to fetch ${type}:`, error);
 		} finally {
-			setReportFormState(prevState => ({ ...prevState, isLoadingStations: false }));
+			setReportFormState(prevState => ({ ...prevState, [type === 'lines' ? 'isLoadingLines' : 'isLoadingStations']: false }));
 		}
 	};
 
-	const handleOnLineChange = (option: Option, action: ActionMeta<unknown>) => {
+	const handleOnLineChange = (option: selectOption, action: ActionMeta<unknown>) => {
 		if (action.action === 'clear') {
 			setReportFormState(prevState => ({ ...prevState, lineInput: emptyOption, directionInput: emptyOption, directionOptions: [] }));
-			refreshStationOptions();
+			refreshOptions('stations');
 			return;
 		}
 
@@ -137,11 +121,11 @@ const ReportForm: React.FC<ReportFormProps> = ({
 
 	}
 
-	const handleOnStationChange = (option: Option, action: ActionMeta<unknown>) => {
+	const handleOnStationChange = (option: selectOption, action: ActionMeta<unknown>) => {
 		if (action.action === 'clear') {
 			setReportFormState(prevState => ({ ...prevState, stationInput: emptyOption, lineInput: emptyOption, directionInput: emptyOption }));
-			refreshLineOptions();
-			refreshStationOptions();
+			refreshOptions('stations');
+			refreshOptions('lines');
 
 			return;
 		}
@@ -151,8 +135,8 @@ const ReportForm: React.FC<ReportFormProps> = ({
 
 	useEffect(() => {
 		const fetchData = async () => {
-			await refreshStationOptions();
-			await refreshLineOptions();
+			await refreshOptions('stations');
+			await refreshOptions('lines');
 		};
 
 		fetchData();
@@ -170,10 +154,9 @@ const ReportForm: React.FC<ReportFormProps> = ({
 						options={reportFormState.stationOptions}
 						placeholder={redHighlight('Station')}
 						defaultInputValue={reportFormState.stationInput}
-						onChange={(value, action) => handleOnStationChange(value as Option, action)}
-						isLoading={reportFormState.isLoadingStations}
+						onChange={(value, action) => handleOnStationChange(value as selectOption, action)}
 						isDisabled={reportFormState.isLoadingStations}
-						
+
 					/>
 
 				</div>
@@ -184,10 +167,9 @@ const ReportForm: React.FC<ReportFormProps> = ({
 							options={reportFormState.lineOptions}
 							defaultInputValue={reportFormState.lineInput}
 							placeholder='Linie'
-							onChange={(value, action) => handleOnLineChange(value as Option, action)}
+							onChange={(value, action) => handleOnLineChange(value as selectOption, action)}
 							isDropdownIndicator={false}
 							isIndicatorSeparator={false}
-							isLoading={reportFormState.isLoadingLines}
 							isDisabled={reportFormState.isLoadingLines}
 						/>
 					</div>
@@ -197,10 +179,9 @@ const ReportForm: React.FC<ReportFormProps> = ({
 							options={reportFormState.directionOptions}
 							placeholder='Richtung'
 							defaultInputValue={reportFormState.directionInput}
-							onChange={(option) => setReportFormState(prevState => ({ ...prevState, directionInput: option as Option }))}
+							onChange={(option) => setReportFormState(prevState => ({ ...prevState, directionInput: option as selectOption }))}
 							isDropdownIndicator={false}
 							isIndicatorSeparator={false}
-							isLoading={reportFormState.isLoadingStations}
 							isDisabled={reportFormState.isLoadingStations}
 						/>
 					</div>

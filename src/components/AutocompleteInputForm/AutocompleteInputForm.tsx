@@ -2,7 +2,7 @@ import Select, { ActionMeta, StylesConfig} from 'react-select';
 
 import { AutocompleteStyles } from './AutocompleteStyles';
 
-export interface Option {
+export interface selectOption {
   value: string ;
   label: string ;
 }
@@ -33,12 +33,12 @@ export function setStyles (isIndicatorSeparator: boolean | undefined, isDropdown
 }
 
 export interface AutocompleteInputFormProps {
-  options: Option[] ;
+  options: selectOption[] ;
   placeholder: React.ReactNode;
-  onChange: (value: Option | unknown, action: ActionMeta<unknown>) => void;
+  onChange: (value: selectOption | unknown, action: ActionMeta<unknown>) => void;
   className: string;
-  value?: Option;
-  defaultInputValue: Option | unknown;
+  value?: selectOption;
+  defaultInputValue: selectOption | unknown;
   isIndicatorSeparator?: boolean;
   isDropdownIndicator?: boolean;
   isLoading?: boolean;
@@ -63,7 +63,6 @@ export default function AutocompleteInputForm(props: AutocompleteInputFormProps)
         styles={colourStyles}
         placeholder={props.placeholder}
         onChange={props.onChange}
-        isLoading={props.isLoading}
         isDisabled={props.isDisabled}
         id='autocomplete-input-form'
         classNamePrefix={props.classNamePrefix}

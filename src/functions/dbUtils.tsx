@@ -1,4 +1,4 @@
-import { Option } from '../components/AutocompleteInputForm/AutocompleteInputForm';
+import { selectOption } from '../components/AutocompleteInputForm/AutocompleteInputForm';
 import { MarkerData } from '../components/Map/Markers/MarkerContainer';
 
 export interface StationProperty {
@@ -50,8 +50,7 @@ export async function getAllLinesList(): Promise<LinesList> {
   }
 }
 
-export async function reportInspector(line: Option, station: Option, direction: Option) {
-    // TODO: we should send ID instead of the name!!!!!! (backend issue)
+export async function reportInspector(line: selectOption, station: selectOption, direction: selectOption) {
     const requestBody = JSON.stringify({
         line: line === undefined ? '' : line.value,
         station: station.label,

@@ -22,9 +22,6 @@ const LocationMarker = () => {
             if (navigator.geolocation) {
                 navigator.permissions
                 .query({ name: 'geolocation' })
-                .then(function (result) {
-                    console.log(result);
-                });
             }
             navigator.geolocation.getCurrentPosition((position) => {
                 setPosition([position.coords.latitude, position.coords.longitude]);

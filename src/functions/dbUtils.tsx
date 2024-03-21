@@ -1,15 +1,6 @@
 import { Option } from '../components/AutocompleteInputForm/AutocompleteInputForm';
 import { MarkerData } from '../components/Map/Markers/MarkerContainer';
 
-export type StationsAndLinesList = {
-    lines: string[];
-    stations: string[];
-  };
-
-export interface StationsList  {
-    [key: string]: StationProperty;
-}
-
 export interface StationProperty {
 	name: string;
 	coordinates: {
@@ -19,9 +10,12 @@ export interface StationProperty {
 	lines: string[];
 }
 
-export interface LinesList {
+export type LineProperty = {
     [key: string]: string[];
 }
+
+export type StationList = Record<string, StationProperty>;
+export type LinesList = Record<string, string[]>;
 
 export async function getRecentTicketInspectorInfo(): Promise<MarkerData[]> {
     try {
@@ -34,36 +28,25 @@ export async function getRecentTicketInspectorInfo(): Promise<MarkerData[]> {
     }
 }
 
-export async function getAllStationsAndLines(): Promise<StationsAndLinesList> {
-    try {
-        const response = await fetch('/list');
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('Error:', error);
-        return { lines: [], stations: [] };
-    }
-}
-
-export async function getAllStationsList(): Promise<StationsList[]> {
+export async function getAllStationsList(): Promise<StationList> {
   try {
       const response = await fetch('/list?stations=true');
       const data = await response.json();
       return data;
   } catch (error) {
       console.error('Error:', error);
-      return [];
+      return {};
   }
 }
 
-export async function getAllLinesList(): Promise<LinesList[]> {
+export async function getAllLinesList(): Promise<LinesList> {
   try {
       const response = await fetch('/list?lines=true');
       const data = await response.json();
       return data;
   } catch (error) {
       console.error('Error:', error);
-      return [];
+      return {};
   }
 }
 

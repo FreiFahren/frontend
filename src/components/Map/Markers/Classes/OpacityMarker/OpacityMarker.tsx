@@ -50,7 +50,7 @@ export const OpacityMarker = ({ markerData, index, isHistoric }: { markerData: M
         <Marker key={`${line}-${index}`} position={[station.coordinates.latitude, station.coordinates.longitude]} icon={icon}>
             <Popup>
                 <>
-                    {line} {direction.name ? direction.name + ' - ' : ''} {isHistoric ? station.name + ' (Historisch)' : station.name}
+                    {line} {direction.name ? direction.name + ' - ' : ''} { station.name}
                 </>
             </Popup>
         </Marker>

@@ -16,8 +16,9 @@ import { highlightElement, redefineDirectionOptions, redefineLineOptions, redefi
 import { ActionMeta } from 'react-select/';
 
 interface ReportFormProps {
-	closeModal: () => void;
-	onFormSubmit: () => void;
+  closeModal: () => void;
+  onFormSubmit: () => void;
+  className?: string;
 }
 
 type reportFormState = {

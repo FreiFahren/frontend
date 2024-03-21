@@ -53,9 +53,9 @@ export async function getAllLinesList(): Promise<LinesList> {
 export async function reportInspector(line: Option, station: Option, direction: Option) {
     // TODO: we should send ID instead of the name!!!!!! (backend issue)
     const requestBody = JSON.stringify({
-        line: line === undefined ? { value: '', label: ''} : line.value,
+        line: line === undefined ? '' : line.value,
         station: station.label,
-        direction: direction === undefined ? { value: '', label: ''} : direction.value,
+        direction: direction === undefined ? '' : direction.label,
     });
     console.log(requestBody)
     fetch('/newInspector', {

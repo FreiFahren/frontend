@@ -26,6 +26,7 @@ export type MarkerData = {
       };
   };
   line: string;
+  isHistoric: boolean;
 };
 
 const MarkerContainer: React.FC<MarkersProps> = ({ formSubmitted }) => {
@@ -37,6 +38,14 @@ const MarkerContainer: React.FC<MarkersProps> = ({ formSubmitted }) => {
         if (JSON.stringify(newTicketInspectorList) !== JSON.stringify(ticketInspectorList)) {
           setTicketInspectorList(newTicketInspectorList);
         }
+        ticketInspectorList.forEach((ticketInspector) => {
+          if (ticketInspector.timestamp === '0001-01-01T00:00:00Z'){
+            ticketInspector.isHistoric = true;
+          }else{
+            ticketInspector.isHistoric = false;
+          }
+        })
+        
     };
 
     fetchData();
@@ -52,17 +61,12 @@ const MarkerContainer: React.FC<MarkersProps> = ({ formSubmitted }) => {
     <div>
       {
         ticketInspectorList.map((ticketInspector, index) => {
-            let isHistoric = false;
-
-            if (ticketInspector.timestamp === '0001-01-01T00:00:00Z'){
-              isHistoric = true;
-            }
             return (
               <OpacityMarker
                 markerData={ticketInspector}
                 index={index}
                 key={ticketInspector.station.id}
-                isHistoric={isHistoric}/>
+                isHistoric={ticketInspector.isHistoric}/>
             );
 
         })}

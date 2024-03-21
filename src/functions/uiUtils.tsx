@@ -13,12 +13,24 @@ type LinesList = {
 
 export function highlightElement(id: string) {
     const element = document.getElementById(id);
+    
+    if(element !== null) {
+      if (element) {
+        element.classList.add('highlight');
+        setTimeout(() => {
+          element.classList.remove('highlight');
+        }, 3000);
+      }
+    }else{
 
-    if (element) {
-      element.classList.add('highlight');
+    const elementClass = document.getElementsByClassName(id);
+    
+    if (elementClass) {
+      elementClass[0].classList.add('highlight');
       setTimeout(() => {
-        element.classList.remove('highlight');
+        elementClass[0].classList.remove('highlight');
       }, 3000);
+    }
     }
 
 }

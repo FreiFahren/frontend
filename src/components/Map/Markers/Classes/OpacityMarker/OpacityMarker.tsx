@@ -15,14 +15,14 @@ export const OpacityMarker: React.FC<OpacityMarkerProps> = ({ markerData, index,
     const [opacity, setOpacity] = useState(0);
     const { timestamp, station, line, direction } = markerData;
 
-    const timestampSeconds = new Date(timestamp);
+    const Timestamp = new Date(timestamp);
 
     // Subtract one hour to account for the time difference between the server and the client
-    timestampSeconds.setHours(timestampSeconds.getHours() - 1);
+    Timestamp.setHours(Timestamp.getHours() - 1);
     const currentTime = new Date().getTime();
 
     const calculateOpacity = () => {
-        const elapsedTime = currentTime - timestampSeconds.getTime();
+        const elapsedTime = currentTime - Timestamp.getTime();
         const opacityValue = Math.max(0, 1 - (elapsedTime / ( 15 * 60 * 1000)));
 
         setOpacity(opacityValue);

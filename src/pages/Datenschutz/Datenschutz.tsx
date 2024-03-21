@@ -1,9 +1,7 @@
-import './Datenschutz.css';
-
 const Datenschutz = () => {
     return (
         <>
-        <div id='datenschutz-form'>
+        <div className='legal-text'>
             <h1>Datenschutzerklärung für die App "Freifahren"</h1>
             <br />
                 <p>Letze aktualisierung: 18.03.2024</p>

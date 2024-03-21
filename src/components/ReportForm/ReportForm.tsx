@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { ActionMeta } from 'react-select/';
 
-import './ReportForm.css';
 import {
-
 	LinesList,
 	StationList,
 	getAllLinesList,
@@ -13,7 +12,8 @@ import AutocompleteInputForm, {
 	Option,
 } from '../AutocompleteInputForm/AutocompleteInputForm';
 import { highlightElement, redefineDirectionOptions, redefineLineOptions, redefineStationOptions } from '../../functions/uiUtils';
-import { ActionMeta } from 'react-select/';
+
+import './ReportForm.css';
 
 interface ReportFormProps {
   closeModal: () => void;
@@ -22,7 +22,6 @@ interface ReportFormProps {
 }
 
 type reportFormState = {
-	hasNoStationInput: boolean;
 	lineInput: Option | undefined;
 	stationInput: Option | undefined;
 	directionInput: Option | undefined;
@@ -36,7 +35,6 @@ type reportFormState = {
 };
 
 const initialState: reportFormState = {
-	hasNoStationInput: false,
 	lineInput: undefined,
 	stationInput: undefined,
 	directionInput: undefined,
@@ -48,6 +46,10 @@ const initialState: reportFormState = {
 	isLoadingLines: true,
 	isLoadingStations: true,
 };
+
+const redHighlight = (text: string) => {
+	return <>{text}<span className='red-highlight'>*</span></>
+} 
 
 const ReportForm: React.FC<ReportFormProps> = ({
 	closeModal,
@@ -65,17 +67,11 @@ const ReportForm: React.FC<ReportFormProps> = ({
 		let hasError = false;
 
 		if (reportFormState.stationInput === undefined || reportFormState.stationInput === emptyOption) {
-			setReportFormState(prevState => ({ ...prevState, hasNoStationInput: true }));
+			highlightElement('station-select-component__control');
 			hasError = true;
-		} else {
-			setReportFormState(prevState => ({ ...prevState, hasNoStationInput: false }));
-			hasError = false;
 		}
 
-		if (
-			!(document.getElementById('privacy-checkbox') as HTMLInputElement)
-				.checked
-		) {
+		if (!(document.getElementById('privacy-checkbox') as HTMLInputElement).checked) {
 			highlightElement('privacy-label'); // Highlight the 'privacy-checkbox' input field
 			hasError = true;
 		}
@@ -167,20 +163,21 @@ const ReportForm: React.FC<ReportFormProps> = ({
 			<h1>Neue Meldung</h1>
 			<form onSubmit={handleSubmit}>
 
-				<div>
+				<div id='station-select-div'>
 					<AutocompleteInputForm
 						className='station-select'
+						classNamePrefix='station-select-component'
 						options={reportFormState.stationOptions}
-						placeholder='Station'
+						placeholder={redHighlight('Station')}
 						defaultInputValue={reportFormState.stationInput}
-						hasNoStationInput={reportFormState.hasNoStationInput}
 						onChange={(value, action) => handleOnStationChange(value as Option, action)}
 						isLoading={reportFormState.isLoadingStations}
 						isDisabled={reportFormState.isLoadingStations}
+						
 					/>
 
 				</div>
-				<div className='report-form-container'>
+				<div className='line-direction-container'>
 					<div className='line-select-container'>
 						<AutocompleteInputForm
 							className='line-select'
@@ -217,7 +214,7 @@ const ReportForm: React.FC<ReportFormProps> = ({
 						/>
 						Ich stimme der{' '}
 						<a href='/datenschutz'> Datenschutzerklärung </a> zu.{' '}
-						<span className='red-highlight'>*</span>
+						{redHighlight('')}
 					</label>
 				</div>
 				<div>

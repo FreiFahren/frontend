@@ -1,5 +1,5 @@
-
 import Select, { ActionMeta, StylesConfig} from 'react-select';
+
 import { AutocompleteStyles } from './AutocompleteStyles';
 
 export interface Option {
@@ -7,7 +7,7 @@ export interface Option {
   label: string ;
 }
 
-export function setStyles (hasError: boolean | undefined, isIndicatorSeparator: boolean | undefined, isDropdownIndicator: boolean | undefined): StylesConfig {
+export function setStyles (isIndicatorSeparator: boolean | undefined, isDropdownIndicator: boolean | undefined): StylesConfig {
    const colourStyles: StylesConfig = {
     control: (styles) => ({
       ...styles,
@@ -17,7 +17,6 @@ export function setStyles (hasError: boolean | undefined, isIndicatorSeparator: 
       justifyItems: 'center',
       padding: '10px',
       fontSize: '1.3rem',
-      borderColor: hasError ? 'red' : '#ced4da',
 
       }),
       indicatorSeparator: (base) => ({
@@ -35,21 +34,21 @@ export function setStyles (hasError: boolean | undefined, isIndicatorSeparator: 
 
 export interface AutocompleteInputFormProps {
   options: Option[] ;
-  placeholder: string;
+  placeholder: React.ReactNode;
   onChange: (value: Option | unknown, action: ActionMeta<unknown>) => void;
   className: string;
   value?: Option;
-  hasNoStationInput?: boolean;
   defaultInputValue: Option | unknown;
   isIndicatorSeparator?: boolean;
   isDropdownIndicator?: boolean;
   isLoading?: boolean;
   isDisabled?: boolean;
+  classNamePrefix?: string;
 }
 
 export default function AutocompleteInputForm(props: AutocompleteInputFormProps) {
 
-  const colourStyles = setStyles(props.hasNoStationInput, props.isIndicatorSeparator, props.isDropdownIndicator);
+  const colourStyles = setStyles(props.isIndicatorSeparator, props.isDropdownIndicator);
 
   return (
     <>
@@ -66,7 +65,8 @@ export default function AutocompleteInputForm(props: AutocompleteInputFormProps)
         onChange={props.onChange}
         isLoading={props.isLoading}
         isDisabled={props.isDisabled}
-
+        id='autocomplete-input-form'
+        classNamePrefix={props.classNamePrefix}
       />
     </div>
 

@@ -1,9 +1,7 @@
-import './Impressum.css'
-
 const Impressum = () => {
     return (
         <>
-            <div id='impressum-form'>
+            <div className='legal-text'>
                 <h1>Impressum</h1>
                 <br />
                     <h2>Anbieter:</h2>

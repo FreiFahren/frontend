@@ -14,8 +14,9 @@ export const OpacityMarker = ({ markerData, index }: { markerData: MarkerData; i
 
     useEffect(() => {
         // ensures that intervalId is defined before it's used
+        // eslint-disable-next-line prefer-const
         let intervalId: NodeJS.Timeout;
-        
+
         const calculateOpacity = () => {
             const currentTime = new Date().getTime();
             const elapsedTime = currentTime - timestampSeconds;
@@ -45,10 +46,10 @@ export const OpacityMarker = ({ markerData, index }: { markerData: MarkerData; i
     }
 
     return (
-        <Marker 
+        <Marker
             ref={markerRef}
             key={`${line}-${index}`}
-            position={[station.coordinates.latitude, station.coordinates.longitude]} 
+            position={[station.coordinates.latitude, station.coordinates.longitude]}
             icon={OpacityMarkerIcon(opacity)}
         >
             <Popup>

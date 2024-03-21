@@ -12,7 +12,7 @@ interface OpacityMarkerProps {
 }
 
 export const OpacityMarker: React.FC<OpacityMarkerProps> = ({ markerData, index, isHistoric }) => {
-    const [opacity, setOpacity] = useState(1);
+    const [opacity, setOpacity] = useState(0);
     const { timestamp, station, line, direction } = markerData;
 
     const timestampSeconds = new Date(timestamp);

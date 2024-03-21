@@ -61,7 +61,7 @@ const ReportForm: React.FC<ReportFormProps> = ({
 
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
-		
+
 		let hasError = false;
 
 		if (reportFormState.stationInput === undefined || reportFormState.stationInput === emptyOption) {

@@ -26,9 +26,9 @@ function App() {
     <div className='App'>
       {isFirstOpen &&
       <>
-        <LegalDisclaimer 
-          className={isFirstOpen ? 'open' : ''} 
-          closeModal={() => setIsFirstOpen(false)} 
+        <LegalDisclaimer
+          className={isFirstOpen ? 'open' : ''}
+          closeModal={() => setIsFirstOpen(false)}
         />
         <Backdrop onClick={() => highlightElement('legal-disclaimer')} />
       </>}
@@ -45,9 +45,9 @@ function App() {
       <ReportButton onClick={() => setIsReportFormOpen(!isReportFormOpen)} />
       {isReportFormOpen && (
         <>
-          <ReportForm 
-            closeModal={() => setIsReportFormOpen(false)} 
-            onFormSubmit={handleFormSubmit} 
+          <ReportForm
+            closeModal={() => setIsReportFormOpen(false)}
+            onFormSubmit={handleFormSubmit}
             className={'open'}
           />
           <Backdrop onClick={() => setIsReportFormOpen(false)} />

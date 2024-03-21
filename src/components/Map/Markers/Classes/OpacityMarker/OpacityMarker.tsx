@@ -8,9 +8,10 @@ let icon = OpacityMarkerIcon(1);
 interface OpacityMarkerProps {
     markerData: MarkerData;
     index: number;
+    isHistoric: boolean;
 }
 
-export const OpacityMarker: React.FC<OpacityMarkerProps> = ({ markerData, index }) => {
+export const OpacityMarker: React.FC<OpacityMarkerProps> = ({ markerData, index, isHistoric }) => {
     const [opacity, setOpacity] = useState(1);
     const { timestamp, station, line, direction } = markerData;
 

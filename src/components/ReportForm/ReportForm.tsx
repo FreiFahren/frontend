@@ -52,6 +52,7 @@ const initialState: reportFormState = {
 const ReportForm: React.FC<ReportFormProps> = ({
 	closeModal,
 	onFormSubmit,
+	className,
 }) => {
 
 	const [reportFormState, setReportFormState] = useState<reportFormState>(initialState);
@@ -163,7 +164,7 @@ const ReportForm: React.FC<ReportFormProps> = ({
 	}, []);
 
 	return (
-		<div className='report-form container'>
+		<div className={`report-form container ${className}`}>
 			<h1>Neue Meldung</h1>
 			<form onSubmit={handleSubmit}>
 

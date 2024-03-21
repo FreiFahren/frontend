@@ -28,7 +28,7 @@ export const OpacityMarker: React.FC<OpacityMarkerProps> = ({ markerData, index,
           const calculateOpacity = () => {
             const currentTime = new Date().getTime();
             const elapsedTime = currentTime - Timestamp.getTime();
-            const newOpacity = Math.max(0, 1 - (elapsedTime / (20 * 1000)));
+            const newOpacity = Math.max(0, 1 - (elapsedTime / (15 * 60 * 1000)));
             setOpacity(newOpacity);
             if (newOpacity === 0) {
               clearInterval(intervalId);

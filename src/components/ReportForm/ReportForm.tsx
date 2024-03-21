@@ -172,20 +172,6 @@ const ReportForm: React.FC<ReportFormProps> = ({
 			}
 		}
 
-		// if the line is not in the station, reset the line and direction
-		let isLineInStation = false;
-
-		for (const line of newLineOptions) {
-			if (line.value === lineInput?.value) {
-				isLineInStation = true;
-			}
-		}
-
-		if (!isLineInStation) {
-			setLineInput(emptyOption);
-			setDirectionInput(emptyOption);
-		}
-
 		setLineOptions(newLineOptions);
 	}
 

@@ -45,12 +45,13 @@ const ReportForm: React.FC<ReportFormProps> = ({
 
 	const emptyOption = '' as unknown as Option;
 
+
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
 
 		let hasError = false;
 
-		if (stationInput === emptyOption) {
+		if (stationInput === undefined) {
 			highlightElement('station'); // Highlight the 'station' input field
 			setHasNoStationInput(true);
 			hasError = true;
@@ -204,31 +205,31 @@ const ReportForm: React.FC<ReportFormProps> = ({
 					/>
 
 				</div>
-				<div style={{ display: 'flex', justifyContent: 'space-between' }}>
-					<div style={{ width: '35%' }}>
+				<div className="report-form-container">
+					<div className="line-select-container">
 						<AutocompleteInputForm
-							className='line-select'
-							options={lineOptions}
-							defaultInputValue={lineInput}
-							placeholder='Linie'
-							onChange={handleOnLineChange as (option: unknown, action: ActionMeta<unknown>) => void}
-							isDropdownIndicator={false}
-							isIndicatorSeparator={false}
-							isLoading={isLoadingLines}
-							isDisabled={isLoadingLines}
+						className='line-select'
+						options={lineOptions}
+						defaultInputValue={lineInput}
+						placeholder='Linie'
+						onChange={handleOnLineChange as (option: unknown, action: ActionMeta<unknown>) => void}
+						isDropdownIndicator={false}
+						isIndicatorSeparator={false}
+						isLoading={isLoadingLines}
+						isDisabled={isLoadingLines}
 						/>
 					</div>
-					<div style={{ width: '65%' }}>
+					<div className="direction-select-container">
 						<AutocompleteInputForm
-							className='direction-select'
-							options={directionOptions}
-							placeholder='Richtung'
-							defaultInputValue={directionInput}
-							onChange={handleOnDirectionChange as (option: unknown, action: ActionMeta<unknown>) => void}
-							isDropdownIndicator={false}
-							isIndicatorSeparator={false}
-							isLoading={isLoadingStations}
-							isDisabled={isLoadingStations}
+						className='direction-select'
+						options={directionOptions}
+						placeholder='Richtung'
+						defaultInputValue={directionInput}
+						onChange={handleOnDirectionChange as (option: unknown, action: ActionMeta<unknown>) => void}
+						isDropdownIndicator={false}
+						isIndicatorSeparator={false}
+						isLoading={isLoadingStations}
+						isDisabled={isLoadingStations}
 						/>
 					</div>
 				</div>

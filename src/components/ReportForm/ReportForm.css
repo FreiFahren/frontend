@@ -6,14 +6,6 @@
     border-radius: var(--standard-border-radius);
 }
 
-.custom-placeholder {
-    position: absolute;
-    font-size: 0.85em;
-    left: 6vw;
-    bottom: -8px;
-    color: var(---place-holder-color);
-}
-
 .red-highlight {
    color: var(--red);
 }
@@ -51,4 +43,17 @@
 .report-form label a {
     color: var(--black);
     margin: 0 2px;
+}
+
+.report-form-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.line-select-container {
+    width: 35%;
+}
+
+.direction-select-container {
+    width: 65%;
 }

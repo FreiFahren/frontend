@@ -84,7 +84,6 @@ const ReportForm: React.FC<ReportFormProps> = ({
 
 		const { lineInput, stationInput, directionInput } = reportFormState;
 
-		console.log('direction', directionInput)
 		await reportInspector(lineInput!, stationInput!, directionInput!);
 
 		closeModal();

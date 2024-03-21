@@ -57,7 +57,7 @@ export async function reportInspector(line: Option, station: Option, direction: 
         station: station.label,
         direction: (direction === undefined || direction === null) ? '' : direction.label,
     });
-    console.log(requestBody)
+
     fetch('/newInspector', {
         method: 'POST',
         headers: {
@@ -71,10 +71,6 @@ export async function reportInspector(line: Option, station: Option, direction: 
         }
         return response.json();
       })
-      .then(data => {
-        console.log(data)
-        console.log('Success!');
-        })
       .catch((error) => console.error('Error:', error));
 }
 

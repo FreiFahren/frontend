@@ -4,68 +4,78 @@ import { getRecentTicketInspectorInfo } from '../../../functions/dbUtils';
 import { OpacityMarker } from './Classes/OpacityMarker/OpacityMarker';
 
 export interface MarkersProps {
-  formSubmitted: boolean;
+	formSubmitted: boolean;
 }
 
 export type MarkerData = {
-  timestamp: string;
-  station: {
-      id: string;
-      name: string;
-      coordinates: {
-          latitude: number;
-          longitude: number;
-      };
-  };
-  direction: {
-      id: string;
-      name: string;
-      coordinates: {
-          latitude: number;
-          longitude: number;
-      };
-  };
-  line: string;
-  isHistoric: boolean;
+	timestamp: string;
+	station: {
+		id: string;
+		name: string;
+		coordinates: {
+			latitude: number;
+			longitude: number;
+		};
+	};
+	direction: {
+		id: string;
+		name: string;
+		coordinates: {
+			latitude: number;
+			longitude: number;
+		};
+	};
+	line: string;
+	isHistoric: boolean;
 };
 
 const MarkerContainer: React.FC<MarkersProps> = ({ formSubmitted }) => {
-  const [ticketInspectorList, setTicketInspectorList] = useState<MarkerData[]>([]);
-  const lastReceivedInspectorTimestamp = useRef<string | null>(null);
+	const [ticketInspectorList, setTicketInspectorList] = useState<MarkerData[]>([]);
+	const lastReceivedInspectorTimestamp = useRef<string | null>(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-        const newTicketInspectorList = await getRecentTicketInspectorInfo(lastReceivedInspectorTimestamp.current) || [];
+	useEffect(() => {
+		const fetchData = async () => {
+			const newTicketInspectorList = await getRecentTicketInspectorInfo(lastReceivedInspectorTimestamp.current) || [];
 
-        // Check if the new array is not empty, then update the state
-        if (Array.isArray(newTicketInspectorList) && newTicketInspectorList.length > 0) {
-            setTicketInspectorList(newTicketInspectorList);
+			// Check if the new array is not empty, then update the state
+			if (Array.isArray(newTicketInspectorList) && newTicketInspectorList.length > 0) {
 
-            // Update lastUpdateTime in local storage with the most recent timestamp
-            lastReceivedInspectorTimestamp.current = newTicketInspectorList[0].timestamp;
-        }
-    };
+				// Check if the timestamp is '0001-01-01T00:00:00Z' and set isHistoric to true
+				newTicketInspectorList.forEach((ticketInspector) => {
+					if (ticketInspector.timestamp === '0001-01-01T00:00:00Z') {
+						ticketInspector.isHistoric = true;
+					} else {
+						ticketInspector.isHistoric = false;
+					}
+				})
 
-    fetchData();
-    const interval = setInterval(fetchData, 5000);
+				setTicketInspectorList(newTicketInspectorList);
 
-    return () => clearInterval(interval);
-}, [formSubmitted, ticketInspectorList]);
+				// Update lastUpdateTime in local storage with the most recent timestamp
+				lastReceivedInspectorTimestamp.current = newTicketInspectorList[0].timestamp;
+			}
+		};
 
-  return (
-    <div>
-      {ticketInspectorList.map((ticketInspector, index) => {
-            return (
-              <OpacityMarker
-                markerData={ticketInspector}
-                index={index}
-                key={ticketInspector.station.id}
-                isHistoric={ticketInspector.isHistoric}/>
-            );
+		fetchData();
+		const interval = setInterval(fetchData, 5000);
 
-        })}
-    </div>
-  );
+		return () => clearInterval(interval);
+	}, [formSubmitted, ticketInspectorList]);
+
+	return (
+		<div>
+			{ticketInspectorList.map((ticketInspector, index) => {
+				return (
+					<OpacityMarker
+						markerData={ticketInspector}
+						index={index}
+						key={ticketInspector.station.id}
+						isHistoric={ticketInspector.isHistoric} />
+				);
+
+			})}
+		</div>
+	);
 };
 
 export default MarkerContainer;

@@ -17,8 +17,6 @@ export type LineProperty = {
 export type StationList = Record<string, StationProperty>;
 export type LinesList = Record<string, string[]>;
 
-
-
 export async function getRecentTicketInspectorInfo(lastUpdateTimestamp: string | null): Promise<MarkerData[] | null> {
     try {
         const headers = new Headers();

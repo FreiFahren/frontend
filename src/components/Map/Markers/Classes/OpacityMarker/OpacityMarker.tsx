@@ -1,28 +1,26 @@
-import { useState, useEffect } from 'react';
 import { Marker, Popup } from 'react-leaflet';
 import { MarkerData } from '../../MarkerContainer';
 import { OpacityMarkerIcon } from '../../../../../functions/mapUtils';
-
-let icon = OpacityMarkerIcon(1);
+import L from 'leaflet';
+import { useRef, useEffect, useCallback, useState } from 'react';
 
 export const OpacityMarker = ({ markerData, index }: { markerData: MarkerData; index: number; }) => {
     const [opacity, setOpacity] = useState(0);
     const { timestamp, station, line, direction } = markerData;
 
     const timestampSeconds = new Date(timestamp.replace(/T|Z/g, ' ')).getTime();
-    const currentTime = new Date().getTime();
 
-    const calculateOpacity = () => {
+    const markerRef = useRef<L.Marker | null>(null); // Create a ref to store the marker instance
 
+    const calculateOpacity = useCallback(() => { // Wrapped in useCallback
+        const currentTime = new Date().getTime();
         const elapsedTime = currentTime - timestampSeconds;
         const opacityValue = Math.max(0, 1 - (elapsedTime / (15 * 60 * 1000)));
         setOpacity(opacityValue);
-        icon = OpacityMarkerIcon(opacityValue);
         return opacityValue;
-    };
+    }, [timestampSeconds]); // timestampSeconds is a dependency
 
     useEffect(() => {
-        // Get the initial opacity value
         calculateOpacity();
 
         const interval = setInterval(() => {
@@ -36,18 +34,29 @@ export const OpacityMarker = ({ markerData, index }: { markerData: MarkerData; i
         return () => {
             clearInterval(interval);
         };
-    });
+    }, [calculateOpacity, opacity]); // calculateOpacity is now a stable function
 
-    // If the opacity hits zero, we don't want to render the marker
+    useEffect(() => {
+        if (markerRef.current) {
+            const newIcon = OpacityMarkerIcon(opacity);
+            markerRef.current.setIcon(newIcon); // Update the icon of the marker instance
+        }
+    }, [opacity]); // Run this effect whenever the opacity changes
+
     if (opacity === 0) {
         return null;
     }
 
     return (
-        <Marker key={`${line}-${index}`} position={[station.coordinates.latitude, station.coordinates.longitude]} icon={icon}>
+        <Marker 
+            ref={markerRef} // Pass the ref to the Marker component
+            key={`${line}-${index}`} 
+            position={[station.coordinates.latitude, station.coordinates.longitude]} 
+            icon={OpacityMarkerIcon(opacity)}
+        >
             <Popup>
                 <>
-                    {line} {direction.name ? direction.name + ' - ' : ''} {station.name}
+                    {line} {direction.name ? direction.name + ' - ' : ''} {station.name} {opacity.toFixed(2)}
                 </>
             </Popup>
         </Marker>

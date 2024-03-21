@@ -59,11 +59,10 @@ const ReportForm: React.FC<ReportFormProps> = ({
 
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
-
+		
 		let hasError = false;
 
-		if (reportFormState.stationInput === undefined) {
-			highlightElement('station'); // Highlight the 'station' input field
+		if (reportFormState.stationInput === undefined || reportFormState.stationInput === emptyOption) {
 			setReportFormState(prevState => ({ ...prevState, hasNoStationInput: true }));
 			hasError = true;
 		} else {
@@ -83,6 +82,7 @@ const ReportForm: React.FC<ReportFormProps> = ({
 
 		const { lineInput, stationInput, directionInput } = reportFormState;
 
+		console.log('direction', directionInput)
 		await reportInspector(lineInput!, stationInput!, directionInput!);
 
 		closeModal();

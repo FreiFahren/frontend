@@ -1,10 +1,5 @@
 
-.report-form input {
-    width: 80%;
-    padding: 10px;
-    border: 2px solid var(--gray-outlines);
-    border-radius: var(--standard-border-radius);
-}
+
 
 .red-highlight {
    color: var(--red);
@@ -28,10 +23,6 @@
 
 }
 
-.report-form label input {
-    width: fit-content;
-    
-}
 
 .report-form input[type="checkbox"] {
     height: 1.5rem;

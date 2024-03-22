@@ -26,7 +26,7 @@ export async function getRecentTicketInspectorInfo(lastUpdateTimestamp: string |
         }
 
         // Make the request with optional If-Modified-Since header
-        const response = await fetch('/recent', {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/recent`, {
             method: 'GET',
             headers: headers,
         });
@@ -46,7 +46,7 @@ export async function getRecentTicketInspectorInfo(lastUpdateTimestamp: string |
 
 export async function getAllStationsList(): Promise<StationList> {
   try {
-      const response = await fetch('/list?stations=true');
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/list?stations=true`);
       const data = await response.json();
       return data;
   } catch (error) {
@@ -57,7 +57,7 @@ export async function getAllStationsList(): Promise<StationList> {
 
 export async function getAllLinesList(): Promise<LinesList> {
   try {
-      const response = await fetch('/list?lines=true');
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/list?lines=true`);
       const data = await response.json();
       return data;
   } catch (error) {
@@ -73,7 +73,7 @@ export async function reportInspector(line: selectOption, station: selectOption,
         direction: (direction === undefined || direction === null) ? '' : direction.label,
     });
 
-    fetch('/newInspector', {
+    fetch(`${process.env.REACT_APP_API_URL}/newInspector`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

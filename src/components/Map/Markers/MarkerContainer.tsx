@@ -32,7 +32,7 @@ export type MarkerData = {
 const MarkerContainer: React.FC<MarkersProps> = ({ formSubmitted }) => {
 	const [ticketInspectorList, setTicketInspectorList] = useState<MarkerData[]>([]);
 	const lastReceivedInspectorTimestamp = useRef<string | null>(null);
-	
+
 	useEffect(() => {
 		const fetchData = async () => {
 			const newTicketInspectorList = await getRecentTicketInspectorInfo(lastReceivedInspectorTimestamp.current) || [];

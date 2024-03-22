@@ -14,11 +14,11 @@ export const OpacityMarkerIcon = (opacity: number) => {
     const icon = L.divIcon({
         className: 'custom-icon',
         html: `<div style="background-color:rgba(255,0,0,${opacity});
-                            width:20px;
-                            height:20px;
+                            width:25px;
+                            height:25px;
                             border-radius:50%;
                             box-shadow: 0 2px 4px rgba(0, 0, 0, ${opacity});"></div>`,
-        iconSize: [20, 20],
+        iconSize: [25, 25],
     });
 
     return icon;

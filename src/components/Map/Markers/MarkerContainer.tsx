@@ -32,22 +32,13 @@ export type MarkerData = {
 const MarkerContainer: React.FC<MarkersProps> = ({ formSubmitted }) => {
 	const [ticketInspectorList, setTicketInspectorList] = useState<MarkerData[]>([]);
 	const lastReceivedInspectorTimestamp = useRef<string | null>(null);
-
+	
 	useEffect(() => {
 		const fetchData = async () => {
 			const newTicketInspectorList = await getRecentTicketInspectorInfo(lastReceivedInspectorTimestamp.current) || [];
 
 			// Check if the new array is not empty, then update the state
 			if (Array.isArray(newTicketInspectorList) && newTicketInspectorList.length > 0) {
-
-				// Check if the timestamp is '0001-01-01T00:00:00Z' and set isHistoric to true
-				newTicketInspectorList.forEach((ticketInspector) => {
-					if (ticketInspector.timestamp === '0001-01-01T00:00:00Z') {
-						ticketInspector.isHistoric = true;
-					} else {
-						ticketInspector.isHistoric = false;
-					}
-				})
 
 				setTicketInspectorList(newTicketInspectorList);
 

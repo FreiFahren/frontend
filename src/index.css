@@ -105,3 +105,12 @@ button a {
 .legal-text {
   padding: 25px;
 }
+
+.inspector-marker {
+  animation: fade 1s infinite alternate;
+}
+
+@keyframes fade { 
+  from { opacity: 0.6; } 
+}
+

@@ -35,7 +35,6 @@ beforeAll(() => {
   });
 });
 
-
 // Mocking highlightElement function
 jest.mock('../../../functions/uiUtils', () => ({
   highlightElement: jest.fn(),

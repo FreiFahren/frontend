@@ -38,7 +38,7 @@ export const OpacityMarker: React.FC<OpacityMarkerProps> = ({ markerData, index 
           };
           calculateOpacity(); // Initial calculation
 
-          intervalId = setInterval(calculateOpacity, 5000); // every 5 seconds to avoid excessive rerenders
+          intervalId = setInterval(calculateOpacity, 5 * 1000); // every 5 seconds to avoid excessive rerenders
         } else {
           setOpacity(1);
         }
@@ -57,11 +57,12 @@ export const OpacityMarker: React.FC<OpacityMarkerProps> = ({ markerData, index 
     }
 
     const elapsedTimeMessage = (elapsedTime:number, isHistoric:boolean): string => {
-        if (elapsedTime > 600000 || isHistoric) {
+        if (elapsedTime > 10 * 60 * 1000 || isHistoric) {
             return 'Vor mehr als <strong>10 Minuten</strong> gemeldet.';
         }
         else {
-            return `Vor <strong>${Math.max(1, Math.floor(elapsedTime / 60000))} Minuten</strong> gemeldet.`;
+            const minutes = Math.max(1, Math.floor(elapsedTime / (60 * 1000)));
+            return `Vor <strong>${minutes === 1 ? 'einer' : minutes} Minuten</strong> gemeldet.`;
         }
     };
 

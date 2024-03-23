@@ -30,6 +30,7 @@ If you have any questions feel free to reach out to: johan@trieloff.net or dbran
 3. Set up enviromental variables
     ```sh
     REACT_APP_JAWG_ACCESS_TOKEN=YOUR_JAWG_ACCESS_TOKEN
+    REACT_APP_API_URL=http://localhost:8080
     ```
     You can get a free access token from [Jawg](https://www.jawg.io/)
 

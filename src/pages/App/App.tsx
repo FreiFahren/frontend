@@ -40,9 +40,7 @@ function App() {
         />
         <Backdrop onClick={() => highlightElement('legal-disclaimer')} />
       </>}
-      <div id='map'>
-        <Map formSubmitted={formSubmitted} initialPosition={initialPosition}/>
-      </div>
+      <Map formSubmitted={formSubmitted} initialPosition={initialPosition}/>
       <UtilButton onClick={() => setIsUtilFormOpen(!isUtilFormOpen)}/>
       {isUtilFormOpen && (
         <>

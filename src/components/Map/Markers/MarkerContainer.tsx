@@ -61,7 +61,7 @@ const MarkerContainer: React.FC<MarkersProps> = ({ formSubmitted }) => {
 						markerData={ticketInspector}
 						index={index}
 						key={ticketInspector.station.id}
-						isHistoric={ticketInspector.isHistoric} />
+					/>
 				);
 
 			})}

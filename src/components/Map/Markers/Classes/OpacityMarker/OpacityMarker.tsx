@@ -1,8 +1,9 @@
 import { Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
+import { useRef, useEffect, useState, useMemo } from 'react';
+
 import { MarkerData } from '../../MarkerContainer';
 import { OpacityMarkerIcon } from '../../../../../functions/mapUtils';
-import L from 'leaflet';
-import { useRef, useEffect, useState } from 'react';
 
 interface OpacityMarkerProps {
     markerData: MarkerData;
@@ -14,9 +15,8 @@ export const OpacityMarker: React.FC<OpacityMarkerProps> = ({ markerData, index,
     const [opacity, setOpacity] = useState(0);
     const { timestamp, station, line, direction } = markerData;
 
-    // Timestamp is only one time call, so it's safe to ignore the warning
-    const Timestamp = new Date(timestamp);
-    Timestamp.setHours(Timestamp.getHours() -1); // subtracts 1 hour from the timestamp (utc to local time conversion)
+    const Timestamp = useMemo(() => new Date(timestamp), [timestamp]);
+    Timestamp.setHours(Timestamp.getHours() - 1); // subtracts 1 hour from the timestamp (utc to local time conversion)
 
     const markerRef = useRef<L.Marker | null>(null);
     useEffect(() => {

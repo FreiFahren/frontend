@@ -28,7 +28,7 @@ export const OpacityMarker: React.FC<OpacityMarkerProps> = ({ markerData, index,
           const calculateOpacity = () => {
             const currentTime = new Date().getTime();
             const elapsedTime = currentTime - Timestamp.getTime();
-            const newOpacity = Math.max(0, 1 - (elapsedTime / (15 * 60 * 1000)));
+            const newOpacity = Math.max(0, 1 - (elapsedTime / (30 * 1000)));
             setOpacity(newOpacity);
             if (newOpacity === 0) {
               clearInterval(intervalId);
@@ -41,8 +41,8 @@ export const OpacityMarker: React.FC<OpacityMarkerProps> = ({ markerData, index,
           setOpacity(1);
           return () => clearInterval(intervalId); // This will clear the interval when isHistoric becomes true
         }
-
-      }, [Timestamp, isHistoric]); // Add isHistoric to the dependency array
+       
+      }, [Timestamp, isHistoric]);
 
     useEffect(() => {
         if (markerRef.current && opacity > 0) {

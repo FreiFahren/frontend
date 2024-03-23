@@ -32,7 +32,6 @@ export function highlightElement(id: string) {
       }, 3000);
     }
     }
-
 }
 
 // when a station is selected, the line options are redefined, giving only the lines that the station is connected to

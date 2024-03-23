@@ -1,3 +1,4 @@
+import React from 'react';
 import Select, { ActionMeta, StylesConfig} from 'react-select';
 
 import { AutocompleteStyles } from './AutocompleteStyles';

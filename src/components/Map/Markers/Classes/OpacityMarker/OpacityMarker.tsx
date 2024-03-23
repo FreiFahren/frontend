@@ -1,18 +1,18 @@
+import React, { useRef, useEffect, useState, useMemo } from 'react';
 import { Marker, Popup } from 'react-leaflet';
-import { MarkerData } from '../../MarkerContainer';
 import { OpacityMarkerIcon } from '../../../../../functions/mapUtils';
 import L from 'leaflet';
-import { useRef, useEffect, useState, useMemo } from 'react';
+
+import { MarkerData } from '../../MarkerContainer';
 
 interface OpacityMarkerProps {
     markerData: MarkerData;
     index: number;
-    isHistoric: boolean;
 }
 
-export const OpacityMarker: React.FC<OpacityMarkerProps> = ({ markerData, index, isHistoric }) => {
+export const OpacityMarker: React.FC<OpacityMarkerProps> = ({ markerData, index }) => {
     const [opacity, setOpacity] = useState(0);
-    const { timestamp, station, line, direction } = markerData;
+    const { timestamp, station, line, direction, isHistoric } = markerData;
 
     // By using useMemo, we can avoid recalculating the timestamp on every render
     const Timestamp = useMemo(() => {

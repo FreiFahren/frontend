@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import Map from '../../components/Map/Map';
 import ReportButton from '../../components/ReportButton/ReportButton';

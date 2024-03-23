@@ -1,3 +1,5 @@
+import React from 'react';
+
 import './LegalDisclaimer.css';
 
 interface LegalDisclaimerProps {

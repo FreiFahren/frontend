@@ -1,9 +1,8 @@
 import { Marker, Popup } from 'react-leaflet';
-import L from 'leaflet';
-import { useRef, useEffect, useState, useMemo } from 'react';
-
 import { MarkerData } from '../../MarkerContainer';
 import { OpacityMarkerIcon } from '../../../../../functions/mapUtils';
+import L from 'leaflet';
+import { useRef, useEffect, useState, useMemo } from 'react';
 
 interface OpacityMarkerProps {
     markerData: MarkerData;
@@ -15,15 +14,17 @@ export const OpacityMarker: React.FC<OpacityMarkerProps> = ({ markerData, index,
     const [opacity, setOpacity] = useState(0);
     const { timestamp, station, line, direction } = markerData;
 
-    const Timestamp = useMemo(() => new Date(timestamp), [timestamp]);
-    Timestamp.setHours(Timestamp.getHours() - 1); // subtracts 1 hour from the timestamp (utc to local time conversion)
+    // By using useMemo, we can avoid recalculating the timestamp on every render
+    const Timestamp = useMemo(() => {
+        const tempTimestamp = new Date(timestamp);
+        tempTimestamp.setHours(tempTimestamp.getHours() - 1); // Adjust for UTC to local
+        return tempTimestamp;
+    }, [timestamp]);
 
     const markerRef = useRef<L.Marker | null>(null);
     useEffect(() => {
-        // ensures that intervalId is defined before it's used
-        // eslint-disable-next-line prefer-const
-        let intervalId: NodeJS.Timeout;
-
+        let intervalId : NodeJS.Timeout;
+        
         if (!isHistoric) {
           const calculateOpacity = () => {
             const currentTime = new Date().getTime();
@@ -35,14 +36,14 @@ export const OpacityMarker: React.FC<OpacityMarkerProps> = ({ markerData, index,
             }
           };
           calculateOpacity(); // Initial calculation
-
+    
           intervalId = setInterval(calculateOpacity, 5000); // every 5 seconds to avoid excessive rerenders
         } else {
           setOpacity(1);
-          return () => clearInterval(intervalId); // This will clear the interval when isHistoric becomes true
         }
-
-      }, [Timestamp, isHistoric]); // Add isHistoric to the dependency array
+        return () => clearInterval(intervalId);
+    }, [Timestamp, isHistoric]);
+    
 
     useEffect(() => {
         if (markerRef.current && opacity > 0) {

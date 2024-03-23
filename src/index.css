@@ -113,4 +113,9 @@ button a {
 @keyframes fade { 
   from { opacity: 0.6; } 
 }
-
+/* 
+.leaflet-zoom-anim .leaflet-zoom-animated {
+	-webkit-transition: -webkit-transform 0.25s cubic-bezier(0,0,0.1,1) !important;
+	   -moz-transition:    -moz-transform 0.25s cubic-bezier(0,0,0.1,1) !important;
+	        transition:         transform 0.25s cubic-bezier(0,0,0.1,1) !important;
+	} */

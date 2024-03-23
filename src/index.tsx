@@ -16,9 +16,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+    <SpeedInsights />
+      <Analytics />
       <Routes>
-        <SpeedInsights />
-        <Analytics />
         <Route path='/' element={<App />} />
         <Route path='/impressum' element={<Impressum />} />
         <Route path='/datenschutz' element={<Datenschutz />} />

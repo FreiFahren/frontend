@@ -28,5 +28,5 @@ describe('LegalDisclaimer Component Tests', () => {
     fireEvent.click(screen.getByTestId('backdrop'));
     // Since highlightElement is mocked, you can check if it was called
     expect(highlightElement).toHaveBeenCalledWith('legal-disclaimer');
-  });  
+  });
 });

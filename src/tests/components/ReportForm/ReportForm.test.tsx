@@ -8,7 +8,7 @@ jest.mock('../../../functions/dbUtils', () => ({
     getAllLinesList: jest.fn().mockResolvedValue({/* mock return value for getAllLinesList */}),
     getAllStationsList: jest.fn().mockResolvedValue({/* mock return value for getAllStationsList */}),
     reportInspector: jest.fn().mockResolvedValue(undefined), // Corrected mock for reportInspector
-  }));  
+  }));
 
 describe('ReportForm Submission', () => {
   beforeEach(() => {

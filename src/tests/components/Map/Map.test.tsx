@@ -47,7 +47,7 @@ describe('Map', () => {
       }),
       expect.anything()
     );
-  });  
+  });
 
   it('accepts formSubmitted prop changes', () => {
     const { rerender } = render(<Map formSubmitted={false} />);
@@ -57,10 +57,10 @@ describe('Map', () => {
       }),
       expect.anything()
     );
-  
+
     rerender(<Map formSubmitted={true} />);
     // This test checks if MapContainer is called again after rerendering
     // Ideally, this would check for a change in behavior based on formSubmitted
     // However, as child components are mocked, direct effects might not be visible
-  });   
+  });
 });

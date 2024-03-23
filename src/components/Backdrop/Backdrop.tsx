@@ -8,7 +8,7 @@ interface BackdropProps {
 
 const Backdrop: React.FC<BackdropProps> = ({ onClick }) => {
     return (
-        <div 
+        <div
             className='backdrop'
             onClick={onClick}
             data-testid='backdrop'

@@ -7,6 +7,8 @@ import App from './pages/App/App';
 import Impressum from './pages/Impressum/Impressum';
 import Datenschutz from './pages/Datenschutz/Datenschutz';
 import reportWebVitals from './reportWebVitals';
+import { SpeedInsights } from '@vercel/speed-insights/react'
+import { Analytics } from '@vercel/analytics/react'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -14,7 +16,10 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+    <SpeedInsights />
+      <Analytics />
       <Routes>
+
         <Route path='/' element={<App />} />
         <Route path='/impressum' element={<Impressum />} />
         <Route path='/datenschutz' element={<Datenschutz />} />

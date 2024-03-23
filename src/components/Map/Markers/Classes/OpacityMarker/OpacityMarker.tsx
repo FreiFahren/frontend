@@ -24,7 +24,7 @@ export const OpacityMarker: React.FC<OpacityMarkerProps> = ({ markerData, index,
     const markerRef = useRef<L.Marker | null>(null);
     useEffect(() => {
         let intervalId : NodeJS.Timeout;
-        
+
         if (!isHistoric) {
           const calculateOpacity = () => {
             const currentTime = new Date().getTime();
@@ -36,14 +36,13 @@ export const OpacityMarker: React.FC<OpacityMarkerProps> = ({ markerData, index,
             }
           };
           calculateOpacity(); // Initial calculation
-    
+
           intervalId = setInterval(calculateOpacity, 5000); // every 5 seconds to avoid excessive rerenders
         } else {
           setOpacity(1);
         }
         return () => clearInterval(intervalId);
     }, [Timestamp, isHistoric]);
-    
 
     useEffect(() => {
         if (markerRef.current && opacity > 0) {

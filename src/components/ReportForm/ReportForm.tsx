@@ -157,12 +157,17 @@ const ReportForm: React.FC<ReportFormProps> = ({
 			setReportFormState(prevState => ({ ...prevState, stationInput: emptyOption, lineInput: emptyOption, directionInput: emptyOption }));
 			refreshOptions('stations');
 			refreshOptions('lines');
-
 			return;
 		}
-
+	
+		// Remove the warning span if a new station is selected
+		const warningSpan = document.getElementById('warning-span');
+		if (warningSpan) {
+			warningSpan.remove(); // This will remove the warning span from the DOM
+		}
+	
 		setReportFormState(prevState => ({ ...prevState, stationInput: option, lineOptions: redefineLineOptions(option, reportFormState.stationsList) }));
-	}
+	};	
 
 	useEffect(() => {
 		const fetchData = async () => {

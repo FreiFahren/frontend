@@ -114,6 +114,7 @@ p {
   padding: 25px;
 }
 
+/* This makes the zoom and popup animation feeling faster */
 .leaflet-zoom-anim .leaflet-zoom-animated {
 	-webkit-transition: -webkit-transform 0.1s cubic-bezier(0,0,0.1,1);
 	   -moz-transition:    -moz-transform 0.1s cubic-bezier(0,0,0.1,1);

@@ -9,6 +9,7 @@ export const createLocationMarkerHTML = () => {
                     height:25px;
                     border-radius:50%;
                     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+                    outline: 2px solid white;
                 "></div>`;
     };
 
@@ -23,6 +24,7 @@ export const OpacityMarkerIcon = (opacity: number) => {
                     height:25px;
                     border-radius:50%;
                     box-shadow: 0 2px 4px rgba(0, 0, 0, ${opacity});
+                    outline: 2px solid white;
                 "></div>`,
         iconSize: [25, 25],
     });

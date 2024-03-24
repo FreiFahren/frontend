@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { LayerGroup, LayersControl, MapContainer } from 'react-leaflet';
 import { LatLngTuple, latLngBounds } from 'leaflet';
 
@@ -20,6 +20,8 @@ const Map: React.FC<MapProps> = ({ formSubmitted, initialPosition }) => {
 
     const maxBounds = latLngBounds([52.96125019866001, 12.509131386425151], [52.014679000584486, 14.382300343810543]);
 
+
+    
     return (
         <MapContainer id='map' center={berlinViewPosition} zoom={13} scrollWheelZoom={true} maxBounds={maxBounds}>
 

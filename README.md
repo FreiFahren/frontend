@@ -53,3 +53,15 @@ FreiFahren operates by leveraging real-time, community-driven data to track the 
 5. **Community Engagement:** Users are encouraged to contribute to the community by reporting their own sightings of ticket inspectors. This helps keep the map accurate and up-to-date.
 
 By harnessing the power of community reporting and real-time data processing, FreiFahren provides a valuable tool for navigating the Berlin public transport network with confidence.
+
+## Markers and structure
+
+To display the location on the map, inside the Map directory
+are the markers. To display and organize the markers, ``/components/Map/Markers/MarkerContainer.tsx`` maintain, calculate and render multiple markers on the map.
+
+1. ``/Markers/LocationMarker/LocationMarker.tsx``, is called in ``Map.tsx``. We use this marker to query for and display the current user's location
+2. ``/Markers/OpacityMarker/OpacityMarker.tsx`` is called in ``MarkerContainer.tsx``. They represent the unique user reports on inspectors and fade after 30 minutes.
+
+In hindsight, the Markers directory lays a foundation for other Markers with different features/
+
+

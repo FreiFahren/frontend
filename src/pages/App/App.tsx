@@ -10,6 +10,7 @@ import { highlightElement } from '../../functions/uiUtils';
 import { getPosition } from '../../components/Map/Markers/Classes/LocationMarker/LocationMarker';
 import Backdrop from '../../components/Backdrop/Backdrop';
 import './App.css';
+import { LatLngTuple } from 'leaflet';
 
 function App() {
   const [isReportFormOpen, setIsReportFormOpen] = useState(false);
@@ -23,7 +24,7 @@ function App() {
 
   const [isFirstOpen, setIsFirstOpen] = useState(true);
 
-  const [initialPosition, setInitialPosition] = useState<[number, number] | null>(null);
+  const [initialPosition, setInitialPosition] = useState<LatLngTuple | null>(null);
 
   function closeLegalDisclaimer() {
     setIsFirstOpen(false);

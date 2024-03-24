@@ -1,10 +1,10 @@
-import L from 'leaflet';
+import L, { LatLngTuple } from 'leaflet';
 import React, { useEffect, useState } from 'react';
 import { Marker, Popup } from 'react-leaflet';
 
 import { createLocationMarkerHTML } from '../../../../../functions/mapUtils';
 
-export const getPosition = (setPosition: React.Dispatch<React.SetStateAction<[number, number] | null>>) => {
+export const getPosition = (setPosition: React.Dispatch<React.SetStateAction<LatLngTuple | null>>) => {
     navigator.permissions.query({ name: 'geolocation' }).then((result) => {
         if (result.state === 'prompt' || result.state === 'granted') {
             navigator.geolocation.getCurrentPosition((position) => {
@@ -15,17 +15,17 @@ export const getPosition = (setPosition: React.Dispatch<React.SetStateAction<[nu
 };
 
 interface LocationMarkerProps {
-     initialPosition: [number, number] | null;
+     initialPosition: LatLngTuple | null;
 }
 
 const LocationMarker: React.FC<LocationMarkerProps> = ({ initialPosition }) => {
-     const [position, setPosition] = useState<[number, number] | null>(initialPosition);
+     const [position, setPosition] = useState<LatLngTuple | null>(initialPosition);
 
-        const LocationIcon = L.divIcon({
-            className: 'custom-icon',
-            html: createLocationMarkerHTML(),
-            iconSize: [20, 20]
-        });
+    const LocationIcon = L.divIcon({
+        className: 'custom-icon',
+        html: createLocationMarkerHTML(),
+        iconSize: [20, 20]
+    });
 
     useEffect(() => {
         // If the browser doesn't support geolocation, do nothing

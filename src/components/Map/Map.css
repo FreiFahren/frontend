@@ -14,13 +14,17 @@
   .leaflet-control-zoom {
     display: none;
   }
+
+  .leaflet-control-layers {
+    bottom: 1rem;
+    left: 0.6rem;
+  }
   .leaflet-touch .leaflet-control-layers-toggle {
     width: 5rem;
     height: 5rem;
   }
 
-  .leaflet-retina .leaflet-control-layers-toggle
-  {
+  .leaflet-retina .leaflet-control-layers-toggle{
     background-size: 4rem;
   }
 

@@ -5,6 +5,7 @@ import { LatLngTuple, latLngBounds } from 'leaflet';
 import MarkerContainer from './Markers/MarkerContainer';
 import LocationMarker from './Markers/Classes/LocationMarker/LocationMarker';
 import './Map.css'
+import StandardLayer from './Layers/StandardLayer';
 
 interface MapProps {
     formSubmitted: boolean;
@@ -18,11 +19,8 @@ const Map: React.FC<MapProps> = ({ formSubmitted }) => {
 
   return (
         <MapContainer id='map' center={position} zoom={13} scrollWheelZoom={true} maxBounds={maxBounds}>
-        <TileLayer
-            attribution= '<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a>'
-            url={`https://tile.jawg.io/jawg-streets/{z}/{x}/{y}{r}.png?access-token=${process.env.REACT_APP_JAWG_ACCESS_TOKEN}`}
-        />
 
+    <StandardLayer />
         <LocationMarker />
 
         <MarkerContainer formSubmitted={formSubmitted}/>

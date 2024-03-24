@@ -15,7 +15,7 @@ jest.mock('react-leaflet', () => ({
 describe('Map', () => {
   // Existing test case
   it('renders MapContainer with the correct initial position', () => {
-    render(<Map formSubmitted={false} />);
+    render(<Map formSubmitted={false} initialPosition={null} />);
     expect(MapContainer).toHaveBeenCalledWith(
       expect.objectContaining({
         center: [52.5162, 13.3880],
@@ -26,7 +26,7 @@ describe('Map', () => {
   });
 
   it('enables scrollWheelZoom', () => {
-    render(<Map formSubmitted={false} />);
+    render(<Map formSubmitted={false} initialPosition={null} />);
     expect(MapContainer).toHaveBeenCalledWith(
       expect.objectContaining({
         scrollWheelZoom: true,
@@ -40,7 +40,7 @@ describe('Map', () => {
       _northEast: { lat: 52.96125019866001, lng: 14.382300343810543 },
       _southWest: { lat: 52.014679000584486, lng: 12.509131386425151 }
     };
-    render(<Map formSubmitted={false} />);
+    render(<Map formSubmitted={false} initialPosition={null} />);
     expect(MapContainer).toHaveBeenCalledWith(
       expect.objectContaining({
         maxBounds: expect.objectContaining(expectedMaxBounds),
@@ -50,7 +50,7 @@ describe('Map', () => {
   });
 
   it('accepts formSubmitted prop changes', () => {
-    const { rerender } = render(<Map formSubmitted={false} />);
+    const { rerender } = render(<Map formSubmitted={false} initialPosition={null} />);
     expect(MapContainer).toHaveBeenCalledWith(
       expect.objectContaining({
         children: expect.anything(),
@@ -58,7 +58,7 @@ describe('Map', () => {
       expect.anything()
     );
 
-    rerender(<Map formSubmitted={true} />);
+    rerender(<Map formSubmitted={true} initialPosition={null} />);
     // This test checks if MapContainer is called again after rerendering
     // Ideally, this would check for a change in behavior based on formSubmitted
     // However, as child components are mocked, direct effects might not be visible

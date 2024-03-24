@@ -1,10 +1,25 @@
 import L from 'leaflet';
 import React, { useEffect, useState } from 'react';
 import { Marker, Popup } from 'react-leaflet';
+
 import { createLocationMarkerHTML } from '../../../../../functions/mapUtils';
 
-const LocationMarker = () => {
-    const [position, setPosition] = useState<[number, number] | null>(null);
+export const getPosition = (setPosition: React.Dispatch<React.SetStateAction<[number, number] | null>>) => {
+    navigator.permissions.query({ name: 'geolocation' }).then((result) => {
+        if (result.state === 'prompt' || result.state === 'granted') {
+            navigator.geolocation.getCurrentPosition((position) => {
+                setPosition([position.coords.latitude, position.coords.longitude]);
+            });
+        }
+    });
+};
+
+interface LocationMarkerProps {
+     initialPosition: [number, number] | null;
+}
+
+const LocationMarker: React.FC<LocationMarkerProps> = ({ initialPosition }) => {
+     const [position, setPosition] = useState<[number, number] | null>(initialPosition);
 
         const LocationIcon = L.divIcon({
             className: 'custom-icon',
@@ -18,24 +33,16 @@ const LocationMarker = () => {
             return;
         }
 
-        const getPosition = () => {
-            if (navigator.geolocation) {
-                navigator.permissions
-                .query({ name: 'geolocation' })
-            }
-            navigator.geolocation.getCurrentPosition((position) => {
-                setPosition([position.coords.latitude, position.coords.longitude]);
-            });
-        };
-
         // Get current position immediately
-        getPosition();
+        getPosition(setPosition);
 
-        // Then get it every 10 seconds
-        const intervalId = setInterval(getPosition, 10000);
-
-        // Clear interval on component unmount
-        return () => clearInterval(intervalId);
+        // Get position every 15 seconds
+        const intervalId = setInterval(() => {
+            getPosition(setPosition);
+        }, 15000);
+        return () => {
+            clearInterval(intervalId);
+        };
     }, []);
 
     return (

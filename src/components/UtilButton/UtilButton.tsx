@@ -8,7 +8,7 @@ interface UtilButtonProps {
 
 const UtilButton: React.FC<UtilButtonProps> = ({ onClick }) => {
     return (
-        <button className='util-button' onClick={onClick}>
+        <button className='util-button' onClick={onClick} aria-label='utility info'>
             <span/>
             <span/>
             <span/>

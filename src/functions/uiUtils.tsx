@@ -65,3 +65,14 @@ export const redefineDirectionOptions = (option: selectOption, linesList: LinesL
 
   return newDirectionOptions;
 }
+
+export function createWarningSpan(elementId: string, message: string) {
+  let warningSpan = document.getElementById('warning-span');
+  if (!warningSpan) {
+      warningSpan = document.createElement('span');
+      warningSpan.id = 'warning-span';
+      warningSpan.className = 'red-highlight';
+      warningSpan.textContent = message;
+      document.getElementById(elementId)?.appendChild(warningSpan);
+  }
+}

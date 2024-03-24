@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { ActionMeta } from 'react-select/';
 
-import {
-	LinesList,
-	StationList,
-	StationProperty,
-	getAllLinesList,
-	getAllStationsList,
-	reportInspector,
-} from '../../functions/dbUtils';
-import AutocompleteInputForm, {
-	selectOption,
-} from '../AutocompleteInputForm/AutocompleteInputForm';
-import { highlightElement, redefineDirectionOptions, redefineLineOptions, redefineStationOptions } from '../../functions/uiUtils';
-
+import { LinesList, StationList, StationProperty, getAllLinesList, getAllStationsList, reportInspector } from '../../functions/dbUtils';
+import AutocompleteInputForm, { selectOption } from '../AutocompleteInputForm/AutocompleteInputForm';
+import { highlightElement, redefineDirectionOptions, redefineLineOptions, redefineStationOptions, createWarningSpan } from '../../functions/uiUtils';
+import { calculateDistance } from '../../functions/mapUtils';
+import { getPosition } from '../Map/Markers/Classes/LocationMarker/LocationMarker';
 import './ReportForm.css';
 
 interface ReportFormProps {
@@ -73,8 +65,13 @@ const ReportForm: React.FC<ReportFormProps> = ({
 		}
 
 		if (!(document.getElementById('privacy-checkbox') as HTMLInputElement).checked) {
-			highlightElement('privacy-label'); // Highlight the 'privacy-checkbox' input field
+			highlightElement('privacy-label');
 			hasError = true;
+		}
+
+		const locationError = await verifyUserLocation(reportFormState.stationInput, reportFormState.stationsList);
+		if (locationError) {
+			hasError = true; // Update hasError based on location verification
 		}
 
 		if (hasError) return; // If there is an error, do not proceed with the submission
@@ -86,6 +83,28 @@ const ReportForm: React.FC<ReportFormProps> = ({
 		closeModal();
 		onFormSubmit(); // Notify App component about the submission
 	};
+
+	async function verifyUserLocation(
+		stationInput: selectOption | undefined,
+		stationsList: StationList
+	): Promise<boolean> {
+		if (!stationInput) return false;
+
+		const userLocation = await getPosition();
+		const station = stationsList[stationInput.value];
+		if (!station) return false;
+
+		const distance = userLocation ? calculateDistance(userLocation[0], userLocation[1], station.coordinates.latitude, station.coordinates.longitude): 0;
+
+		// Checks if the user is more than 1 km away from the station
+		if (distance > 1) {
+			highlightElement('report-form');
+			createWarningSpan('station-select-div', 'Du bist zu weit von der Station entfernt. Bitte wähle die richtige Station!');
+			return true; // Indicates an error
+		}
+
+		return false;
+	}
 
 	const refreshOptions = async (type: 'lines' | 'stations') => {
 		try {
@@ -126,12 +145,17 @@ const ReportForm: React.FC<ReportFormProps> = ({
 			setReportFormState(prevState => ({ ...prevState, stationInput: emptyOption, lineInput: emptyOption, directionInput: emptyOption }));
 			refreshOptions('stations');
 			refreshOptions('lines');
-
 			return;
 		}
 
+		// Remove the warning span if a new station is selected
+		const warningSpan = document.getElementById('warning-span');
+		if (warningSpan) {
+			warningSpan.remove(); // This will remove the warning span from the DOM
+		}
+
 		setReportFormState(prevState => ({ ...prevState, stationInput: option, lineOptions: redefineLineOptions(option, reportFormState.stationsList) }));
-	}
+	};
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -143,7 +167,7 @@ const ReportForm: React.FC<ReportFormProps> = ({
 	}, []);
 
 	return (
-		<div className={`report-form container ${className}`}>
+		<div className={`report-form container ${className}`} id='report-form'>
 			<h1>Neue Meldung</h1>
 			<form onSubmit={handleSubmit}>
 

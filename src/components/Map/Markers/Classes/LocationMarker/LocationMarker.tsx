@@ -38,11 +38,11 @@ const LocationMarker: React.FC<LocationMarkerProps> = ({ initialPosition }) => {
                 const newPos = await getPosition();
                 setPosition(newPos);
             };
-    
+
             fetchPosition();
-    
+
             const intervalId = setInterval(fetchPosition, 15000); // 15 seconds
-    
+
             return () => clearInterval(intervalId);
         }, []);
 

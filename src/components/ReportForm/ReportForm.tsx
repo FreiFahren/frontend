@@ -24,7 +24,6 @@ type reportFormState = {
 	linesList: LinesList;
 	isLoadingLines: boolean;
 	isLoadingStations: boolean;
-	
 };
 
 const initialState: reportFormState = {
@@ -49,14 +48,14 @@ function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: numbe
 	const dLat = deg2rad(lat2 - lat1);
 	const dLon = deg2rad(lon2 - lon1);
 	const a =
-	  Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-	  Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-	  Math.sin(dLon / 2) * Math.sin(dLon / 2);
+		Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+		Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+		Math.sin(dLon / 2) * Math.sin(dLon / 2);
 	const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 	const distance = R * c; // Distance in km
 	return distance;
 }
-  
+
 function deg2rad(deg: number) {
 	return deg * (Math.PI / 180);
 }
@@ -87,7 +86,7 @@ const ReportForm: React.FC<ReportFormProps> = ({
 		}
 
 		const userLocation = await getPosition();
-    
+
 		if (userLocation && reportFormState.stationInput) {
 			const station = reportFormState.stationsList[reportFormState.stationInput.value];
 			if (station) {
@@ -107,7 +106,7 @@ const ReportForm: React.FC<ReportFormProps> = ({
 				}
 			}
 		}
-	
+
 		if (hasError) return; // If there is an error, do not proceed with the submission
 
 		const { lineInput, stationInput, directionInput } = reportFormState;
@@ -159,15 +158,15 @@ const ReportForm: React.FC<ReportFormProps> = ({
 			refreshOptions('lines');
 			return;
 		}
-	
+
 		// Remove the warning span if a new station is selected
 		const warningSpan = document.getElementById('warning-span');
 		if (warningSpan) {
 			warningSpan.remove(); // This will remove the warning span from the DOM
 		}
-	
+
 		setReportFormState(prevState => ({ ...prevState, stationInput: option, lineOptions: redefineLineOptions(option, reportFormState.stationsList) }));
-	};	
+	};
 
 	useEffect(() => {
 		const fetchData = async () => {

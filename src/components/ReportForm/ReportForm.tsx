@@ -93,7 +93,16 @@ const ReportForm: React.FC<ReportFormProps> = ({
 			if (station) {
 				const distance = calculateDistance(userLocation[0], userLocation[1], station.coordinates.latitude, station.coordinates.longitude);
 				if (distance > 1) { // If the distance is more than 1 km
-					highlightElement('station-select-div');
+					highlightElement('report-form');
+					let warningSpan = document.getElementById('warning-span');
+					if (!warningSpan) {
+						// If the warning span doesn't exist, create it
+						warningSpan = document.createElement('span');
+						warningSpan.id = 'warning-span';
+						warningSpan.className = 'red-highlight';
+						warningSpan.textContent = 'Du bist zu weit von der Station entfernt. Bitte wähle die richtige Station!';
+						document.getElementById('station-select-div')?.insertAdjacentElement('afterend', warningSpan);
+					}
 					hasError = true;
 				}
 			}

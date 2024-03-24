@@ -16,16 +16,17 @@ const UtilModal: React.FC<UtilModalProps> = ({ className }) => {
                     💡 Gib uns Feedback!
                 </a>
             </button>
-            <ul>
-                <li><Link to='/impressum'>Impressum</Link></li>
-                <li><Link to='/Datenschutz'>Datenschutz</Link></li>
-            </ul>
+
             <div>
+            <ul>
                 <span>
                     <a href='https://github.com/FreiFahren/frontend' target='_blank' rel='noopener noreferrer'>
                         <img src={githubMark} alt='GitHub' />
                     </a>
                 </span>
+                <li><Link to='/impressum'>Impressum</Link></li>
+                <li><Link to='/Datenschutz'>Datenschutz</Link></li>
+            </ul>
             </div>
         </div>
     );

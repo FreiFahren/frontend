@@ -50,6 +50,7 @@ button {
   font-size: var(--button-font-size);
   font-weight: 600;
   text-align: center;
+  outline: 4px solid white !important;
 }
 
 button:hover {

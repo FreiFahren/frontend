@@ -1,0 +1,26 @@
+.toggle-layer-button {
+    z-index: 998;
+    box-shadow: var(--button-box-shadow); /* Set a higher z-index value */
+}
+    
+.toggle-layer-button {
+    position: fixed;
+    height: 3rem;
+    width: 3rem;
+    bottom: 25px;
+    left: 25px;
+    padding: 10px;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    box-shadow: var(--button-box-shadow);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.toggle-layer-button span {
+    font-size: 2rem;
+    bottom: 35px;
+}

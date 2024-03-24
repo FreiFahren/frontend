@@ -6,7 +6,6 @@
     right: 25px;
     padding: 10px;
     cursor: pointer;
-    background-color: var(--action-color);
     border: none;
     border-radius: 50%;
     box-shadow: var(--button-box-shadow);
@@ -14,11 +13,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    outline: 4px solid white;
 }
 
 .report-button span {
     font-size: 50px;
-    position: relative; 
+    position: absolute; 
     z-index: var(--button-z-index); 
 }

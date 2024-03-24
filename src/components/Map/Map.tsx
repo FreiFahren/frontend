@@ -1,13 +1,12 @@
-import React, { useEffect } from 'react';
-import { LayerGroup, LayersControl, MapContainer } from 'react-leaflet';
+import React from 'react';
+import { MapContainer } from 'react-leaflet';
 import { LatLngTuple, latLngBounds } from 'leaflet';
 
 import MarkerContainer from './Markers/MarkerContainer';
 import LocationMarker from './Markers/Classes/LocationMarker/LocationMarker';
 import './Map.css'
 
-import StandardLayer from './Layers/StandardLayer';
-import DarkLayer from './Layers/DarkLayer';
+import LayerButton from './LayerButton/LayerButton';
 
 interface MapProps {
     formSubmitted: boolean;
@@ -20,30 +19,15 @@ const Map: React.FC<MapProps> = ({ formSubmitted, initialPosition }) => {
 
     const maxBounds = latLngBounds([52.96125019866001, 12.509131386425151], [52.014679000584486, 14.382300343810543]);
 
-
-    
     return (
+        <div>
         <MapContainer id='map' center={berlinViewPosition} zoom={13} scrollWheelZoom={true} maxBounds={maxBounds}>
-
-            <LayersControl position='bottomleft'>
-
-                <LayersControl.BaseLayer checked name='Light'>
-                    <LayerGroup>
-                        <StandardLayer position={initialPosition} />
-                    </LayerGroup>
-                </LayersControl.BaseLayer>
-
-                <LayersControl.BaseLayer name='Dark'>
-                    <LayerGroup>
-                        <DarkLayer position={initialPosition} />
-                    </LayerGroup>
-                </LayersControl.BaseLayer>
-
-            </LayersControl>
+            <LayerButton initialPosition={initialPosition} />
 
             <LocationMarker initialPosition={initialPosition}/>
             <MarkerContainer formSubmitted={formSubmitted}/>
         </MapContainer>
+        </div>
     );
 }
 

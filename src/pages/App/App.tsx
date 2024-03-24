@@ -26,9 +26,13 @@ function App() {
 
   const [initialPosition, setInitialPosition] = useState<LatLngTuple | null>(null);
 
-  function closeLegalDisclaimer() {
+  async function closeLegalDisclaimer() {
     setIsFirstOpen(false);
-    getPosition(setInitialPosition);
+    const position = await getPosition();
+
+    if (position) {
+      setInitialPosition(position);
+    }
   }
 
   return (

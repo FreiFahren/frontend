@@ -3,14 +3,22 @@ import React, { useEffect, useState } from 'react';
 import { Marker, Popup } from 'react-leaflet';
 
 import { createLocationMarkerHTML } from '../../../../../functions/mapUtils';
+import { handlePositionChange } from '../../../Map';
 
-export const getPosition = (setPosition: React.Dispatch<React.SetStateAction<LatLngTuple | null>>) => {
-    navigator.permissions.query({ name: 'geolocation' }).then((result) => {
-        if (result.state === 'prompt' || result.state === 'granted') {
-            navigator.geolocation.getCurrentPosition((position) => {
-                setPosition([position.coords.latitude, position.coords.longitude]);
-            });
-        }
+export const getPosition = (): Promise<LatLngTuple| null> => {
+    return new Promise((resolve) => {
+        navigator.permissions.query({ name: 'geolocation' }).then((result) => {
+            if (result.state === 'prompt' || result.state === 'granted') {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    resolve([position.coords.latitude, position.coords.longitude]);
+                    handlePositionChange([position.coords.latitude, position.coords.longitude]);
+                }, () => {
+                    resolve(null); // Handle the case where getting position fails
+                });
+            } else {
+                resolve(null); // Handle the case where permission is not granted
+            }
+        });
     });
 };
 
@@ -27,23 +35,18 @@ const LocationMarker: React.FC<LocationMarkerProps> = ({ initialPosition }) => {
         iconSize: [20, 20]
     });
 
-    useEffect(() => {
-        // If the browser doesn't support geolocation, do nothing
-        if (!navigator.geolocation) {
-            return;
-        }
+        useEffect(() => {
+            const fetchPosition = async () => {
+                const newPos = await getPosition();
+                setPosition(newPos);
+            };
 
-        // Get current position immediately
-        getPosition(setPosition);
+            fetchPosition();
 
-        // Get position every 15 seconds
-        const intervalId = setInterval(() => {
-            getPosition(setPosition);
-        }, 15000);
-        return () => {
-            clearInterval(intervalId);
-        };
-    }, []);
+            const intervalId = setInterval(fetchPosition, 15000); // 15 seconds
+
+            return () => clearInterval(intervalId);
+        }, []);
 
     return (
         <div>

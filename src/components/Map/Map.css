@@ -6,11 +6,37 @@
   z-index: var(--map-z-index);
 }
 
-.leaflet-control-container {
+.leaflet-control-attribution {
   display: none;
 }
 
+@media (max-width: 999px) {
+  .leaflet-control-zoom {
+    display: none;
+  }
+  .leaflet-touch .leaflet-control-layers-toggle {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .leaflet-retina .leaflet-control-layers-toggle
+  {
+    background-size: 4rem;
+  }
+
+  .leaflet-control-layers label {
+    font-size: var(--big-font-size);;
+  }
+  input[type="checkbox" i] {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
 @media (min-width: 999px) {
+  .leaflet-control-zoom {
+    display: block;
+  }
   .leaflet-control-container {
     display: block;
     position: absolute;
@@ -18,7 +44,11 @@
     left: 10px;
   }
 
-  .leaflet-control-attribution {
-    display: none;
+  .leaflet-control-layers {
+    display: block;
+    min-width: 20px;
   }
+
+
+  
 }

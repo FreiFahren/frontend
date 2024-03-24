@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LayerGroup, LayersControl, MapContainer } from 'react-leaflet';
 import { LatLngTuple, latLngBounds } from 'leaflet';
 
@@ -14,14 +14,13 @@ interface MapProps {
     initialPosition: LatLngTuple | null;
 }
 
-const Map: React.FC<MapProps> = ({ formSubmitted, initialPosition }) => {
-    // Berlin as Standardview
 
-    const position: LatLngTuple = initialPosition ? initialPosition : [52.5162,13.3880] as LatLngTuple;
+const Map: React.FC<MapProps> = ({ formSubmitted, initialPosition }) => {
+    let position: LatLngTuple = [52.5162, 13.3880];
 
     const maxBounds = latLngBounds([52.96125019866001, 12.509131386425151], [52.014679000584486, 14.382300343810543]);
 
-  return (
+    return (
         <MapContainer id='map' center={position} zoom={13} scrollWheelZoom={true} maxBounds={maxBounds}>
 
             <LayersControl position='bottomleft'>
@@ -34,17 +33,16 @@ const Map: React.FC<MapProps> = ({ formSubmitted, initialPosition }) => {
 
                 <LayersControl.BaseLayer name='Dark'>
                     <LayerGroup>
-                        <DarkLayer />
+                        <DarkLayer position={initialPosition} />
                     </LayerGroup>
                 </LayersControl.BaseLayer>
-
+                
             </LayersControl>
+
             <LocationMarker initialPosition={initialPosition}/>
-
             <MarkerContainer formSubmitted={formSubmitted}/>
-
         </MapContainer>
-  );
+    );
 }
 
 export default Map;

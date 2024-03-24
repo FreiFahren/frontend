@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { Marker, Popup } from 'react-leaflet';
 
 import { createLocationMarkerHTML } from '../../../../../functions/mapUtils';
-import { handlePositionChange } from '../../../Map';
 
 export const getPosition = (): Promise<LatLngTuple| null> => {
     return new Promise((resolve) => {
@@ -11,7 +10,6 @@ export const getPosition = (): Promise<LatLngTuple| null> => {
             if (result.state === 'prompt' || result.state === 'granted') {
                 navigator.geolocation.getCurrentPosition((position) => {
                     resolve([position.coords.latitude, position.coords.longitude]);
-                    handlePositionChange([position.coords.latitude, position.coords.longitude]);
                 }, () => {
                     resolve(null); // Handle the case where getting position fails
                 });

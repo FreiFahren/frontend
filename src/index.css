@@ -113,3 +113,16 @@ p {
 .legal-text {
   padding: 25px;
 }
+
+.leaflet-zoom-anim .leaflet-zoom-animated {
+	-webkit-transition: -webkit-transform 0.1s cubic-bezier(0,0,0.1,1);
+	   -moz-transition:    -moz-transform 0.1s cubic-bezier(0,0,0.1,1);
+	        transition:         transform 0.1s cubic-bezier(0,0,0.1,1);
+	}
+
+.leaflet-fade-anim .leaflet-popup {
+  opacity: 0;
+  -webkit-transition: opacity 0.1s linear;
+      -moz-transition: opacity 0.1s linear;
+          transition: opacity 0.1s linear;
+  }

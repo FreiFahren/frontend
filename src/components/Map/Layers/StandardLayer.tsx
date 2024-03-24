@@ -1,4 +1,4 @@
-import {  LatLngTuple } from 'leaflet';
+import { LatLngTuple } from 'leaflet';
 import { useEffect } from 'react';
 import { TileLayer, useMap } from 'react-leaflet';
 
@@ -20,21 +20,14 @@ const StandardLayer = (props: StandardLayerProps) => {
       if (position) {
         map.setView(position);
       } else {
+        console.log(position)
         map.setView([52.5162, 13.3880]);
       }
     }, 5000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [position, map]);
 
-  // useEffect(() => {
-
-  //   setInterval(() => {
-
-  //     else map.setView([52.5162,13.3880]);
-  //   }, 10000);
-
-  // }, []);
   return(<TileLayer url={lightTileUrl} maxZoom={maxZoom} minZoom={minZoom}/>);
 };
 

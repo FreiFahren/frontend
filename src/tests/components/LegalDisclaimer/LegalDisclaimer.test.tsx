@@ -5,6 +5,36 @@ import '@testing-library/jest-dom/extend-expect';
 import App from '../../../pages/App/App';
 import { highlightElement } from '../../../functions/uiUtils';
 
+beforeAll(() => {
+  // Mocking navigator.permissions if undefined
+  if (typeof navigator.permissions === 'undefined') {
+    Object.defineProperty(navigator, 'permissions', {
+      writable: true,
+      value: {},
+    });
+  }
+  // Mocking navigator.permissions.query to return a resolved promise with { state: 'granted' }
+  navigator.permissions.query = jest.fn().mockImplementation(() => Promise.resolve({ state: 'granted' }));
+
+  // Checking if navigator.geolocation is undefined and defining it if necessary
+  if (typeof navigator.geolocation === 'undefined') {
+    Object.defineProperty(navigator, 'geolocation', {
+      writable: true,
+      value: {},
+    });
+  }
+  // Mocking navigator.geolocation.getCurrentPosition to call the success callback with a mock position
+  navigator.geolocation.getCurrentPosition = jest.fn().mockImplementation((successCallback) => {
+    const position = { // Mock position object
+      coords: {
+        latitude: 50.110924,
+        longitude: 8.682127,
+      },
+    };
+    successCallback(position);
+  });
+});
+
 // Mocking highlightElement function
 jest.mock('../../../functions/uiUtils', () => ({
   highlightElement: jest.fn(),

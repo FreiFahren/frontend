@@ -7,6 +7,7 @@ import LegalDisclaimer from '../../components/LegalDisclaimer/LegalDisclaimer';
 import UtilButton from '../../components/UtilButton/UtilButton';
 import UtilModal from '../../components/UtilModal/UtilModal';
 import { highlightElement } from '../../functions/uiUtils';
+import { getPosition } from '../../components/Map/Markers/Classes/LocationMarker/LocationMarker';
 import Backdrop from '../../components/Backdrop/Backdrop';
 import './App.css';
 
@@ -22,19 +23,24 @@ function App() {
 
   const [isFirstOpen, setIsFirstOpen] = useState(true);
 
+  const [initialPosition, setInitialPosition] = useState<[number, number] | null>(null);
+
+  function closeLegalDisclaimer() {
+    setIsFirstOpen(false);
+    getPosition(setInitialPosition);
+  }
+
   return (
     <div className='App'>
       {isFirstOpen &&
       <>
         <LegalDisclaimer
           className={isFirstOpen ? 'open' : ''}
-          closeModal={() => setIsFirstOpen(false)}
+          closeModal={closeLegalDisclaimer}
         />
         <Backdrop onClick={() => highlightElement('legal-disclaimer')} />
       </>}
-      <div id='map'>
-        <Map formSubmitted={formSubmitted} />
-      </div>
+      <Map formSubmitted={formSubmitted} initialPosition={initialPosition}/>
       <UtilButton onClick={() => setIsUtilFormOpen(!isUtilFormOpen)}/>
       {isUtilFormOpen && (
         <>

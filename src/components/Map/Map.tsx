@@ -8,9 +8,10 @@ import './Map.css'
 
 interface MapProps {
     formSubmitted: boolean;
+    initialPosition: [number, number] | null;
 }
 
-const Map: React.FC<MapProps> = ({ formSubmitted }) => {
+const Map: React.FC<MapProps> = ({ formSubmitted, initialPosition }) => {
     // Berlin as Standardview
     const position: LatLngTuple = [52.5162,13.3880];
 
@@ -23,7 +24,7 @@ const Map: React.FC<MapProps> = ({ formSubmitted }) => {
             url={`https://tile.jawg.io/jawg-streets/{z}/{x}/{y}{r}.png?access-token=${process.env.REACT_APP_JAWG_ACCESS_TOKEN}`}
         />
 
-        <LocationMarker />
+        <LocationMarker initialPosition={initialPosition}/>
 
         <MarkerContainer formSubmitted={formSubmitted}/>
 

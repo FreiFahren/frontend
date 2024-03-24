@@ -1,11 +1,13 @@
 import React from 'react';
-import { LayersControl, MapContainer,  TileLayer } from 'react-leaflet';
+import { LayerGroup, LayersControl, MapContainer, TileLayer } from 'react-leaflet';
 import { LatLngTuple, latLngBounds } from 'leaflet';
 
 import MarkerContainer from './Markers/MarkerContainer';
 import LocationMarker from './Markers/Classes/LocationMarker/LocationMarker';
 import './Map.css'
+
 import StandardLayer from './Layers/StandardLayer';
+import DarkLayer from './Layers/DarkLayer';
 
 interface MapProps {
     formSubmitted: boolean;
@@ -23,12 +25,19 @@ const Map: React.FC<MapProps> = ({ formSubmitted, initialPosition }) => {
         <MapContainer id='map' center={position} zoom={13} scrollWheelZoom={true} maxBounds={maxBounds}>
 
             <LayersControl position='bottomleft'>
-                <LayersControl.Overlay checked name='Standard'>
-                    <StandardLayer />
-                </LayersControl.Overlay>
-                <LayersControl.Overlay name='Satellite'>
-                    <TileLayer url='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}' />
-                </LayersControl.Overlay>
+     
+                <LayersControl.BaseLayer checked name='Standard'>
+                    <LayerGroup>
+                        <StandardLayer />
+                    </LayerGroup>
+                </LayersControl.BaseLayer>
+
+                <LayersControl.BaseLayer name='Dark'>
+                    <LayerGroup>
+                        <DarkLayer />
+                    </LayerGroup>
+                </LayersControl.BaseLayer>
+
             </LayersControl>
             <LocationMarker initialPosition={initialPosition}/>
 

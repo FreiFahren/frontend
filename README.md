@@ -59,8 +59,8 @@ By harnessing the power of community reporting and real-time data processing, Fr
 To display the location on the map, inside the Map directory
 are the markers. To display and organize the markers, ``/components/Map/Markers/MarkerContainer.tsx`` maintain, calculate and render multiple markers on the map.
 
-1. ``/Markers/LocationMarker/LocationMarker.tsx``, is called in ``Map.tsx``. We use this marker to query for and display the current user's location
-2. ``/Markers/OpacityMarker/OpacityMarker.tsx`` is called in ``MarkerContainer.tsx``. They represent the unique user reports on inspectors and fade after 30 minutes.
+1. ``/Markers/Classes/LocationMarker/LocationMarker.tsx``, is called in ``Map.tsx``. We use this marker to query for and display the current user's location
+2. ``/Markers/Classes/OpacityMarker/OpacityMarker.tsx`` is called in ``MarkerContainer.tsx``. They represent the unique user reports on inspectors and fade after 30 minutes.
 
 In hindsight, the Markers directory lays a foundation for other Markers with different features/
 

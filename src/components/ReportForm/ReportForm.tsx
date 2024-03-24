@@ -3,7 +3,7 @@ import { ActionMeta } from 'react-select/';
 
 import { LinesList, StationList, StationProperty, getAllLinesList, getAllStationsList, reportInspector } from '../../functions/dbUtils';
 import AutocompleteInputForm, { selectOption } from '../AutocompleteInputForm/AutocompleteInputForm';
-import { highlightElement, redefineDirectionOptions, redefineLineOptions, redefineStationOptions } from '../../functions/uiUtils';
+import { highlightElement, redefineDirectionOptions, redefineLineOptions, redefineStationOptions, createWarningSpan } from '../../functions/uiUtils';
 import { getPosition } from '../Map/Markers/Classes/LocationMarker/LocationMarker';
 import './ReportForm.css';
 
@@ -85,26 +85,9 @@ const ReportForm: React.FC<ReportFormProps> = ({
 			hasError = true;
 		}
 
-		const userLocation = await getPosition();
-
-		if (userLocation && reportFormState.stationInput) {
-			const station = reportFormState.stationsList[reportFormState.stationInput.value];
-			if (station) {
-				const distance = calculateDistance(userLocation[0], userLocation[1], station.coordinates.latitude, station.coordinates.longitude);
-				if (distance > 1) { // If the distance is more than 1 km
-					highlightElement('report-form');
-					let warningSpan = document.getElementById('warning-span');
-					if (!warningSpan) {
-						// If the warning span doesn't exist, create it
-						warningSpan = document.createElement('span');
-						warningSpan.id = 'warning-span';
-						warningSpan.className = 'red-highlight';
-						warningSpan.textContent = 'Du bist zu weit von der Station entfernt. Bitte wähle die richtige Station!';
-						document.getElementById('station-select-div')?.insertAdjacentElement('afterend', warningSpan);
-					}
-					hasError = true;
-				}
-			}
+		const locationError = await verifyUserLocation(reportFormState.stationInput, reportFormState.stationsList);
+		if (locationError) {
+			hasError = true; // Update hasError based on location verification
 		}
 
 		if (hasError) return; // If there is an error, do not proceed with the submission
@@ -116,6 +99,28 @@ const ReportForm: React.FC<ReportFormProps> = ({
 		closeModal();
 		onFormSubmit(); // Notify App component about the submission
 	};
+
+	async function verifyUserLocation(
+		stationInput: selectOption | undefined,
+		stationsList: StationList
+	): Promise<boolean> {
+		if (!stationInput) return false;
+
+		const userLocation = await getPosition();
+		const station = stationsList[stationInput.value];
+		if (!station) return false;
+
+		const distance = userLocation ? calculateDistance(userLocation[0], userLocation[1], station.coordinates.latitude, station.coordinates.longitude): 0;
+
+		// Too far from the selected station
+		if (distance > 1) {
+			highlightElement('report-form');
+			createWarningSpan('station-select-div', 'Du bist zu weit von der Station entfernt. Bitte wähle die richtige Station!');
+			return true; // Indicates an error
+		}
+
+		return false;
+	}
 
 	const refreshOptions = async (type: 'lines' | 'stations') => {
 		try {

@@ -1,6 +1,7 @@
 import { LatLngTuple } from 'leaflet';
 import { useEffect } from 'react';
 import { TileLayer, useMap } from 'react-leaflet';
+import { berlinViewPosition } from '../Map';
 
 interface StandardLayerProps {
   position: LatLngTuple | null;
@@ -16,16 +17,15 @@ const DarkLayer = (props: StandardLayerProps) => {
 
   const map = useMap();
 
-
   useEffect(() => {
     const interval = setInterval(() => {
       if (position) {
         map.setView(position);
       } else {
-        console.log(position)
-        map.setView([52.5162, 13.3880]);
+
+        map.setView(berlinViewPosition);
       }
-    }, 5000);
+    }, 10 * 1000);
 
     return () => clearInterval(interval);
   }, [position, map]);

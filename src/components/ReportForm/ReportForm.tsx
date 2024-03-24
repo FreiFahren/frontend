@@ -1,19 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { ActionMeta } from 'react-select/';
 
-import {
-	LinesList,
-	StationList,
-	StationProperty,
-	getAllLinesList,
-	getAllStationsList,
-	reportInspector,
-} from '../../functions/dbUtils';
-import AutocompleteInputForm, {
-	selectOption,
-} from '../AutocompleteInputForm/AutocompleteInputForm';
+import { LinesList, StationList, StationProperty, getAllLinesList, getAllStationsList, reportInspector } from '../../functions/dbUtils';
+import AutocompleteInputForm, { selectOption } from '../AutocompleteInputForm/AutocompleteInputForm';
 import { highlightElement, redefineDirectionOptions, redefineLineOptions, redefineStationOptions } from '../../functions/uiUtils';
-
+import { getPosition } from '../Map/Markers/Classes/LocationMarker/LocationMarker';
 import './ReportForm.css';
 
 interface ReportFormProps {
@@ -33,6 +24,7 @@ type reportFormState = {
 	linesList: LinesList;
 	isLoadingLines: boolean;
 	isLoadingStations: boolean;
+	
 };
 
 const initialState: reportFormState = {
@@ -50,6 +42,23 @@ const initialState: reportFormState = {
 
 const redHighlight = (text: string) => {
 	return <>{text}<span className='red-highlight'>*</span></>
+}
+
+function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
+	const R = 6371; // Radius of the earth in km
+	const dLat = deg2rad(lat2 - lat1);
+	const dLon = deg2rad(lon2 - lon1);
+	const a =
+	  Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+	  Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+	  Math.sin(dLon / 2) * Math.sin(dLon / 2);
+	const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+	const distance = R * c; // Distance in km
+	return distance;
+}
+  
+function deg2rad(deg: number) {
+	return deg * (Math.PI / 180);
 }
 
 const ReportForm: React.FC<ReportFormProps> = ({
@@ -73,10 +82,23 @@ const ReportForm: React.FC<ReportFormProps> = ({
 		}
 
 		if (!(document.getElementById('privacy-checkbox') as HTMLInputElement).checked) {
-			highlightElement('privacy-label'); // Highlight the 'privacy-checkbox' input field
+			highlightElement('privacy-label');
 			hasError = true;
 		}
 
+		const userLocation = await getPosition();
+    
+		if (userLocation && reportFormState.stationInput) {
+			const station = reportFormState.stationsList[reportFormState.stationInput.value];
+			if (station) {
+				const distance = calculateDistance(userLocation[0], userLocation[1], station.coordinates.latitude, station.coordinates.longitude);
+				if (distance > 1) { // If the distance is more than 1 km
+					highlightElement('station-select-div');
+					hasError = true;
+				}
+			}
+		}
+	
 		if (hasError) return; // If there is an error, do not proceed with the submission
 
 		const { lineInput, stationInput, directionInput } = reportFormState;
@@ -143,7 +165,7 @@ const ReportForm: React.FC<ReportFormProps> = ({
 	}, []);
 
 	return (
-		<div className={`report-form container ${className}`}>
+		<div className={`report-form container ${className}`} id='report-form'>
 			<h1>Neue Meldung</h1>
 			<form onSubmit={handleSubmit}>
 

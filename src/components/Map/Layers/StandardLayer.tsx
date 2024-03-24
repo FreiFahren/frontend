@@ -1,17 +1,22 @@
 import { LatLngTuple, LeafletEvent } from 'leaflet';
 import { useEffect } from 'react';
 import { TileLayer, useMap } from 'react-leaflet';
+
 import { berlinViewPosition } from '../Map';
+import { darkModeIds } from './DarkLayer';
 
 interface StandardLayerProps {
 	position: LatLngTuple | null;
 }
 
-export const removeDarkMode = (id: string) => {
-	const element = document.getElementsByClassName(id);
-	if (element) {
-		element.item(0)?.classList.remove('dark-mode');
-	}
+
+export const removeDarkMode = (ids: string[]) => {
+	for (const id of ids) {
+		const element = document.getElementsByClassName(id);
+		if (element) {
+			element.item(0)?.classList.remove('dark-mode');
+		}
+	}	
 };
 
 const StandardLayer = (props: StandardLayerProps) => {
@@ -43,11 +48,7 @@ const StandardLayer = (props: StandardLayerProps) => {
 			minZoom={minZoom}
 			eventHandlers={{
 				add: (event: LeafletEvent) => {
-					// removeDarkMode('report-button');
-					// removeDarkMode('leaflet-control-layers-toggle');
-					// removeDarkMode('leaflet-control-layers');
-					// removeDarkMode('util-button')
-					// removeDarkMode('report-form.report-form.container.open');
+					removeDarkMode(darkModeIds);
 				},
 			}}
 		/>

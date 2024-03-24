@@ -11,11 +11,32 @@
 }
 
 .dark-mode {
-  background-color: #5100FF !important;
   color: white !important;
-  outline: 4px solid #1E1E1E !important;
-  
+  outline: 4px solid #222121 !important;
 }
+.dark-mode.toggle-layer-button {
+  background-color: #3f3f3fa8 !important;
+}
+.dark-mode.util-button {
+   background-color: #3f3f3fa8 !important;
+}
+
+.dark-mode.util-button span {
+  background-color: white !important;
+}
+
+.dark-mode.report-button {
+  background-color: #325ab7c4 !important;
+}
+.dark-mode.container {
+  background-color: #325ab7c4 !important;
+}
+
+.dark-mode.open {
+  background-color: #325ab7c4 !important;
+
+}
+
 /* leaflet-control-layers-list */
 @media (max-width: 999px) {
   .leaflet-control-zoom {

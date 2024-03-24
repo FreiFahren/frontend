@@ -1,9 +1,10 @@
 import React, { useRef, useEffect, useState, useMemo } from 'react';
 import { Marker, Popup } from 'react-leaflet';
-import { OpacityMarkerIcon } from '../../../../../functions/mapUtils';
 import L from 'leaflet';
 
+import './OpacityMarker.css';
 import { MarkerData } from '../../MarkerContainer';
+import { OpacityMarkerIcon } from '../../../../../functions/mapUtils';
 
 interface OpacityMarkerProps {
     markerData: MarkerData;
@@ -29,7 +30,7 @@ export const OpacityMarker: React.FC<OpacityMarkerProps> = ({ markerData, index 
           const calculateOpacity = () => {
             const currentTime = new Date().getTime();
             const elapsedTime = currentTime - Timestamp.getTime();
-            const newOpacity = Math.max(0, 1 - (elapsedTime / (15 * 60 * 1000)));
+            const newOpacity = Math.max(0, 1 - (elapsedTime / (30 * 60 * 1000)));
             setOpacity(newOpacity);
             if (newOpacity === 0) {
               clearInterval(intervalId);
@@ -37,7 +38,7 @@ export const OpacityMarker: React.FC<OpacityMarkerProps> = ({ markerData, index 
           };
           calculateOpacity(); // Initial calculation
 
-          intervalId = setInterval(calculateOpacity, 5000); // every 5 seconds to avoid excessive rerenders
+          intervalId = setInterval(calculateOpacity, 5 * 1000); // every 5 seconds to avoid excessive rerenders
         } else {
           setOpacity(1);
         }
@@ -55,6 +56,16 @@ export const OpacityMarker: React.FC<OpacityMarkerProps> = ({ markerData, index 
         return null;
     }
 
+    const elapsedTimeMessage = (elapsedTime:number, isHistoric:boolean): string => {
+        if (elapsedTime > 10 * 60 * 1000 || isHistoric) {
+            return 'Vor mehr als <strong>10 Minuten</strong> gemeldet.';
+        }
+        else {
+            const minutes = Math.max(1, Math.floor(elapsedTime / (60 * 1000)));
+            return `Vor <strong>${minutes === 1 ? 'einer' : minutes} Minuten</strong> gemeldet.`;
+        }
+    };
+
     return (
         <Marker
             ref={markerRef}
@@ -64,7 +75,8 @@ export const OpacityMarker: React.FC<OpacityMarkerProps> = ({ markerData, index 
         >
             <Popup>
                 <>
-                    {line} {direction.name ? direction.name + ' - ' : ''} { station.name }
+                    {line} {direction.name ? direction.name + ' - ' : ''} <strong>{station.name}</strong>
+                    <div dangerouslySetInnerHTML={{ __html: elapsedTimeMessage(new Date().getTime() - Timestamp.getTime(), isHistoric) }} />
                 </>
             </Popup>
         </Marker>

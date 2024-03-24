@@ -4,6 +4,7 @@ import { ActionMeta } from 'react-select/';
 import { LinesList, StationList, StationProperty, getAllLinesList, getAllStationsList, reportInspector } from '../../functions/dbUtils';
 import AutocompleteInputForm, { selectOption } from '../AutocompleteInputForm/AutocompleteInputForm';
 import { highlightElement, redefineDirectionOptions, redefineLineOptions, redefineStationOptions, createWarningSpan } from '../../functions/uiUtils';
+import { calculateDistance } from '../../functions/mapUtils';
 import { getPosition } from '../Map/Markers/Classes/LocationMarker/LocationMarker';
 import './ReportForm.css';
 
@@ -41,23 +42,6 @@ const initialState: reportFormState = {
 
 const redHighlight = (text: string) => {
 	return <>{text}<span className='red-highlight'>*</span></>
-}
-
-function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
-	const R = 6371; // Radius of the earth in km
-	const dLat = deg2rad(lat2 - lat1);
-	const dLon = deg2rad(lon2 - lon1);
-	const a =
-		Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-		Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-		Math.sin(dLon / 2) * Math.sin(dLon / 2);
-	const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-	const distance = R * c; // Distance in km
-	return distance;
-}
-
-function deg2rad(deg: number) {
-	return deg * (Math.PI / 180);
 }
 
 const ReportForm: React.FC<ReportFormProps> = ({
@@ -112,7 +96,7 @@ const ReportForm: React.FC<ReportFormProps> = ({
 
 		const distance = userLocation ? calculateDistance(userLocation[0], userLocation[1], station.coordinates.latitude, station.coordinates.longitude): 0;
 
-		// Too far from the selected station
+		// Checks if the user is more than 1 km away from the station
 		if (distance > 1) {
 			highlightElement('report-form');
 			createWarningSpan('station-select-div', 'Du bist zu weit von der Station entfernt. Bitte wähle die richtige Station!');

@@ -9,9 +9,10 @@ import StandardLayer from './Layers/StandardLayer';
 
 interface MapProps {
     formSubmitted: boolean;
+    initialPosition: [number, number] | null;
 }
 
-const Map: React.FC<MapProps> = ({ formSubmitted }) => {
+const Map: React.FC<MapProps> = ({ formSubmitted, initialPosition }) => {
     // Berlin as Standardview
     const position: LatLngTuple = [52.5162,13.3880];
 
@@ -20,8 +21,7 @@ const Map: React.FC<MapProps> = ({ formSubmitted }) => {
   return (
         <MapContainer id='map' center={position} zoom={13} scrollWheelZoom={true} maxBounds={maxBounds}>
 
-    <StandardLayer />
-        <LocationMarker />
+        <LocationMarker initialPosition={initialPosition}/>
 
         <MarkerContainer formSubmitted={formSubmitted}/>
 

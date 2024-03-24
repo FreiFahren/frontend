@@ -1,28 +1,21 @@
-
-
-
 .red-highlight {
    color: var(--red);
 }
 
 .report-form form > div:nth-child(2) {
     position: relative; 
-
 }
 
 .report-form label {
     border-radius: var(--standard-border-radius);
-    font-size: 0.9em;
+    font-size: var(--standard-font-size);
     display: flex;
     align-items: center;
     width: fit-content;
     position: relative;
-    
     margin: auto;
     margin-bottom: 1rem;
-
 }
-
 
 .report-form input[type="checkbox"] {
     height: 1.5rem;

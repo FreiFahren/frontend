@@ -9,5 +9,5 @@
 .leaflet-popup-content div {
     margin-top: 5px;
     color: var(--place-holder-color);
-    font-size: 0.9em;
+    font-size: var(--standard-font-size);
 }

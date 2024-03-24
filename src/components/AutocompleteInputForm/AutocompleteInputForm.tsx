@@ -17,8 +17,7 @@ export function setStyles (isIndicatorSeparator: boolean | undefined, isDropdown
       justifyContent: 'center',
       justifyItems: 'center',
       padding: '10px',
-      fontSize: '1.3rem',
-
+      fontSize: '0.9 em',
       }),
       indicatorSeparator: (base) => ({
         ...base,

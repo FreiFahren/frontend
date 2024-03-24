@@ -14,6 +14,10 @@
   --button-z-index: 0;
   --backdrop-z-index: 1;
   --modal-z-index: 2;
+
+  --standard-font-size: 0.9em;
+  --button-font-size: 1.1em;
+  --big-font-size: 1.5em;
 }
 
 body {
@@ -31,7 +35,7 @@ code {
 }
 
 h1 {
-  font-size: 1.5em;
+  font-size: var(--big-font-size);
   font-weight: 500;
   margin: 0.67em 0;
 }
@@ -43,7 +47,7 @@ button {
   border: none;
   border-radius: var(--standard-border-radius);
   color: var(--white);
-  font-size: 1em;
+  font-size: var(--button-font-size);
   font-weight: 600;
   text-align: center;
 }
@@ -54,8 +58,12 @@ button:hover {
 
 button a {
   color: var(--white);
-  font-size: 1rem;
+  font-size: var(--standard-font-size);
   text-decoration: none;
+}
+
+p {
+  font-size: var(--standard-font-size);
 }
 
 @keyframes popup {

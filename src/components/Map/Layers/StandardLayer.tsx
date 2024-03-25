@@ -1,4 +1,4 @@
-import { LatLngTuple, LeafletEvent } from 'leaflet';
+import { LatLngTuple } from 'leaflet';
 import { useEffect } from 'react';
 import { TileLayer, useMap } from 'react-leaflet';
 
@@ -38,7 +38,7 @@ const StandardLayer = (props: StandardLayerProps) => {
 			maxZoom={maxZoom}
 			minZoom={minZoom}
 			eventHandlers={{
-				add: (event: LeafletEvent) => {
+				add: () => {
 					removeDarkMode(darkModeIds);
 				},
 			}}

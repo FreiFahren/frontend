@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { LatLngTuple, LeafletEvent } from 'leaflet';
+import { LatLngTuple } from 'leaflet';
 import { TileLayer, useMap } from 'react-leaflet';
 
 import { berlinViewPosition } from '../Map';
@@ -39,7 +39,7 @@ const DarkLayer = (props: StandardLayerProps) => {
 			maxZoom={setMaxZoom}
 			minZoom={setMinZoom}
 			eventHandlers={{
-				add: (event: LeafletEvent) => {
+				add: () => {
 					setDarkMode(darkModeIds);
 				},
 			}}

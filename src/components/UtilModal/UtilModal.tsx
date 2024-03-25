@@ -12,7 +12,7 @@ interface UtilModalProps {
 }
 
 const UtilModal: React.FC<UtilModalProps> = ({ className }) => {
-	const {currentThemeLayer, setCurrentThemeLayer} = useContext(LayerContext);
+	const {currentThemeLayer} = useContext(LayerContext);
 
 	return (
 		<div

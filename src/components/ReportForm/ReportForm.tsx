@@ -57,6 +57,14 @@ const ReportForm: React.FC<ReportFormProps> = ({
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
 
+		// Check if 30 minutes have passed since the last report
+		const lastReportTime = localStorage.getItem('lastReportTime');
+		if (lastReportTime && Date.now() - parseInt(lastReportTime) < 30 * 60 * 1000) {
+			highlightElement('report-form');
+			createWarningSpan('station-select-div', 'Du kannst nur alle 30 Minuten eine Meldung abgeben!');
+			return;
+		}
+
 		let hasError = false;
 
 		if (reportFormState.stationInput === undefined || reportFormState.stationInput === emptyOption) {
@@ -79,6 +87,9 @@ const ReportForm: React.FC<ReportFormProps> = ({
 		const { lineInput, stationInput, directionInput } = reportFormState;
 
 		await reportInspector(lineInput!, stationInput!, directionInput!);
+
+		// Save the timestamp of the report
+		localStorage.setItem('lastReportTime', Date.now().toString());
 
 		closeModal();
 		onFormSubmit(); // Notify App component about the submission

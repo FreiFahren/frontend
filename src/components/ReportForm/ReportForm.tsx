@@ -59,9 +59,9 @@ const ReportForm: React.FC<ReportFormProps> = ({
 
 		// Check for last report time to prevent spamming
 		const lastReportTime = localStorage.getItem('lastReportTime');
-		if (lastReportTime && Date.now() - parseInt(lastReportTime) < 30 * 60 * 1000) {
+		if (lastReportTime && Date.now() - parseInt(lastReportTime) < 15 * 60 * 1000) {
 			highlightElement('report-form');
-			createWarningSpan('station-select-div', 'Du kannst nur alle 30 Minuten eine Meldung abgeben!');
+			createWarningSpan('station-select-div', 'Du kannst nur alle 15 Minuten eine Meldung abgeben!');
 			hasError = true;
 		}
 

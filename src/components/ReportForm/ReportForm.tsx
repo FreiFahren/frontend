@@ -54,10 +54,16 @@ const ReportForm: React.FC<ReportFormProps> = ({
 
 	const emptyOption = '' as unknown as selectOption;
 
-	const handleSubmit = async (event: React.FormEvent) => {
-		event.preventDefault();
-
+	const validateReportForm = async () => {
 		let hasError = false;
+
+		// Check for last report time to prevent spamming
+		const lastReportTime = localStorage.getItem('lastReportTime');
+		if (lastReportTime && Date.now() - parseInt(lastReportTime) < 15 * 60 * 1000) {
+			highlightElement('report-form');
+			createWarningSpan('station-select-div', 'Du kannst nur alle 15 Minuten eine Meldung abgeben!');
+			hasError = true;
+		}
 
 		if (reportFormState.stationInput === undefined || reportFormState.stationInput === emptyOption) {
 			highlightElement('station-select-component__control');
@@ -71,14 +77,23 @@ const ReportForm: React.FC<ReportFormProps> = ({
 
 		const locationError = await verifyUserLocation(reportFormState.stationInput, reportFormState.stationsList);
 		if (locationError) {
-			hasError = true; // Update hasError based on location verification
+			hasError = true;
 		}
 
-		if (hasError) return; // If there is an error, do not proceed with the submission
+		return hasError; // Return true if there's an error, false otherwise
+	};
+
+	const handleSubmit = async (event: React.FormEvent) => {
+		event.preventDefault();
+
+		const hasError = await validateReportForm();
+		if (hasError) return; // Abort submission if there are validation errors
 
 		const { lineInput, stationInput, directionInput } = reportFormState;
-
 		await reportInspector(lineInput!, stationInput!, directionInput!);
+
+		// Save the timestamp of the report to prevent spamming
+		localStorage.setItem('lastReportTime', Date.now().toString());
 
 		closeModal();
 		onFormSubmit(); // Notify App component about the submission

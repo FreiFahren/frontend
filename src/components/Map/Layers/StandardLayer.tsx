@@ -1,5 +1,5 @@
 import { LatLngTuple } from 'leaflet';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { TileLayer, useMap } from 'react-leaflet';
 
 import { berlinViewPosition } from '../Map';

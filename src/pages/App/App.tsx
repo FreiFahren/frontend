@@ -9,6 +9,7 @@ import UtilModal from '../../components/UtilModal/UtilModal';
 import { highlightElement } from '../../functions/uiUtils';
 import { getPosition } from '../../components/Map/Markers/Classes/LocationMarker/LocationMarker';
 import Backdrop from '../../components/Backdrop/Backdrop';
+import StatsPopUp from '../../components/StatsPopUp/StatsPopUp';
 import './App.css';
 
 function App() {
@@ -22,11 +23,12 @@ function App() {
   const [isUtilFormOpen, setIsUtilFormOpen] = useState(false);
 
   const [isFirstOpen, setIsFirstOpen] = useState(true);
-
   const [initialPosition, setInitialPosition] = useState<[number, number] | null>(null);
+  const [statsPopUpOpen, setStatsPopUpOpen] = useState(false);
 
   async function closeLegalDisclaimer() {
     setIsFirstOpen(false);
+    setStatsPopUpOpen(true);
     const position = await getPosition();
 
     if (position) {
@@ -63,6 +65,7 @@ function App() {
           <Backdrop onClick={() => setIsReportFormOpen(false)} />
         </>
       )}
+      {statsPopUpOpen && <StatsPopUp className={'open'}/>}
     </div>
   );
 }

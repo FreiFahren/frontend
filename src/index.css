@@ -96,7 +96,9 @@ p {
 .container.open {
   display: block;
   opacity: 1;
+}
 
+.open {
   animation: popup 0.25s ease forwards;
 }
 

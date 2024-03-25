@@ -1,0 +1,19 @@
+.stats-popup {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    min-width: 100px;
+    height: 35px;
+    background-color: var(--black);
+    color: var(--white);
+    border-radius: 17px;
+    opacity: 0.75 !important;
+    box-shadow: var(--button-box-shadow);
+    border: none;
+    cursor: pointer;
+}

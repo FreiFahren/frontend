@@ -1,28 +1,24 @@
 .toggle-layer-button {
     z-index: 998;
-    box-shadow: var(--button-box-shadow); /* Set a higher z-index value */
 }
     
 .toggle-layer-button {
-    position: fixed;
-    height: 3rem;
-    width: 3rem;
-    bottom: 25px;
-    left: 25px;
-    padding: 10px;
+    /* height: 3rem; */
+    /* width: 3rem; */
+    /* bottom: 25px; */
+
     cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 50%;
-    box-shadow: var(--button-box-shadow);
+    /* background-color: rgba(0, 0, 0, 0.5); */
+    
+    /* box-shadow: var(--button-box-shadow);
     overflow: hidden;
-    display: flex;
+    
     justify-content: center;
-    align-items: center;
+    align-items: center; */
 }
 
 .toggle-layer-button span {
     font-size: 2rem;
-    bottom: 35px;
 }
 
 @media screen and (min-width: 999px) {
@@ -38,4 +34,40 @@
         top: 0.1rem;
         left: 0.05rem;
     }
+}
+
+/* dark mode styling */
+.dark-mode {
+    color: white !important;
+    outline: 4px solid #222121 !important;
+  }
+.dark-mode.toggle-layer-button {
+    background-color: #3f3f3fe4 !important;
+}
+.dark-mode.util-button {
+    background-color: #3f3f3ff3 !important;
+}
+
+.dark-mode.util-button span {
+    background-color: white !important;
+}
+
+.dark-mode h1 {
+    color: black;
+}
+
+.dark-mode.report-button {
+    background-color: #325ab7f4 !important;
+}
+
+.dark-mode.util-modal-block-button{
+    background-color: #3f3f3fe4 !important;
+}
+
+.dark-mode.util-modal-block-button{
+    background-color: #3f3f3fe4 !important;
+}
+
+.dark-mode.inspector-markers {
+    background-color: green !important;
 }

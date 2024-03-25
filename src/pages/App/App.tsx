@@ -16,22 +16,39 @@ import { getPosition } from '../../components/Map/Markers/Classes/LocationMarker
 
 import './App.css';
 
+export type ThemeLayerOptions = 'Light' | 'Dark';
+
+export const LayerContext = React.createContext({
+  currentThemeLayer: 'Light',
+  setCurrentThemeLayer: (layer: string) => {console.log(layer)},
+});
+
+type AppUIState = {
+  isReportFormOpen: boolean;
+  isUtilFormOpen: boolean;
+  isFirstOpen: boolean;
+  formSubmitted: boolean;
+};
+
+const initialAppUIState: AppUIState = {
+  isReportFormOpen: false,
+  isUtilFormOpen: false,
+  isFirstOpen: true,
+  formSubmitted: false,
+};
+
 function App() {
-  const [isReportFormOpen, setIsReportFormOpen] = useState(false);
-  const [formSubmitted, setFormSubmitted] = useState(false);
-
-  const handleFormSubmit = () => {
-    setFormSubmitted(prevState => !prevState);
-  }
-
-  const [isUtilFormOpen, setIsUtilFormOpen] = useState(false);
-
-  const [isFirstOpen, setIsFirstOpen] = useState(true);
+  const [appUIState, setAppUIState] = useState<AppUIState>(initialAppUIState);
+  const [currentThemeLayer, setCurrentThemeLayer] = useState('Light');
 
   const [initialPosition, setInitialPosition] = useState<LatLngTuple | null>(null);
 
+  const handleFormSubmit = () => {
+    setAppUIState(appUIState => ({ ...appUIState, formSubmitted: !appUIState.formSubmitted }));
+  }
+
   async function closeLegalDisclaimer() {
-    setIsFirstOpen(false);
+    setAppUIState({ ...appUIState, isFirstOpen: false });
     const position = await getPosition();
 
     if (position) {
@@ -41,34 +58,34 @@ function App() {
 
   return (
     <div className='App'>
-      {isFirstOpen &&
-      <>
-        <LegalDisclaimer
-          className={isFirstOpen ? 'open' : ''}
-          closeModal={closeLegalDisclaimer}
-        />
-        <Backdrop onClick={() => highlightElement('legal-disclaimer')} />
-      </>}
-
-      <Map formSubmitted={formSubmitted} initialPosition={initialPosition}/>
-      <UtilButton onClick={() => setIsUtilFormOpen(!isUtilFormOpen)}/>
-
-      {isUtilFormOpen && (
+      {appUIState.isFirstOpen &&
         <>
-          <UtilModal className={'open'}/>
-          <Backdrop onClick={() => setIsUtilFormOpen(false)} />
-        </>
-      )}
-      <ReportButton onClick={() => setIsReportFormOpen(!isReportFormOpen)} />
+          <LegalDisclaimer
+            className={appUIState.isFirstOpen ? 'open' : ''}
+            closeModal={closeLegalDisclaimer}
+          />
+          <Backdrop onClick={() => highlightElement('legal-disclaimer')} />
+        </>}
+      <LayerContext.Provider value={{ currentThemeLayer, setCurrentThemeLayer }}>
+        <Map formSubmitted={appUIState.formSubmitted} initialPosition={initialPosition} />
+        <UtilButton onClick={() => setAppUIState({ ...appUIState, isUtilFormOpen: !appUIState.isUtilFormOpen })} />
 
-      {isReportFormOpen && (
+        {appUIState.isUtilFormOpen && (
+          <>
+            <UtilModal className={ (currentThemeLayer === 'Light') ? 'open' : 'open dark-mode'} />
+            <Backdrop onClick={() => setAppUIState({ ...appUIState, isUtilFormOpen: false })} />
+          </>
+        )}
+        <ReportButton onClick={() => setAppUIState({ ...appUIState, isReportFormOpen: !appUIState.isReportFormOpen })} />
+      </LayerContext.Provider>
+      {appUIState.isReportFormOpen && (
         <>
           <ReportForm
-            closeModal={() => setIsReportFormOpen(false)}
+            closeModal={() => setAppUIState({ ...appUIState, isReportFormOpen: false })}
             onFormSubmit={handleFormSubmit}
             className={'open'}
           />
-          <Backdrop onClick={() => setIsReportFormOpen(false)} />
+          <Backdrop onClick={() => setAppUIState({ ...appUIState, isReportFormOpen: false })} />
         </>
       )}
     </div>

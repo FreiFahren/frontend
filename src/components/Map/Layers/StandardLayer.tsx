@@ -3,21 +3,12 @@ import { useEffect } from 'react';
 import { TileLayer, useMap } from 'react-leaflet';
 
 import { berlinViewPosition } from '../Map';
-import { darkModeIds } from './DarkLayer';
+import { darkModeIds } from '../LayerButton/LayerButton';
+import { removeDarkMode } from '../LayerButton/LayerButton';
 
 interface StandardLayerProps {
 	position: LatLngTuple | null;
 }
-
-
-export const removeDarkMode = (ids: string[]) => {
-	for (const id of ids) {
-		const element = document.getElementsByClassName(id);
-		if (element) {
-			element.item(0)?.classList.remove('dark-mode');
-		}
-	}	
-};
 
 const StandardLayer = (props: StandardLayerProps) => {
 	const { position } = props;

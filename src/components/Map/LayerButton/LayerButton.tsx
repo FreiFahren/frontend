@@ -1,37 +1,41 @@
-import React, { useState } from 'react';
-import { LayerGroup } from 'react-leaflet';
-import { LatLngTuple } from 'leaflet';
-
-import StandardLayer from '../Layers/StandardLayer';
-import DarkLayer from '../Layers/DarkLayer';
+import React, { useContext } from 'react';
 
 import './LayerButton.css';
+import { LayerContext } from '../../../pages/App/App';
 
-type LayerButtonProps = {
-	initialPosition: LatLngTuple | null;
+export const darkModeIds = ['report-button', 'toggle-layer-button', 'util-button', 'util-modal-block-button', 'inspector-marker']
+
+export const setDarkMode = (ids: string[]) => {
+	for (const id of ids) {
+		const element = document.getElementsByClassName(id);
+		if (element) {
+			element.item(0)?.classList.add('dark-mode');
+			console.log(element, 'dark-mode', 'class', id);
+		}
+	}
+
 };
 
-const LayerButton = (props: LayerButtonProps) => {
-	const { initialPosition } = props;
-	const [selectedLayer, setSelectedLayer] = useState('Light');
+export const removeDarkMode = (ids: string[]) => {
+	for (const id of ids) {
+		const element = document.getElementsByClassName(id);
+		if (element) {
+			element.item(0)?.classList.remove('dark-mode');
+		}
+	}
 
-	const toggleLayer = () => {
-		setSelectedLayer(selectedLayer === 'Light' ? 'Dark' : 'Light');
+};
+
+const LayerButton = () => {
+    const { currentThemeLayer, setCurrentThemeLayer } = useContext(LayerContext);
+
+	const toggleThemeLayer = () => {
+		setCurrentThemeLayer(currentThemeLayer === 'Light' ? 'Dark' : 'Light');
 	};
 
 	return (
 		<div>
-			<button className='toggle-layer-button' onClick={toggleLayer}> {selectedLayer === 'Light' ? <span>☀️</span> : <span>🌑</span>} </button>
-
-			{selectedLayer === 'Light' ? (
-				<LayerGroup>
-					<StandardLayer position={initialPosition} />
-				</LayerGroup>
-			) : (
-				<LayerGroup>
-					<DarkLayer position={initialPosition} />
-				</LayerGroup>
-			)}
+			<button className={(currentThemeLayer === 'Light') ? 'toggle-layer-button' : 'toggle-layer-button dark-mode'  } onClick={toggleThemeLayer}> {currentThemeLayer === 'Light' ? <span>☀️</span> : <span>🌑</span>} </button>
 		</div>
 	);
 };

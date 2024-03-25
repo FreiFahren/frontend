@@ -1,10 +1,11 @@
-import React, { useRef, useEffect, useState, useMemo } from 'react';
+import React, { useRef, useEffect, useState, useMemo, useContext } from 'react';
 import { Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 
 import './OpacityMarker.css';
 import { MarkerData } from '../../MarkerContainer';
 import { OpacityMarkerIcon } from '../../../../../functions/mapUtils';
+import { LayerContext } from '../../../../../pages/App/App';
 
 interface OpacityMarkerProps {
     markerData: MarkerData;
@@ -14,6 +15,7 @@ interface OpacityMarkerProps {
 export const OpacityMarker: React.FC<OpacityMarkerProps> = ({ markerData, index }) => {
     const [opacity, setOpacity] = useState(0);
     const { timestamp, station, line, direction, isHistoric } = markerData;
+    const { currentThemeLayer } = useContext(LayerContext);
 
     // By using useMemo, we can avoid recalculating the timestamp on every render
     const Timestamp = useMemo(() => {
@@ -47,7 +49,7 @@ export const OpacityMarker: React.FC<OpacityMarkerProps> = ({ markerData, index 
 
     useEffect(() => {
         if (markerRef.current && opacity > 0) {
-            const newIcon = OpacityMarkerIcon(opacity);
+            const newIcon = OpacityMarkerIcon(opacity, currentThemeLayer);
             markerRef.current.setIcon(newIcon);
         }
     }, [opacity]);
@@ -71,7 +73,7 @@ export const OpacityMarker: React.FC<OpacityMarkerProps> = ({ markerData, index 
             ref={markerRef}
             key={`${line}-${index}`}
             position={[station.coordinates.latitude, station.coordinates.longitude]}
-            icon={OpacityMarkerIcon(opacity)}
+            icon={OpacityMarkerIcon(opacity, currentThemeLayer)}
         >
             <Popup>
                 <>

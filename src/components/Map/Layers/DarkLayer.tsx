@@ -4,22 +4,11 @@ import { LatLngTuple, LeafletEvent } from 'leaflet';
 import { TileLayer, useMap } from 'react-leaflet';
 
 import { berlinViewPosition } from '../Map';
+import { darkModeIds, setDarkMode } from '../LayerButton/LayerButton';
 
 interface StandardLayerProps {
 	position: LatLngTuple | null;
 }
-
-export const darkModeIds = ['report-button', 'toggle-layer-button', 'util-button', 'util-modal', 'container', 'open', 'util-modal-block']
-
-export const setDarkMode = (ids: string[]) => {
-	for (const id of ids) {
-		const element = document.getElementsByClassName(id);
-		if (element) {
-			element.item(0)?.classList.add('dark-mode');
-			console.log(element, 'dark-mode', 'class', id);
-		}
-	}
-};
 
 const DarkLayer = (props: StandardLayerProps) => {
 	const { position } = props;
@@ -28,7 +17,7 @@ const DarkLayer = (props: StandardLayerProps) => {
 	const setMinZoom = 11;
 
 	const darkTileUrl =
-		'https://tile.jawg.io/ee6306f0-9ef8-45ed-b207-72ce2bb9d897/{z}/{x}/{y}{r}.png?access-token=FFEQAFoSuGPsfDwcON88gVkX5vZQkR0VNRMkfAOBYE7hrX9c7beONi36E5BNYPHo';
+		'https://tile.jawg.io/f3354f40-2334-41b6-a537-c72decb830b2/{z}/{x}/{y}{r}.png?access-token=FFEQAFoSuGPsfDwcON88gVkX5vZQkR0VNRMkfAOBYE7hrX9c7beONi36E5BNYPHo';
 
 	const map = useMap();
 

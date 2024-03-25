@@ -76,3 +76,26 @@ export function createWarningSpan(elementId: string, message: string) {
       document.getElementById(elementId)?.appendChild(warningSpan);
   }
 }
+
+export const darkModeIds = ['report-button', 'toggle-layer-button', 'util-button', 'util-modal-block-button', 'inspector-marker']
+
+export const setDarkMode = (ids: string[]) => {
+	for (const id of ids) {
+		const element = document.getElementsByClassName(id);
+		if (element) {
+			element.item(0)?.classList.add('dark-mode');
+			console.log(element, 'dark-mode', 'class', id);
+		}
+	}
+
+};
+
+export const removeDarkMode = (ids: string[]) => {
+	for (const id of ids) {
+		const element = document.getElementsByClassName(id);
+		if (element) {
+			element.item(0)?.classList.remove('dark-mode');
+		}
+	}
+
+};

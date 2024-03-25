@@ -4,7 +4,7 @@ import { LatLngTuple } from 'leaflet';
 import { TileLayer, useMap } from 'react-leaflet';
 
 import { berlinViewPosition } from '../Map';
-import { darkModeIds, setDarkMode } from '../LayerButton/LayerButton';
+import { darkModeIds, setDarkMode } from '../../../functions/uiUtils';
 
 interface StandardLayerProps {
 	position: LatLngTuple | null;

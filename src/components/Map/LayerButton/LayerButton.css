@@ -3,18 +3,7 @@
 }
     
 .toggle-layer-button {
-    /* height: 3rem; */
-    /* width: 3rem; */
-    /* bottom: 25px; */
-
     cursor: pointer;
-    /* background-color: rgba(0, 0, 0, 0.5); */
-    
-    /* box-shadow: var(--button-box-shadow);
-    overflow: hidden;
-    
-    justify-content: center;
-    align-items: center; */
 }
 
 .toggle-layer-button span {
@@ -62,12 +51,4 @@
 
 .dark-mode.util-modal-block-button{
     background-color: #3f3f3fe4 !important;
-}
-
-.dark-mode.util-modal-block-button{
-    background-color: #3f3f3fe4 !important;
-}
-
-.dark-mode.inspector-markers {
-    background-color: green !important;
 }

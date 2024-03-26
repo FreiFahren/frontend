@@ -77,7 +77,8 @@ export function createWarningSpan(elementId: string, message: string) {
   }
 }
 
-export const darkModeIds = ['report-button', 'toggle-layer-button', 'util-button', 'util-modal-block-button', 'inspector-marker']
+// for dark and standard layer
+export const darkModeIds = ['report-button', 'toggle-layer-button', 'util-button']
 
 export const setDarkMode = (ids: string[]) => {
 	for (const id of ids) {

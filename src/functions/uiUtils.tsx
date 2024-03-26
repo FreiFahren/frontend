@@ -1,3 +1,4 @@
+import React from 'react';
 import { selectOption } from '../components/AutocompleteInputForm/AutocompleteInputForm';
 
 type StationsList = {
@@ -85,7 +86,7 @@ export const setDarkMode = (ids: string[]) => {
 		const element = document.getElementsByClassName(id);
 		if (element) {
 			element.item(0)?.classList.add('dark-mode');
-			console.log(element, 'dark-mode', 'class', id);
+
 		}
 	}
 

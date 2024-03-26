@@ -1,4 +1,3 @@
-import React from 'react';
 import { selectOption } from '../components/AutocompleteInputForm/AutocompleteInputForm';
 
 type StationsList = {

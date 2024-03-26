@@ -41,7 +41,6 @@ jest.mock('../../../functions/uiUtils', () => ({
   removeDarkMode: jest.fn(),
 }));
 
-
 describe('LegalDisclaimer Component Tests', () => {
   test('LegalDisclaimer opens', () => {
     render(<App />);

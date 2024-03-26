@@ -84,6 +84,7 @@ p {
   transform: translate(-50%, -50%);
   width: 60%;
   max-width: 600px;
+  max-height: 85vh;
   background-color: var(--white);
   padding: 20px;
   border-radius: var(--standard-border-radius);
@@ -91,6 +92,8 @@ p {
   z-index: var(--modal-z-index);
   display: none;
   opacity: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .container.open {
@@ -102,7 +105,7 @@ p {
 
 @media (max-width: 400px) {
   .container {
-    width: 85%;
+    width: 85vw;
   }
 }
 

@@ -59,13 +59,17 @@ const ReportForm: React.FC<ReportFormProps> = ({
 
 		// Check for last report time to prevent spamming
 		const lastReportTime = localStorage.getItem('lastReportTime');
+		console.log(lastReportTime)
+
 		if (lastReportTime && Date.now() - parseInt(lastReportTime) < 15 * 60 * 1000) {
+
 			highlightElement('report-form');
 			createWarningSpan('station-select-div', 'Du kannst nur alle 15 Minuten eine Meldung abgeben!');
 			hasError = true;
 		}
 
 		if (reportFormState.stationInput === undefined || reportFormState.stationInput === emptyOption) {
+
 			highlightElement('station-select-component__control');
 			hasError = true;
 		}
@@ -87,14 +91,17 @@ const ReportForm: React.FC<ReportFormProps> = ({
 		event.preventDefault();
 
 		const hasError = await validateReportForm();
-		if (hasError) return; // Abort submission if there are validation errors
-
+		if (hasError) {
+			console.log('Form has errors')
+			return; // Abort submission if there are validation errors
+		}
 		const { lineInput, stationInput, directionInput } = reportFormState;
 		await reportInspector(lineInput!, stationInput!, directionInput!);
 
 		// Save the timestamp of the report to prevent spamming
 		localStorage.setItem('lastReportTime', Date.now().toString());
 
+		console.log('Form submitted')
 		closeModal();
 		onFormSubmit(); // Notify App component about the submission
 	};
@@ -106,10 +113,11 @@ const ReportForm: React.FC<ReportFormProps> = ({
 		if (!stationInput) return false;
 
 		const userLocation = await getPosition();
+
 		const station = stationsList[stationInput.value];
 		if (!station) return false;
 
-		const distance = userLocation.position ? calculateDistance(userLocation.position[0], userLocation.position[1], station.coordinates.latitude, station.coordinates.longitude): 0;
+		const distance = userLocation ? calculateDistance(userLocation[0], userLocation[1], station.coordinates.latitude, station.coordinates.longitude): 0;
 
 		// Checks if the user is more than 1 km away from the station
 		if (distance > 1) {

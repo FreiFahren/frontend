@@ -37,11 +37,9 @@ function App() {
   async function closeLegalDisclaimer() {
     setAppUIState({ ...appUIState, isFirstOpen: false });
     const position = await getPosition();
-    console.log("From APP.tsx");
-    console.log(position);
 
     if (position) {
-      setInitialPosition(position.position);
+      setInitialPosition(position);
     }
   }
 

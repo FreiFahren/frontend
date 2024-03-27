@@ -1,33 +1,41 @@
-import L, { LatLngTuple } from 'leaflet';
+import L, {LatLngTuple} from 'leaflet';
 import React, { useEffect, useState } from 'react';
 import { Marker, Popup } from 'react-leaflet';
 
 import { createLocationMarkerHTML } from '../../../../../functions/mapUtils';
 
-export const getPosition = (): Promise<{ position: LatLngTuple | null }> => {
-    return new Promise((resolve) => {
-        navigator.permissions.query({ name: 'geolocation' }).then((result) => {
-            if (result.state === 'prompt' || result.state === 'granted') {
-                navigator.geolocation.getCurrentPosition((position) => {
-                    resolve({ position: [position.coords.latitude, position.coords.longitude] });
-                }, () => {
-                    resolve({ position: null}); // Handle the case where getting position fails
-                });
-            } else {
-                resolve({ position: null}); // Handle the case where permission is not granted
-            }
-        });
-    });
+export const queryPermission = async (): Promise<boolean> => {
+    try {
+        const permissionStatus = await navigator.permissions.query({ name: 'geolocation' });
+        return permissionStatus.state === 'granted';
+    } catch (error) {
+        return false;
+    }
 };
 
-export const watchPosition = (onPositionChanged: (position: LatLngTuple | null) => void): (() => void) => {
+export const getPosition = (): LatLngTuple | null => {
+    queryPermission().then((permissionGranted) => {
+        if (permissionGranted) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                return [position.coords.latitude, position.coords.longitude];
+            });
+        }
+    });
+    return null;
+};
+
+const watchPosition = async (onPositionChanged: (position: LatLngTuple | null) => void): Promise<(() => void) | null> => {
+    const permissionGranted = await queryPermission();
+    if (!permissionGranted) {
+        return null;
+    }
+
     const watchId = navigator.geolocation.watchPosition((position) => {
         onPositionChanged([position.coords.latitude, position.coords.longitude]);
     }, () => {
         onPositionChanged(null); // Handle the case where getting position fails
     });
 
-    // Return a function that can be used to stop watching the position
     return () => (navigator.geolocation.clearWatch(watchId));
 };
 
@@ -45,10 +53,19 @@ const LocationMarker: React.FC<LocationMarkerProps> = ({ initialPosition }) => {
         });
 
         useEffect(() => {
-            const stopWatchingPosition = watchPosition(setPosition);
-            return () => stopWatchingPosition();
 
-        }, [position]);
+            async function fetchPosition() {
+                const clearWatch = await watchPosition(setPosition);
+
+                return () => clearWatch ? clearWatch() : undefined;
+            }
+
+            fetchPosition();
+
+            // const intervalId = setInterval(fetchPosition, 15000); // 15 seconds
+
+            // return () => clearInterval(intervalId);
+        }, []);
 
     return (
         <div>

@@ -1,4 +1,4 @@
-import L, { LatLng, LatLngTuple } from 'leaflet';
+import L, { LatLngTuple } from 'leaflet';
 import React, { useEffect, useState } from 'react';
 import { Marker, Popup } from 'react-leaflet';
 

@@ -30,7 +30,7 @@ function App() {
     const position = await getPosition();
 
     if (position) {
-      setInitialPosition(position);
+      setInitialPosition(position.position);
     }
   }
 

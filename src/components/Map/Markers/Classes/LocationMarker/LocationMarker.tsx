@@ -1,20 +1,20 @@
 import L from 'leaflet';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Marker, Popup } from 'react-leaflet';
 
 import { createLocationMarkerHTML } from '../../../../../functions/mapUtils';
 
-export const getPosition = (): Promise<[number, number] | null> => {
+export const getPosition = (): Promise<{ position: [number, number] | null, watchId: number | null }> => {
     return new Promise((resolve) => {
         navigator.permissions.query({ name: 'geolocation' }).then((result) => {
             if (result.state === 'prompt' || result.state === 'granted') {
-                navigator.geolocation.getCurrentPosition((position) => {
-                    resolve([position.coords.latitude, position.coords.longitude]);
+                const watchId = navigator.geolocation.watchPosition((position) => {
+                    resolve({ position: [position.coords.latitude, position.coords.longitude], watchId });
                 }, () => {
-                    resolve(null); // Handle the case where getting position fails
+                    resolve({ position: null, watchId: null }); // Handle the case where getting position fails
                 });
             } else {
-                resolve(null); // Handle the case where permission is not granted
+                resolve({ position: null, watchId: null }); // Handle the case where permission is not granted
             }
         });
     });
@@ -34,17 +34,18 @@ const LocationMarker: React.FC<LocationMarkerProps> = ({ initialPosition }) => {
         });
 
         useEffect(() => {
+            let watchId: number | null = null;
+        
             const fetchPosition = async () => {
-                const newPos = await getPosition();
-                setPosition(newPos);
+                const { position, watchId: id } = await getPosition();
+                watchId = id;
+                console.log(position);
+                setPosition(position);
             };
-
+        
             fetchPosition();
-
-            const intervalId = setInterval(fetchPosition, 15000); // 15 seconds
-
-            return () => clearInterval(intervalId);
-        }, []);
+        
+        }, [position]);
 
     return (
         <div>

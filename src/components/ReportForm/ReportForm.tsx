@@ -109,7 +109,7 @@ const ReportForm: React.FC<ReportFormProps> = ({
 		const station = stationsList[stationInput.value];
 		if (!station) return false;
 
-		const distance = userLocation ? calculateDistance(userLocation[0], userLocation[1], station.coordinates.latitude, station.coordinates.longitude): 0;
+		const distance = userLocation.position ? calculateDistance(userLocation.position[0], userLocation.position[1], station.coordinates.latitude, station.coordinates.longitude): 0;
 
 		// Checks if the user is more than 1 km away from the station
 		if (distance > 1) {

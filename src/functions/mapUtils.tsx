@@ -9,20 +9,24 @@ export const createLocationMarkerHTML = () => {
                     height:25px;
                     border-radius:50%;
                     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+                    outline: 2px solid white;
                 "></div>`;
     };
 
-export const OpacityMarkerIcon = (opacity: number) => {
+export const OpacityMarkerIcon = (opacity: number, currentThemeLayer: string) => {
     const icon = L.divIcon({
-        className: 'inspector-marker',
+        className: 'inspector-markers',
         html: `<div 
+                class="inspector-marker"
                 aria-label="inspector marker"
                 style="
-                    background-color:rgba(255,0,0,${opacity});
+                    ${(currentThemeLayer === 'Light') ? `background-color:rgba(256,0,0,${opacity});` : `background-color:rgba(175,0,0,${opacity});`}
+                    
                     width:25px;
                     height:25px;
                     border-radius:50%;
                     box-shadow: 0 2px 4px rgba(0, 0, 0, ${opacity});
+                    outline: 2px solid white;
                 "></div>`,
         iconSize: [25, 25],
     });

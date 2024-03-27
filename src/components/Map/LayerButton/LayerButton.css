@@ -1,0 +1,50 @@
+.toggle-layer-button {
+    cursor: pointer;
+}
+
+.toggle-layer-button span {
+    font-size: 2rem;
+}
+
+@media screen and (min-width: 999px) {
+    .toggle-layer-button {
+        width: 50px;
+        height: 50px;
+        bottom: 2rem;
+        left: 5rem;
+    }
+    .toggle-layer-button span {
+        position: relative;
+        font-size: 2.5rem;
+        top: 0.1rem;
+        left: 0.05rem;
+    }
+}
+
+/* dark mode styling */
+.dark-mode {
+    color: white !important;
+    outline: 4px solid #222121 !important;
+  }
+.dark-mode.toggle-layer-button {
+    background-color: #3f3f3fe4 !important;
+}
+.dark-mode.util-button {
+    background-color: #3f3f3ff3 !important;
+}
+
+.dark-mode.util-button span {
+    background-color: white !important;
+}
+
+.dark-mode h1 {
+    color: black;
+}
+
+.dark-mode.report-button {
+    background-color: #325ab7f4 !important;
+}
+
+.dark-mode.util-modal-block-button{
+    background-color: #3f3f3fe4 !important;
+}

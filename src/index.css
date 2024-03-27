@@ -50,6 +50,7 @@ button {
   font-size: var(--button-font-size);
   font-weight: 600;
   text-align: center;
+  outline: 4px solid white !important;
 }
 
 button:hover {
@@ -116,3 +117,17 @@ p {
 .legal-text {
   padding: 25px;
 }
+
+/* This makes the zoom and popup animation feeling faster */
+.leaflet-zoom-anim .leaflet-zoom-animated {
+	-webkit-transition: -webkit-transform 0.1s cubic-bezier(0,0,0.1,1);
+	   -moz-transition:    -moz-transform 0.1s cubic-bezier(0,0,0.1,1);
+	        transition:         transform 0.1s cubic-bezier(0,0,0.1,1);
+	}
+
+.leaflet-fade-anim .leaflet-popup {
+  opacity: 0;
+  -webkit-transition: opacity 0.1s linear;
+      -moz-transition: opacity 0.1s linear;
+          transition: opacity 0.1s linear;
+  }

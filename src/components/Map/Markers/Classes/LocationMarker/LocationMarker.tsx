@@ -1,5 +1,5 @@
-import L from 'leaflet';
-import React, { useEffect, useRef, useState } from 'react';
+import L, { LatLngTuple } from 'leaflet';
+import React, { useEffect, useState } from 'react';
 import { Marker, Popup } from 'react-leaflet';
 
 import { createLocationMarkerHTML } from '../../../../../functions/mapUtils';
@@ -21,11 +21,11 @@ export const getPosition = (): Promise<{ position: [number, number] | null, watc
 };
 
 interface LocationMarkerProps {
-     initialPosition: [number, number] | null;
+     initialPosition: LatLngTuple | null;
 }
 
 const LocationMarker: React.FC<LocationMarkerProps> = ({ initialPosition }) => {
-     const [position, setPosition] = useState<[number, number] | null>(initialPosition);
+     const [position, setPosition] = useState<LatLngTuple | null>(initialPosition);
 
         const LocationIcon = L.divIcon({
             className: 'custom-icon',

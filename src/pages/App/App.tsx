@@ -10,23 +10,32 @@ import { highlightElement } from '../../functions/uiUtils';
 import { getPosition } from '../../components/Map/Markers/Classes/LocationMarker/LocationMarker';
 import Backdrop from '../../components/Backdrop/Backdrop';
 import './App.css';
+import { LatLngTuple } from 'leaflet';
+
+type AppUIState = {
+  isReportFormOpen: boolean;
+  formSubmitted: boolean;
+  isUtilFormOpen: boolean;
+  isFirstOpen: boolean;
+};
+
+const initialAppUIState: AppUIState = {
+  isReportFormOpen: false,
+  formSubmitted: false,
+  isUtilFormOpen: false,
+  isFirstOpen: true,
+};
 
 function App() {
-  const [isReportFormOpen, setIsReportFormOpen] = useState(false);
-  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [appUIState, setAppUIState] = useState<AppUIState>(initialAppUIState);
+  const [initialPosition, setInitialPosition] = useState<LatLngTuple | null>(null);
 
   const handleFormSubmit = () => {
-    setFormSubmitted(prevState => !prevState);
+    setAppUIState(appUIState => ({ ...appUIState, formSubmitted: !appUIState.formSubmitted }));
   }
 
-  const [isUtilFormOpen, setIsUtilFormOpen] = useState(false);
-
-  const [isFirstOpen, setIsFirstOpen] = useState(true);
-
-  const [initialPosition, setInitialPosition] = useState<[number, number] | null>(null);
-
   async function closeLegalDisclaimer() {
-    setIsFirstOpen(false);
+    setAppUIState({ ...appUIState, isFirstOpen: false });
     const position = await getPosition();
 
     if (position) {
@@ -36,31 +45,32 @@ function App() {
 
   return (
     <div className='App'>
-      {isFirstOpen &&
-      <>
-        <LegalDisclaimer
-          className={isFirstOpen ? 'open' : ''}
-          closeModal={closeLegalDisclaimer}
-        />
-        <Backdrop onClick={() => highlightElement('legal-disclaimer')} />
-      </>}
-      <Map formSubmitted={formSubmitted} initialPosition={initialPosition}/>
-      <UtilButton onClick={() => setIsUtilFormOpen(!isUtilFormOpen)}/>
-      {isUtilFormOpen && (
+      {appUIState.isFirstOpen &&
         <>
-          <UtilModal className={'open'}/>
-          <Backdrop onClick={() => setIsUtilFormOpen(false)} />
-        </>
-      )}
-      <ReportButton onClick={() => setIsReportFormOpen(!isReportFormOpen)} />
-      {isReportFormOpen && (
+          <LegalDisclaimer
+            className={appUIState.isFirstOpen ? 'open' : ''}
+            closeModal={closeLegalDisclaimer}
+          />
+          <Backdrop onClick={() => highlightElement('legal-disclaimer')} />
+        </>}
+        <Map formSubmitted={appUIState.formSubmitted} initialPosition={initialPosition} />
+        <UtilButton onClick={() => setAppUIState({ ...appUIState, isUtilFormOpen: !appUIState.isUtilFormOpen })} />
+
+        {appUIState.isUtilFormOpen && (
+          <>
+            <UtilModal className={ 'open' } />
+            <Backdrop onClick={() => setAppUIState({ ...appUIState, isUtilFormOpen: false })} />
+          </>
+        )}
+        <ReportButton onClick={() => setAppUIState({ ...appUIState, isReportFormOpen: !appUIState.isReportFormOpen })} />
+      {appUIState.isReportFormOpen && (
         <>
           <ReportForm
-            closeModal={() => setIsReportFormOpen(false)}
+            closeModal={() => setAppUIState({ ...appUIState, isReportFormOpen: false })}
             onFormSubmit={handleFormSubmit}
             className={'open'}
           />
-          <Backdrop onClick={() => setIsReportFormOpen(false)} />
+          <Backdrop onClick={() => setAppUIState({ ...appUIState, isReportFormOpen: false })} />
         </>
       )}
     </div>

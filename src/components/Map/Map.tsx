@@ -8,17 +8,18 @@ import './Map.css'
 
 interface MapProps {
     formSubmitted: boolean;
-    initialPosition: [number, number] | null;
+    initialPosition: LatLngTuple | null;
 }
 
-const Map: React.FC<MapProps> = ({ formSubmitted, initialPosition }) => {
-    // Berlin as Standardview
-    const position: LatLngTuple = [52.5162,13.3880];
+export const berlinViewPosition: LatLngTuple = [52.5162, 13.3880];
 
-    const maxBounds = latLngBounds([52.96125019866001, 12.509131386425151], [52.014679000584486, 14.382300343810543]);
+const Map: React.FC<MapProps> = ({ formSubmitted, initialPosition }) => {
+
+    const maxBounds = latLngBounds([52.96125019866001, 12.509131386425151],
+                                   [52.014679000584486, 14.382300343810543]);
 
   return (
-        <MapContainer id='map' center={position} zoom={13} scrollWheelZoom={true} maxBounds={maxBounds}>
+        <MapContainer id='map' center={berlinViewPosition} zoom={13} scrollWheelZoom={true} maxBounds={maxBounds}>
         <TileLayer
             attribution= '<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a>'
             url={`https://tile.jawg.io/jawg-streets/{z}/{x}/{y}{r}.png?access-token=${process.env.REACT_APP_JAWG_ACCESS_TOKEN}`}

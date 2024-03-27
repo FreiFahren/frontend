@@ -59,7 +59,6 @@ const ReportForm: React.FC<ReportFormProps> = ({
 
 		// Check for last report time to prevent spamming
 		const lastReportTime = localStorage.getItem('lastReportTime');
-		console.log(lastReportTime)
 
 		if (lastReportTime && Date.now() - parseInt(lastReportTime) < 15 * 60 * 1000) {
 
@@ -92,7 +91,6 @@ const ReportForm: React.FC<ReportFormProps> = ({
 
 		const hasError = await validateReportForm();
 		if (hasError) {
-			console.log('Form has errors')
 			return; // Abort submission if there are validation errors
 		}
 		const { lineInput, stationInput, directionInput } = reportFormState;
@@ -101,7 +99,6 @@ const ReportForm: React.FC<ReportFormProps> = ({
 		// Save the timestamp of the report to prevent spamming
 		localStorage.setItem('lastReportTime', Date.now().toString());
 
-		console.log('Form submitted')
 		closeModal();
 		onFormSubmit(); // Notify App component about the submission
 	};

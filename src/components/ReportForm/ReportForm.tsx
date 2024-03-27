@@ -5,7 +5,7 @@ import { LinesList, StationList, StationProperty, getAllLinesList, getAllStation
 import AutocompleteInputForm, { selectOption } from '../AutocompleteInputForm/AutocompleteInputForm';
 import { highlightElement, redefineDirectionOptions, redefineLineOptions, redefineStationOptions, createWarningSpan } from '../../functions/uiUtils';
 import { calculateDistance } from '../../functions/mapUtils';
-import { getPosition } from '../Map/Markers/Classes/LocationMarker/LocationMarker';
+import { getPosition } from '../../functions/mapUtils';
 import './ReportForm.css';
 
 interface ReportFormProps {

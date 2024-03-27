@@ -1,4 +1,4 @@
-import L from 'leaflet';
+import L, { LatLngTuple } from 'leaflet';
 
 export const createLocationMarkerHTML = () => {
     return `<div
@@ -47,3 +47,39 @@ function deg2rad(deg: number) {
 	return deg * (Math.PI / 180);
 }
 
+export const queryPermission = async (): Promise<boolean> => {
+    try {
+        const permissionStatus = await navigator.permissions.query({ name: 'geolocation' });
+        return permissionStatus.state === 'granted';
+    } catch (error) {
+        return false;
+    }
+};
+
+// only gets the position ONCE
+export const getPosition = (): LatLngTuple | null => {
+    queryPermission().then((permissionGranted) => {
+        if (permissionGranted) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                return [position.coords.latitude, position.coords.longitude];
+            });
+        }
+    });
+    return null;
+};
+
+// this streams the position of the user, meaning we have to split getPosition and watchPosition
+export const watchPosition = async (onPositionChanged: (position: LatLngTuple | null) => void): Promise<(() => void) | null> => {
+
+    queryPermission().then((permissionGranted) => {
+        if (permissionGranted) {
+            const watchId = navigator.geolocation.watchPosition((position) => {
+                onPositionChanged([position.coords.latitude, position.coords.longitude]);
+            }, () => {
+                onPositionChanged(null); // Handle the case where getting position fails
+            });
+            return () => (navigator.geolocation.clearWatch(watchId));
+        }});
+    return null
+
+};

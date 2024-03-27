@@ -7,7 +7,7 @@ import LegalDisclaimer from '../../components/LegalDisclaimer/LegalDisclaimer';
 import UtilButton from '../../components/UtilButton/UtilButton';
 import UtilModal from '../../components/UtilModal/UtilModal';
 import { highlightElement } from '../../functions/uiUtils';
-import { getPosition } from '../../components/Map/Markers/Classes/LocationMarker/LocationMarker';
+import { getPosition } from '../../functions/mapUtils';
 import Backdrop from '../../components/Backdrop/Backdrop';
 import './App.css';
 import { LatLngTuple } from 'leaflet';

@@ -52,7 +52,7 @@ export const OpacityMarker: React.FC<OpacityMarkerProps> = ({ markerData, index 
             const newIcon = OpacityMarkerIcon(opacity, currentThemeLayer);
             markerRef.current.setIcon(newIcon);
         }
-    }, [opacity]);
+    }, [currentThemeLayer, opacity]);
 
     if (opacity <= 0) {
         return null;

@@ -4,14 +4,13 @@ import { LatLngTuple } from 'leaflet';
 import { TileLayer, useMap } from 'react-leaflet';
 
 import { berlinViewPosition } from '../Map';
-import { darkModeIds, setDarkMode } from '../../../functions/uiUtils';
+import { darkModeClasses, setDarkMode } from '../../../functions/uiUtils';
 
 interface StandardLayerProps {
 	position: LatLngTuple | null;
 }
 
-const DarkLayer = (props: StandardLayerProps) => {
-	const { position } = props;
+const DarkLayer = ({position}: StandardLayerProps) => {
 
 	const setMaxZoom = 16;
 	const setMinZoom = 11;

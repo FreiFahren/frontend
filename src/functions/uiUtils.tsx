@@ -78,11 +78,11 @@ export function createWarningSpan(elementId: string, message: string) {
 }
 
 // for dark and standard layer
-export const darkModeIds = ['report-button', 'toggle-layer-button', 'util-button']
+export const darkModeClasses = ['report-button', 'toggle-layer-button', 'util-button']
 
-export const setDarkMode = (ids: string[]) => {
-	for (const id of ids) {
-		const element = document.getElementsByClassName(id);
+export const setDarkMode = (classes: string[]) => {
+	for (const _class of classes) {
+		const element = document.getElementsByClassName(_class);
 		if (element) {
 			element.item(0)?.classList.add('dark-mode');
 
@@ -91,9 +91,9 @@ export const setDarkMode = (ids: string[]) => {
 
 };
 
-export const removeDarkMode = (ids: string[]) => {
-	for (const id of ids) {
-		const element = document.getElementsByClassName(id);
+export const removeDarkMode = (classes: string[]) => {
+	for (const _class of classes) {
+		const element = document.getElementsByClassName(_class);
 		if (element) {
 			element.item(0)?.classList.remove('dark-mode');
 		}

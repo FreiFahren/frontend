@@ -1,8 +1,4 @@
 .toggle-layer-button {
-    z-index: 998;
-}
-    
-.toggle-layer-button {
     cursor: pointer;
 }
 

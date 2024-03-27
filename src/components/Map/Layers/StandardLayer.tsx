@@ -3,14 +3,13 @@ import React, { useEffect } from 'react';
 import { TileLayer, useMap } from 'react-leaflet';
 
 import { berlinViewPosition } from '../Map';
-import { darkModeIds, removeDarkMode } from '../../../functions/uiUtils';
+import { darkModeClasses, removeDarkMode } from '../../../functions/uiUtils';
 
 interface StandardLayerProps {
 	position: LatLngTuple | null;
 }
 
-const StandardLayer = (props: StandardLayerProps) => {
-	const { position } = props;
+const StandardLayer = ({position}: StandardLayerProps) => {
 
 	const maxZoom = 16;
 	const minZoom = 11;

@@ -12,8 +12,8 @@
     display: flex;
     right: 2px;
     padding-top: 2%;
-    padding: 0%;
-    margin: 0%;
+    padding: 0;
+    margin: 0;
 }
 
 .util-modal ul li {
@@ -27,7 +27,6 @@
 .util-modal ul li a {
     color: var(--black);
     padding-left: 0.3rem;
-    text-decoration: none;
 }
 
 

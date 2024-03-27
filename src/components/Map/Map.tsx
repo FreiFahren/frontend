@@ -8,7 +8,7 @@ import './Map.css'
 
 interface MapProps {
     formSubmitted: boolean;
-    initialPosition: [number, number] | null;
+    initialPosition: LatLngTuple | null;
 }
 
 const Map: React.FC<MapProps> = ({ formSubmitted, initialPosition }) => {

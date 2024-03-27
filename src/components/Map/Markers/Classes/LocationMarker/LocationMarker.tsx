@@ -4,20 +4,31 @@ import { Marker, Popup } from 'react-leaflet';
 
 import { createLocationMarkerHTML } from '../../../../../functions/mapUtils';
 
-export const getPosition = (): Promise<{ position: [number, number] | null, watchId: number | null }> => {
+export const getPosition = (): Promise<{ position: LatLngTuple | null }> => {
     return new Promise((resolve) => {
         navigator.permissions.query({ name: 'geolocation' }).then((result) => {
             if (result.state === 'prompt' || result.state === 'granted') {
-                const watchId = navigator.geolocation.watchPosition((position) => {
-                    resolve({ position: [position.coords.latitude, position.coords.longitude], watchId });
+                navigator.geolocation.getCurrentPosition((position) => {
+                    resolve({ position: [position.coords.latitude, position.coords.longitude] });
                 }, () => {
-                    resolve({ position: null, watchId: null }); // Handle the case where getting position fails
+                    resolve({ position: null}); // Handle the case where getting position fails
                 });
             } else {
-                resolve({ position: null, watchId: null }); // Handle the case where permission is not granted
+                resolve({ position: null}); // Handle the case where permission is not granted
             }
         });
     });
+};
+
+export const watchPosition = (onPositionChanged: (position: LatLngTuple | null) => void): (() => void) => {
+    const watchId = navigator.geolocation.watchPosition((position) => {
+        onPositionChanged([position.coords.latitude, position.coords.longitude]);
+    }, () => {
+        onPositionChanged(null); // Handle the case where getting position fails
+    });
+
+    // Return a function that can be used to stop watching the position
+    return () => (navigator.geolocation.clearWatch(watchId));
 };
 
 interface LocationMarkerProps {
@@ -34,17 +45,9 @@ const LocationMarker: React.FC<LocationMarkerProps> = ({ initialPosition }) => {
         });
 
         useEffect(() => {
-            let watchId: number | null = null;
-        
-            const fetchPosition = async () => {
-                const { position, watchId: id } = await getPosition();
-                watchId = id;
-                console.log(position);
-                setPosition(position);
-            };
-        
-            fetchPosition();
-        
+            const stopWatchingPosition = watchPosition(setPosition);
+            return () => stopWatchingPosition();
+
         }, [position]);
 
     return (

@@ -64,3 +64,4 @@ describe('Map', () => {
     // However, as child components are mocked, direct effects might not be visible
   });
 });
+

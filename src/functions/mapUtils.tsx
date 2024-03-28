@@ -1,3 +1,4 @@
+import React from 'react';
 import L, { LatLngTuple } from 'leaflet';
 
 export const createLocationMarkerHTML = () => {

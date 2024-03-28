@@ -1,4 +1,4 @@
-import L from 'leaflet';
+import L, { LatLngTuple } from 'leaflet';
 
 export const createLocationMarkerHTML = () => {
     return `<div
@@ -47,3 +47,13 @@ function deg2rad(deg: number) {
 	return deg * (Math.PI / 180);
 }
 
+// this streams the position of the user, meaning we have to split getPosition and watchPosition
+export const watchPosition = async (onPositionChanged: (position: LatLngTuple | null) => void): Promise<(() => void)> => {
+    const watchId = navigator.geolocation.watchPosition((position) => {
+        onPositionChanged([position.coords.latitude, position.coords.longitude]);
+    }, () => {
+        onPositionChanged(null); // Handle the case where getting position fails
+    });
+    return () => (navigator.geolocation.clearWatch(watchId));
+
+};

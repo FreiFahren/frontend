@@ -5,13 +5,14 @@ import { LinesList, StationList, StationProperty, getAllLinesList, getAllStation
 import AutocompleteInputForm, { selectOption } from '../AutocompleteInputForm/AutocompleteInputForm';
 import { highlightElement, redefineDirectionOptions, redefineLineOptions, redefineStationOptions, createWarningSpan } from '../../functions/uiUtils';
 import { calculateDistance } from '../../functions/mapUtils';
-import { getPosition } from '../Map/Markers/Classes/LocationMarker/LocationMarker';
 import './ReportForm.css';
+import { LatLngTuple } from 'leaflet';
 
 interface ReportFormProps {
   closeModal: () => void;
   onFormSubmit: () => void;
   className?: string;
+  userPosition?: LatLngTuple | null;
 }
 
 type reportFormState = {
@@ -48,6 +49,7 @@ const ReportForm: React.FC<ReportFormProps> = ({
 	closeModal,
 	onFormSubmit,
 	className,
+	userPosition
 }) => {
 
 	const [reportFormState, setReportFormState] = useState<reportFormState>(initialState);
@@ -59,13 +61,16 @@ const ReportForm: React.FC<ReportFormProps> = ({
 
 		// Check for last report time to prevent spamming
 		const lastReportTime = localStorage.getItem('lastReportTime');
+
 		if (lastReportTime && Date.now() - parseInt(lastReportTime) < 15 * 60 * 1000) {
+
 			highlightElement('report-form');
 			createWarningSpan('station-select-div', 'Du kannst nur alle 15 Minuten eine Meldung abgeben!');
 			hasError = true;
 		}
 
 		if (reportFormState.stationInput === undefined || reportFormState.stationInput === emptyOption) {
+
 			highlightElement('station-select-component__control');
 			hasError = true;
 		}
@@ -105,11 +110,10 @@ const ReportForm: React.FC<ReportFormProps> = ({
 	): Promise<boolean> {
 		if (!stationInput) return false;
 
-		const userLocation = await getPosition();
 		const station = stationsList[stationInput.value];
 		if (!station) return false;
 
-		const distance = userLocation ? calculateDistance(userLocation[0], userLocation[1], station.coordinates.latitude, station.coordinates.longitude): 0;
+		const distance = userPosition ? calculateDistance(userPosition[0], userPosition[1], station.coordinates.latitude, station.coordinates.longitude): 0;
 
 		// Checks if the user is more than 1 km away from the station
 		if (distance > 1) {

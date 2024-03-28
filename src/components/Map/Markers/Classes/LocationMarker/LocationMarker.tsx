@@ -1,31 +1,15 @@
-import L from 'leaflet';
-import React, { useEffect, useState } from 'react';
+import L, {LatLngTuple} from 'leaflet';
+import React, { useCallback, useEffect } from 'react';
 import { Marker, Popup } from 'react-leaflet';
 
-import { createLocationMarkerHTML } from '../../../../../functions/mapUtils';
-
-export const getPosition = (): Promise<[number, number] | null> => {
-    return new Promise((resolve) => {
-        navigator.permissions.query({ name: 'geolocation' }).then((result) => {
-            if (result.state === 'prompt' || result.state === 'granted') {
-                navigator.geolocation.getCurrentPosition((position) => {
-                    resolve([position.coords.latitude, position.coords.longitude]);
-                }, () => {
-                    resolve(null); // Handle the case where getting position fails
-                });
-            } else {
-                resolve(null); // Handle the case where permission is not granted
-            }
-        });
-    });
-};
+import { createLocationMarkerHTML, watchPosition} from '../../../../../functions/mapUtils';
 
 interface LocationMarkerProps {
-     initialPosition: [number, number] | null;
+    userPosition: LatLngTuple | null;
+    setUserPosition: (position: LatLngTuple | null) => void;
 }
 
-const LocationMarker: React.FC<LocationMarkerProps> = ({ initialPosition }) => {
-     const [position, setPosition] = useState<[number, number] | null>(initialPosition);
+const LocationMarker: React.FC<LocationMarkerProps> = ({ userPosition, setUserPosition }) => {
 
         const LocationIcon = L.divIcon({
             className: 'custom-icon',
@@ -33,23 +17,19 @@ const LocationMarker: React.FC<LocationMarkerProps> = ({ initialPosition }) => {
             iconSize: [20, 20]
         });
 
-        useEffect(() => {
-            const fetchPosition = async () => {
-                const newPos = await getPosition();
-                setPosition(newPos);
-            };
-
-            fetchPosition();
-
-            const intervalId = setInterval(fetchPosition, 15000); // 15 seconds
-
-            return () => clearInterval(intervalId);
+        const fetchPosition = useCallback(async () => {
+            const stopWatching = await watchPosition(setUserPosition);
+            return () => stopWatching();
         }, []);
+
+        useEffect(() => {
+            fetchPosition();
+        }, [fetchPosition]);
 
     return (
         <div>
-            {position && (
-                <Marker position={position} icon={LocationIcon} >
+            {userPosition && (
+                <Marker position={userPosition} icon={LocationIcon} >
                     <Popup>
                         Dein Standort
                     </Popup>

@@ -2,8 +2,7 @@ import L, {LatLngTuple} from 'leaflet';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Marker, Popup } from 'react-leaflet';
 
-import { createLocationMarkerHTML, stopLocationHandler } from '../../../../../functions/mapUtils';
-import { startLocationHandler } from '../../../../../functions/mapUtils';
+import { createLocationMarkerHTML, watchPosition} from '../../../../../functions/mapUtils';
 
 interface LocationMarkerProps {
     userPosition: LatLngTuple | null;
@@ -19,8 +18,8 @@ const LocationMarker: React.FC<LocationMarkerProps> = ({ userPosition, setUserPo
         });
 
         const fetchPosition = useCallback(async () => {
-            await startLocationHandler(setUserPosition);
-            return () => stopLocationHandler();
+            const stopWatching = await watchPosition(setUserPosition);
+            return () => stopWatching();
         }, []);
 
         useEffect(() => {

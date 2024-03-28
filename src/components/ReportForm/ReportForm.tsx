@@ -4,8 +4,7 @@ import { ActionMeta } from 'react-select/';
 import { LinesList, StationList, StationProperty, getAllLinesList, getAllStationsList, reportInspector } from '../../functions/dbUtils';
 import AutocompleteInputForm, { selectOption } from '../AutocompleteInputForm/AutocompleteInputForm';
 import { highlightElement, redefineDirectionOptions, redefineLineOptions, redefineStationOptions, createWarningSpan } from '../../functions/uiUtils';
-import { calculateDistance, stopLocationHandler } from '../../functions/mapUtils';
-import { getPosition } from '../../functions/mapUtils';
+import { calculateDistance } from '../../functions/mapUtils';
 import './ReportForm.css';
 import { LatLngTuple } from 'leaflet';
 

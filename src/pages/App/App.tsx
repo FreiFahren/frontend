@@ -7,7 +7,6 @@ import LegalDisclaimer from '../../components/LegalDisclaimer/LegalDisclaimer';
 import UtilButton from '../../components/UtilButton/UtilButton';
 import UtilModal from '../../components/UtilModal/UtilModal';
 import { highlightElement } from '../../functions/uiUtils';
-import { getPosition } from '../../functions/mapUtils';
 import Backdrop from '../../components/Backdrop/Backdrop';
 import './App.css';
 import { LatLngTuple } from 'leaflet';
@@ -36,11 +35,6 @@ function App() {
 
   async function closeLegalDisclaimer() {
     setAppUIState({ ...appUIState, isFirstOpen: false });
-    const position = await getPosition();
-
-    if (position) {
-      setUserPosition(position);
-    }
   }
 
   return (
@@ -53,7 +47,7 @@ function App() {
           />
           <Backdrop onClick={() => highlightElement('legal-disclaimer')} />
         </>}
-        <Map formSubmitted={appUIState.formSubmitted} userPosition={userPosition} setUserPosition={setUserPosition} />
+       
         <UtilButton onClick={() => setAppUIState({ ...appUIState, isUtilFormOpen: !appUIState.isUtilFormOpen })} />
 
         {appUIState.isUtilFormOpen && (
@@ -62,6 +56,7 @@ function App() {
             <Backdrop onClick={() => setAppUIState({ ...appUIState, isUtilFormOpen: false })} />
           </>
         )}
+         <Map formSubmitted={appUIState.formSubmitted} userPosition={userPosition} setUserPosition={setUserPosition} />
         <ReportButton onClick={() => setAppUIState({ ...appUIState, isReportFormOpen: !appUIState.isReportFormOpen })} />
       {appUIState.isReportFormOpen && (
         <>

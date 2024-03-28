@@ -47,30 +47,6 @@ function deg2rad(deg: number) {
 	return deg * (Math.PI / 180);
 }
 
-export const queryPermission = async (): Promise<boolean> => {
-    try {
-        const permissionStatus = await navigator.permissions.query({ name: 'geolocation' });
-        console.log('Permission status:', permissionStatus.state)
-        return permissionStatus.state === 'granted';
-    } catch (error) {
-        console.log('Error querying permission:', error);
-        return false;
-    }
-};
-
-
-// only gets the position ONCE
-export const getPosition = (): LatLngTuple | null => {
-    queryPermission().then((permissionGranted) => {
-        if (permissionGranted) {
-            navigator.geolocation.getCurrentPosition((position) => {
-                console.log(position)
-                return [position.coords.latitude, position.coords.longitude];
-            });
-        }
-    });
-    return null;
-};
 
 // this streams the position of the user, meaning we have to split getPosition and watchPosition
 export const watchPosition = async (onPositionChanged: (position: LatLngTuple | null) => void): Promise<(() => void)> => {

@@ -1,5 +1,5 @@
 import L, {LatLngTuple} from 'leaflet';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Marker, Popup } from 'react-leaflet';
 
 import { createLocationMarkerHTML, watchPosition} from '../../../../../functions/mapUtils';

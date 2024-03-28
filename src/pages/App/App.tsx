@@ -28,7 +28,7 @@ const initialAppUIState: AppUIState = {
 
 function App() {
   const [appUIState, setAppUIState] = useState<AppUIState>(initialAppUIState);
-  const [initialPosition, setInitialPosition] = useState<LatLngTuple | null>(null);
+  const [userPosition, setUserPosition] = useState<LatLngTuple | null>(null);
 
   const handleFormSubmit = () => {
     setAppUIState(appUIState => ({ ...appUIState, formSubmitted: !appUIState.formSubmitted }));
@@ -39,7 +39,7 @@ function App() {
     const position = await getPosition();
 
     if (position) {
-      setInitialPosition(position);
+      setUserPosition(position);
     }
   }
 
@@ -53,7 +53,7 @@ function App() {
           />
           <Backdrop onClick={() => highlightElement('legal-disclaimer')} />
         </>}
-        <Map formSubmitted={appUIState.formSubmitted} initialPosition={initialPosition} />
+        <Map formSubmitted={appUIState.formSubmitted} userPosition={userPosition} setUserPosition={setUserPosition} />
         <UtilButton onClick={() => setAppUIState({ ...appUIState, isUtilFormOpen: !appUIState.isUtilFormOpen })} />
 
         {appUIState.isUtilFormOpen && (
@@ -69,6 +69,7 @@ function App() {
             closeModal={() => setAppUIState({ ...appUIState, isReportFormOpen: false })}
             onFormSubmit={handleFormSubmit}
             className={'open'}
+            userPosition={userPosition}
           />
           <Backdrop onClick={() => setAppUIState({ ...appUIState, isReportFormOpen: false })} />
         </>

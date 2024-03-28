@@ -8,12 +8,13 @@ import './Map.css'
 
 interface MapProps {
     formSubmitted: boolean;
-    initialPosition: LatLngTuple | null;
+    userPosition: LatLngTuple | null;
+    setUserPosition: (position: LatLngTuple | null) => void;
 }
 
 export const berlinViewPosition: LatLngTuple = [52.5162, 13.3880];
 
-const Map: React.FC<MapProps> = ({ formSubmitted, initialPosition }) => {
+const Map: React.FC<MapProps> = ({ formSubmitted, userPosition, setUserPosition }) => {
 
     const maxBounds = latLngBounds([52.96125019866001, 12.509131386425151],
                                    [52.014679000584486, 14.382300343810543]);
@@ -25,7 +26,7 @@ const Map: React.FC<MapProps> = ({ formSubmitted, initialPosition }) => {
             url={`https://tile.jawg.io/jawg-streets/{z}/{x}/{y}{r}.png?access-token=${process.env.REACT_APP_JAWG_ACCESS_TOKEN}`}
         />
 
-        <LocationMarker initialPosition={initialPosition}/>
+        <LocationMarker userPosition={userPosition} setUserPosition={setUserPosition}/>
 
         <MarkerContainer formSubmitted={formSubmitted}/>
 

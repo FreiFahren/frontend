@@ -4,14 +4,16 @@ import { ActionMeta } from 'react-select/';
 import { LinesList, StationList, StationProperty, getAllLinesList, getAllStationsList, reportInspector } from '../../functions/dbUtils';
 import AutocompleteInputForm, { selectOption } from '../AutocompleteInputForm/AutocompleteInputForm';
 import { highlightElement, redefineDirectionOptions, redefineLineOptions, redefineStationOptions, createWarningSpan } from '../../functions/uiUtils';
-import { calculateDistance } from '../../functions/mapUtils';
+import { calculateDistance, stopLocationHandler } from '../../functions/mapUtils';
 import { getPosition } from '../../functions/mapUtils';
 import './ReportForm.css';
+import { LatLngTuple } from 'leaflet';
 
 interface ReportFormProps {
   closeModal: () => void;
   onFormSubmit: () => void;
   className?: string;
+  userPosition?: LatLngTuple | null;
 }
 
 type reportFormState = {
@@ -48,6 +50,7 @@ const ReportForm: React.FC<ReportFormProps> = ({
 	closeModal,
 	onFormSubmit,
 	className,
+	userPosition
 }) => {
 
 	const [reportFormState, setReportFormState] = useState<reportFormState>(initialState);
@@ -108,13 +111,11 @@ const ReportForm: React.FC<ReportFormProps> = ({
 	): Promise<boolean> {
 		if (!stationInput) return false;
 
-		const userLocation = await getPosition();
-
 		const station = stationsList[stationInput.value];
 		if (!station) return false;
-
-		const distance = userLocation ? calculateDistance(userLocation[0], userLocation[1], station.coordinates.latitude, station.coordinates.longitude): 0;
-
+		
+		const distance = userPosition ? calculateDistance(userPosition[0], userPosition[1], station.coordinates.latitude, station.coordinates.longitude): 0;
+		
 		// Checks if the user is more than 1 km away from the station
 		if (distance > 1) {
 			highlightElement('report-form');

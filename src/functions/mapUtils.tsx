@@ -50,33 +50,61 @@ function deg2rad(deg: number) {
 export const queryPermission = async (): Promise<boolean> => {
     try {
         const permissionStatus = await navigator.permissions.query({ name: 'geolocation' });
+        console.log('Permission status:', permissionStatus.state)
         return permissionStatus.state === 'granted';
     } catch (error) {
         console.log('Error querying permission:', error);
         return false;
     }
 };
-
-
-// only gets the position ONCE
-export const getPosition = (): LatLngTuple | null => {
-    queryPermission().then((permissionGranted) => {
-        if (permissionGranted) {
-            navigator.geolocation.getCurrentPosition((position) => {
-                return [position.coords.latitude, position.coords.longitude];
-            });
-        }
+export const getPosition = (): Promise<[number, number] | null> => {
+    return new Promise((resolve) => {
+        navigator.permissions.query({ name: 'geolocation' }).then((result) => {
+            if (result.state === 'prompt' || result.state === 'granted') {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    resolve([position.coords.latitude, position.coords.longitude]);
+                }, () => {
+                    resolve(null); // Handle the case where getting position fails
+                });
+            } else {
+                resolve(null); // Handle the case where permission is not granted
+            }
+        });
     });
-    return null;
 };
 
+
 // this streams the position of the user, meaning we have to split getPosition and watchPosition
-export const watchPosition = async (onPositionChanged: (position: LatLngTuple | null) => void): Promise<(() => void) | null> => {
-    const watchId = navigator.geolocation.watchPosition((position) => {
+let watchId: number | null = null;
+
+export const startLocationHandler = (onPositionChanged: (position: [number, number] | null) => void) => {
+    if (watchId !== null) {
+        navigator.geolocation.clearWatch(watchId);
+    }
+
+    watchId = navigator.geolocation.watchPosition((position) => {
         onPositionChanged([position.coords.latitude, position.coords.longitude]);
     }, () => {
         onPositionChanged(null); // Handle the case where getting position fails
     });
-    return () => (navigator.geolocation.clearWatch(watchId));
-
 };
+
+export const stopLocationHandler = () => {
+    if (watchId !== null) {
+        navigator.geolocation.clearWatch(watchId);
+        watchId = null;
+    }
+};
+
+// // only gets the position ONCE
+// export const getPosition = (): LatLngTuple | null => {
+//     queryPermission().then((permissionGranted) => {
+//         if (permissionGranted) {
+//             navigator.geolocation.getCurrentPosition((position) => {
+//                 console.log(position)
+//                 return [position.coords.latitude, position.coords.longitude];
+//             });
+//         }
+//     });
+//     return null;
+// };

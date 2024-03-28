@@ -2,15 +2,15 @@ import L, {LatLngTuple} from 'leaflet';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Marker, Popup } from 'react-leaflet';
 
-import { createLocationMarkerHTML } from '../../../../../functions/mapUtils';
-import { watchPosition } from '../../../../../functions/mapUtils';
+import { createLocationMarkerHTML, stopLocationHandler } from '../../../../../functions/mapUtils';
+import { startLocationHandler } from '../../../../../functions/mapUtils';
 
 interface LocationMarkerProps {
-     initialPosition: LatLngTuple | null;
+    userPosition: LatLngTuple | null;
+    setUserPosition: (position: LatLngTuple | null) => void;
 }
 
-const LocationMarker: React.FC<LocationMarkerProps> = ({ initialPosition }) => {
-     const [position, setPosition] = useState<LatLngTuple | null>(initialPosition);
+const LocationMarker: React.FC<LocationMarkerProps> = ({ userPosition, setUserPosition }) => {
 
         const LocationIcon = L.divIcon({
             className: 'custom-icon',
@@ -19,8 +19,8 @@ const LocationMarker: React.FC<LocationMarkerProps> = ({ initialPosition }) => {
         });
 
         const fetchPosition = useCallback(async () => {
-            const clearWatch = await watchPosition(setPosition);
-            return () => clearWatch ? clearWatch() : undefined;
+            await startLocationHandler(setUserPosition);
+            return () => stopLocationHandler();
         }, []);
 
         useEffect(() => {
@@ -29,8 +29,8 @@ const LocationMarker: React.FC<LocationMarkerProps> = ({ initialPosition }) => {
 
     return (
         <div>
-            {position && (
-                <Marker position={position} icon={LocationIcon} >
+            {userPosition && (
+                <Marker position={userPosition} icon={LocationIcon} >
                     <Popup>
                         Dein Standort
                     </Popup>

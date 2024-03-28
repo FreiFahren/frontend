@@ -90,9 +90,8 @@ const ReportForm: React.FC<ReportFormProps> = ({
 		event.preventDefault();
 
 		const hasError = await validateReportForm();
-		if (hasError) {
-			return; // Abort submission if there are validation errors
-		}
+		if (hasError) return; // Abort submission if there are validation errors
+		
 		const { lineInput, stationInput, directionInput } = reportFormState;
 		await reportInspector(lineInput!, stationInput!, directionInput!);
 

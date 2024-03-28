@@ -34,7 +34,7 @@ function App() {
     setAppUIState(appUIState => ({ ...appUIState, formSubmitted: !appUIState.formSubmitted }));
   }
 
-  async function closeLegalDisclaimer() {
+  function closeLegalDisclaimer() {
     setAppUIState({ ...appUIState, isFirstOpen: false });
   }
 

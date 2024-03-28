@@ -33,7 +33,7 @@ const Map: React.FC<MapProps> = ({ formSubmitted, userPosition, setUserPosition 
         <TileLayer
             attribution= '<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a>'
             url={`https://tile.jawg.io/jawg-streets/{z}/{x}/{y}{r}.png?access-token=${process.env.REACT_APP_JAWG_ACCESS_TOKEN}`}
-            minZoom={12}
+            minZoom={11}
             maxZoom={16}
         />
 

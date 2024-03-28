@@ -20,7 +20,16 @@ const Map: React.FC<MapProps> = ({ formSubmitted, userPosition, setUserPosition 
                                    [52.014679000584486, 14.382300343810543]);
 
   return (
-        <MapContainer id='map' center={berlinViewPosition} zoom={13} scrollWheelZoom={true} maxBounds={maxBounds}>
+        <MapContainer id='map'
+            center={berlinViewPosition}
+            zoom={13}
+            scrollWheelZoom={true}
+            maxBounds={maxBounds}
+            maxBoundsViscosity={1}
+            inertia={true}
+            bounceAtZoomLimits={false}
+            touchZoom={true}
+        >
         <TileLayer
             attribution= '<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a>'
             url={`https://tile.jawg.io/jawg-streets/{z}/{x}/{y}{r}.png?access-token=${process.env.REACT_APP_JAWG_ACCESS_TOKEN}`}

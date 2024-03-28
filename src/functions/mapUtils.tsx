@@ -52,9 +52,11 @@ export const queryPermission = async (): Promise<boolean> => {
         const permissionStatus = await navigator.permissions.query({ name: 'geolocation' });
         return permissionStatus.state === 'granted';
     } catch (error) {
+        console.log('Error querying permission:', error);
         return false;
     }
 };
+
 
 // only gets the position ONCE
 export const getPosition = (): LatLngTuple | null => {
@@ -70,16 +72,11 @@ export const getPosition = (): LatLngTuple | null => {
 
 // this streams the position of the user, meaning we have to split getPosition and watchPosition
 export const watchPosition = async (onPositionChanged: (position: LatLngTuple | null) => void): Promise<(() => void) | null> => {
-
-    queryPermission().then((permissionGranted) => {
-        if (permissionGranted) {
-            const watchId = navigator.geolocation.watchPosition((position) => {
-                onPositionChanged([position.coords.latitude, position.coords.longitude]);
-            }, () => {
-                onPositionChanged(null); // Handle the case where getting position fails
-            });
-            return () => (navigator.geolocation.clearWatch(watchId));
-        }});
-    return null
+    const watchId = navigator.geolocation.watchPosition((position) => {
+        onPositionChanged([position.coords.latitude, position.coords.longitude]);
+    }, () => {
+        onPositionChanged(null); // Handle the case where getting position fails
+    });
+    return () => (navigator.geolocation.clearWatch(watchId));
 
 };

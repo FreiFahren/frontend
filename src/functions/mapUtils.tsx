@@ -47,7 +47,6 @@ function deg2rad(deg: number) {
 	return deg * (Math.PI / 180);
 }
 
-
 // this streams the position of the user, meaning we have to split getPosition and watchPosition
 export const watchPosition = async (onPositionChanged: (position: LatLngTuple | null) => void): Promise<(() => void)> => {
     const watchId = navigator.geolocation.watchPosition((position) => {

@@ -93,7 +93,7 @@ const ReportForm: React.FC<ReportFormProps> = ({
 
 		const hasError = await validateReportForm();
 		if (hasError) return; // Abort submission if there are validation errors
-		
+
 		const { lineInput, stationInput, directionInput } = reportFormState;
 		await reportInspector(lineInput!, stationInput!, directionInput!);
 
@@ -112,9 +112,9 @@ const ReportForm: React.FC<ReportFormProps> = ({
 
 		const station = stationsList[stationInput.value];
 		if (!station) return false;
-		
+
 		const distance = userPosition ? calculateDistance(userPosition[0], userPosition[1], station.coordinates.latitude, station.coordinates.longitude): 0;
-		
+
 		// Checks if the user is more than 1 km away from the station
 		if (distance > 1) {
 			highlightElement('report-form');
